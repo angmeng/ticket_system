@@ -3,6 +3,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     create_table(:users) do |t|
       ## Database authenticatable
       t.string :username,           :null => false, :default => ""
+      t.string :fullname,           :default => ""
       t.string :email,              :default => ""
       t.string :encrypted_password, :null => false, :default => ""
 
@@ -33,13 +34,24 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       ## Token authenticatable
       # t.string :authentication_token
-
+      
+      #extra fields
+      t.integer :agent_group_id, :default => 0
+      t.integer :branch_id, :default => 0
+      t.integer :type_id, :default => 0
+      t.text    :address
+      t.string  :phone
+      t.string  :fax
+      t.text    :remark
+      t.boolean :active, :default => true
 
       t.timestamps
     end
-    add_index :users, :username,                :unique => true
-    add_index :users, :email,                :unique => true
+    add_index :users, :username,             :unique => true
     add_index :users, :reset_password_token, :unique => true
+    add_index :users, :type_id
+    add_index :users, :agent_group_id
+    add_index :users, :branch_id
     # add_index :users, :confirmation_token,   :unique => true
     # add_index :users, :unlock_token,         :unique => true
     # add_index :users, :authentication_token, :unique => true

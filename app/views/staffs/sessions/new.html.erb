@@ -1,0 +1,32 @@
+<!-- <form accept-charset="UTF-8" action="/staffs/sign_in" class="new_staff form-horizontal" id="new_user" method="post"> -->
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal"}) do |f| %>
+  <%#  token_tag form_authenticity_token %>
+<fieldset>
+
+<legend>Adminintration - Sign In</legend>
+
+<div class="control-group">
+<label class="control-label">Username</label>
+<div class="controls">
+<input type="text" class="input-xlarge" id="user_username" name="user[username]" rel="popover" data-content="Enter your username." data-original-title="Username">
+</div>
+</div>
+
+
+<div class="control-group">
+<label class="control-label">Password</label>
+<div class="controls">
+<input type="text" class="input-xlarge" id="user_password" name="user[password]" rel="popover" data-content="What’s your login password?" data-original-title="Password">
+</div>
+</div>
+
+<div class="control-group">
+<label class="control-label"></label>
+<div class="controls">
+<button type="submit" class="btn btn-success" >Sign In</button>
+</div>
+</div>
+
+</fieldset>
+<!-- </form> -->
+<% end %>

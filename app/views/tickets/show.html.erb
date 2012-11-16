@@ -1,0 +1,43 @@
+<%- model_class = Ticket -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:routine_id) %>:</strong></dt>
+  <dd><%= @ticket.routine_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:ticket_category_id) %>:</strong></dt>
+  <dd><%= @ticket.ticket_category_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:code) %>:</strong></dt>
+  <dd><%= @ticket.code %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @ticket.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:initial_number) %>:</strong></dt>
+  <dd><%= @ticket.initial_number %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:fare) %>:</strong></dt>
+  <dd><%= @ticket.fare %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:inventory_count) %>:</strong></dt>
+  <dd><%= @ticket.inventory_count %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:required_passenger_details) %>:</strong></dt>
+  <dd><%= @ticket.required_passenger_details %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:valid_from) %>:</strong></dt>
+  <dd><%= @ticket.valid_from %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:expired_at) %>:</strong></dt>
+  <dd><%= @ticket.expired_at %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:no_expired) %>:</strong></dt>
+  <dd><%= @ticket.no_expired %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:active) %>:</strong></dt>
+  <dd><%= @ticket.active %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              tickets_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_ticket_path(@ticket), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              ticket_path(@ticket),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>

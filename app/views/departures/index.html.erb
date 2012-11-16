@@ -1,0 +1,48 @@
+<%- model_class = Departure -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:vessel_id) %></th>
+      <th><%= model_class.human_attribute_name(:sales_quota) %></th>
+      <th><%= model_class.human_attribute_name(:online_quota) %></th>
+      <th><%= model_class.human_attribute_name(:custom_quota) %></th>
+      <th><%= model_class.human_attribute_name(:on_call) %></th>
+      <th><%= model_class.human_attribute_name(:status_id) %></th>
+      <th><%= model_class.human_attribute_name(:active) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @departures.each do |departure| %>
+      <tr>
+        <td><%= link_to departure.id, departure_path(departure) %></td>
+        <td><%= departure.vessel_id %></td>
+        <td><%= departure.sales_quota %></td>
+        <td><%= departure.online_quota %></td>
+        <td><%= departure.custom_quota %></td>
+        <td><%= departure.on_call %></td>
+        <td><%= departure.status_id %></td>
+        <td><%= departure.active %></td>
+        <td><%=l departure.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_departure_path(departure), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      departure_path(departure),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_departure_path,
+            :class => 'btn btn-primary' %>

@@ -1,17 +1,37 @@
-<h2>Sign in</h2>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+ <!-- <form accept-charset="UTF-8" action="/staffs/sign_in" class="new_staff form-horizontal" id="new_user" method="post"> -->
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal"}) do |f| %>
+  <%#  token_tag form_authenticity_token %>
+<fieldset>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+<legend>Adminintration - Sign In</legend>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+<div class="control-group">
+<label class="control-label">Username</label>
+<div class="controls">
+<input type="text" class="input-xlarge" id="user_username" name="user[username]" rel="popover" data-content="Enter your username." data-original-title="Username">
+</div>
+</div>
 
-  <div><%= f.submit "Sign in" %></div>
+
+<div class="control-group">
+<label class="control-label">Password</label>
+<div class="controls">
+<input type="text" class="input-xlarge" id="user_password" name="user[password]" rel="popover" data-content="What’s your login password?" data-original-title="Password">
+</div>
+</div>
+
+<div class="control-group">
+<label class="control-label"></label>
+<div class="controls">
+<button type="submit" class="btn btn-success" >Sign In</button>
+</div>
+</div>
+
+</fieldset>
+<!-- </form> -->
 <% end %>
 
-<%= render "devise/shared/links" %>
+
+
+<%# render "devise/shared/links" %>
