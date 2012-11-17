@@ -16,18 +16,18 @@ TicketSystem::Application.routes.draw do
   get "home/info"
   get "dashboard/index"
 
-  # devise_for :staffs, :controllers => { :sessions => "staffs/sessions" }, :skip => [:sessions, :registrations] do
-  #   get '/staffs/sign_in' => 'staffs/sessions#new', :as => :new_staff_session
-  #   post '/staffs/sign_in' => 'staffs/sessions#create', :as => :staff_session
-  #   delete '/staffs/sign_out' => 'staffs/sessions#destroy', :as => :destroy_staff_session
-  # end
-  # resources :staffs
-  # devise_for :agents, :controllers => { :sessions => "agents/sessions" }, :skip => [:sessions, :registrations] do
-  #   get '/agents/sign_in' => 'agents/sessions#new', :as => :new_agent_session
-  #   post '/agents/sign_in' => 'agents/sessions#create', :as => :agent_session
-  #   delete '/agents/sign_out' => 'agents/sessions#destroy', :as => :destroy_agent_session
-  # end
-  # resources :agents
+  devise_for :staffs, :controllers => { :sessions => "staffs/sessions" }, :skip => [:sessions, :registrations] do
+    get '/staffs/sign_in' => 'staffs/sessions#new', :as => :new_staff_session
+    post '/staffs/sign_in' => 'staffs/sessions#create', :as => :staff_session
+    delete '/staffs/sign_out' => 'staffs/sessions#destroy', :as => :destroy_staff_session
+  end
+  resources :staffs
+  devise_for :agents, :controllers => { :sessions => "agents/sessions" }, :skip => [:sessions, :registrations] do
+    get '/agents/sign_in' => 'agents/sessions#new', :as => :new_agent_session
+    post '/agents/sign_in' => 'agents/sessions#create', :as => :agent_session
+    delete '/agents/sign_out' => 'agents/sessions#destroy', :as => :destroy_agent_session
+  end
+  resources :agents
 
   devise_for :users
   resources :users do
@@ -45,7 +45,7 @@ TicketSystem::Application.routes.draw do
   # authenticated :agent do
   #   root :to => 'dashboard#index'
   # end
-  root :to => "home#index"
+  root :to => "home#info"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
