@@ -24,7 +24,8 @@ class AgentsController < ApplicationController
   # GET /agents/new
   # GET /agents/new.json
   def new
-    @agent = Agent.new
+    @agent = Agent.new({category_id: UserType::AGENT})
+    #@agent.category_id = UserType::AGENT
 
     respond_to do |format|
       format.html # new.html.erb

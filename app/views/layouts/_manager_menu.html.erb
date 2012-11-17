@@ -10,12 +10,12 @@
                       <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                         <li><%= link_to "Company", companies_path, :html_options => {tabindex: "-1"} %></li>
                         <li><%= link_to "Branch", branches_path, :html_options => {tabindex: "-1"}  %></li>
-                        <li><%= link_to "Agent Group", agent_groups_path, :html_options => {tabindex: "-1"}  %></li>
-                        <li><%= link_to "User", users_path, :html_options => {tabindex: "-1"}  %></li>
-                        <li><%= link_to "Agent", agents_path, :html_options => {tabindex: "-1"}  %></li>
-                        <li><%= link_to "Staff", staffs_path, :html_options => {tabindex: "-1"}  %></li>
                         <li><%= link_to "Warrant", warrants_path, :html_options => {tabindex: "-1"}  %></li>
                         <li class="divider"></li>
+                        <li><%= link_to "Agent Group", agent_groups_path, :html_options => {tabindex: "-1"}  %></li>
+                        <li><%= link_to "Agent", agents_path, :html_options => {tabindex: "-1"}  %></li>
+                        <li><%= link_to "Staff", staffs_path, :html_options => {tabindex: "-1"}  %></li>
+                        <li><%= link_to "User", users_path, :html_options => {tabindex: "-1"}  %></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -38,11 +38,13 @@
                       <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
                       <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
                         <% if current_user %>
+                          <li> <%= link_to 'Profile', profile_user_path(current_user), :html_options => {tabindex: "-1"} %></li>
+                           <li class="divider"></li>
                           <li> <%= link_to 'Sign out', destroy_staff_session_path, :method => :delete, :html_options => {tabindex: "-1"} %></li>
                         <% else %>
                           <li><a tabindex="-1" href="#">Login</a></li>
                         <% end %>
-                        <li class="divider"></li>
+                        
                       </ul>
                     </li>
                   </ul>

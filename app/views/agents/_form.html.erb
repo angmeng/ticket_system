@@ -1,12 +1,12 @@
 <%= simple_form_for @agent, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :username %>
-  <%= f.input :fullname %>
+  <%= f.input :username, :input_html => { :class => "span6" }  %>
+  <%= f.input :fullname, :input_html => { :class => "span6" }  %>
   <%= f.association :agent_group %>
   <%= f.association :branch %>
   <%= f.input :phone %>
   <%= f.input :fax %>
   <%= f.input :email %>
-  <%= f.input :remark %>
+  <%= f.input :remark, :input_html => { :class => "span6" }  %>
   <%= f.input :active %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>

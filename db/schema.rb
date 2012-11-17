@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20121114175041) do
     t.string   "last_sign_in_ip"
     t.integer  "agent_group_id",         :default => 0
     t.integer  "branch_id",              :default => 0
-    t.integer  "type_id",                :default => 0
+    t.integer  "category_id",            :default => 0
     t.text     "address"
     t.string   "phone"
     t.string   "fax"
@@ -166,8 +166,8 @@ ActiveRecord::Schema.define(:version => 20121114175041) do
 
   add_index "users", ["agent_group_id"], :name => "index_users_on_agent_group_id"
   add_index "users", ["branch_id"], :name => "index_users_on_branch_id"
+  add_index "users", ["category_id"], :name => "index_users_on_category_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["type_id"], :name => "index_users_on_type_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "vessels", :force => true do |t|

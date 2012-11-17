@@ -1,7 +1,7 @@
 <%= simple_form_for @schedule, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :code %>
+  <%= f.input :code, :input_html => { :class => "span6" }  %>
   <%= f.input :departure_time %>
-  <%= f.association :routine %>
+  <%= f.association :routine, :collection => @routines, :label_method => :code, :prompt => "Choose a Route" %>
   <%= f.input :sales_quota %>
   <%= f.input :online_quota %>
   <%= f.input :active %>

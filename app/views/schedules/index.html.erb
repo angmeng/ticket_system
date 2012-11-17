@@ -21,7 +21,7 @@
       <tr>
         <td><%= link_to schedule.code, schedule_path(schedule) %></td>
        
-        <td><%= schedule.departure_time %></td>
+        <td><%=l schedule.departure_time, :format => :hour_minute %></td>
         <td><%= schedule.routine.code %></td>
         <td><%= schedule.sales_quota %></td>
         <td><%= schedule.online_quota %></td>

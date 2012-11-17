@@ -7,9 +7,9 @@
   <dt><strong><%= model_class.human_attribute_name(:code) %>:</strong></dt>
   <dd><%= @schedule.code %></dd>
   <dt><strong><%= model_class.human_attribute_name(:departure_time) %>:</strong></dt>
-  <dd><%= @schedule.departure_time %></dd>
+  <dd><%=l @schedule.departure_time, :format => :hour_minute %></dd>
   <dt><strong><%= model_class.human_attribute_name(:routine_id) %>:</strong></dt>
-  <dd><%= @schedule.routine.name %></dd>
+  <dd><%= @schedule.routine.code %></dd>
   <dt><strong><%= model_class.human_attribute_name(:sales_quota) %>:</strong></dt>
   <dd><%= @schedule.sales_quota %></dd>
   <dt><strong><%= model_class.human_attribute_name(:online_quota) %>:</strong></dt>

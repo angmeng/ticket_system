@@ -4,7 +4,7 @@
   <%= f.input :online_quota %>
   <%= f.input :custom_quota %>
   <%= f.input :on_call %>
-  <%= f.input :status_id %>
+  <%= f.input :status_id, :collection => [[' Open ',1] ,[' Close ', 2]], :as => :radio_buttons, :item_wrapper_class => 'inline', :label => 'Status' %>
   <%= f.input :active %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>

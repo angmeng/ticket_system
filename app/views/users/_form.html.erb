@@ -1,16 +1,19 @@
-<%= simple_form_for @user, :html => { :class => 'form-vertical' } do |f| %>
-  <%= f.input :username %>
-  <%= f.input :email %>
-  <%= f.input :fullname %>
-  <%= f.input :address %>
+<%= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :username, :input_html => { :class => "span6" }  %>
+  <%= f.input :email, :input_html => { :class => "span6" }  %>
+  <%= f.input :fullname, :input_html => { :class => "span6" }  %>
+  <%= f.input :address, :input_html => { :class => "span6" }  %>
   <%= f.input :phone %>
   <%= f.input :fax %>
-  <%= f.input :remark %>
+  <%= f.input :remark, :input_html => { :class => "span6" } %>
  
   <%= f.input :active %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+    <% unless action_name == "profile" %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 users_path, :class => 'btn' %>
+  
+    <% end %>
   </div>
 <% end %>

@@ -5,7 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      
+      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:vessel_id) %></th>
       <th><%= model_class.human_attribute_name(:sales_quota) %></th>
       <th><%= model_class.human_attribute_name(:online_quota) %></th>
@@ -21,7 +21,7 @@
     <% @departures.each do |departure| %>
       <tr>
         <td><%= link_to departure.id, departure_path(departure) %></td>
-        <td><%= departure.vessel_id %></td>
+        <td><%= departure.vessel.name %></td>
         <td><%= departure.sales_quota %></td>
         <td><%= departure.online_quota %></td>
         <td><%= departure.custom_quota %></td>

@@ -25,7 +25,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/new.json
   def new
     @schedule = Schedule.new
-
+    @routines = Routine.order(:code)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @schedule }
@@ -35,6 +35,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/1/edit
   def edit
     @schedule = Schedule.find(params[:id])
+    @routines = Routine.order(:code)
   end
 
   # POST /schedules
@@ -47,7 +48,10 @@ class SchedulesController < ApplicationController
         format.html { redirect_to @schedule, notice: 'Schedule was successfully created.' }
         format.json { render json: @schedule, status: :created, location: @schedule }
       else
-        format.html { render action: "new" }
+        format.html { 
+          @routines = Routine.order(:code)
+          render action: "new" 
+        }
         format.json { render json: @schedule.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +67,10 @@ class SchedulesController < ApplicationController
         format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { 
+          @routines = Routine.order(:code)
+          render action: "edit" 
+        }
         format.json { render json: @schedule.errors, status: :unprocessable_entity }
       end
     end

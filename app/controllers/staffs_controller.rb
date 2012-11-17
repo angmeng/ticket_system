@@ -24,7 +24,8 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   # GET /staffs/new.json
   def new
-    @staff = Staff.new
+    @staff = Staff.new({category_id: UserType::STAFF})
+    #@staff.category_id = UserType::STAFF
 
     respond_to do |format|
       format.html # new.html.erb
