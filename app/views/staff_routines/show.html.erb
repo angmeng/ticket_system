@@ -5,9 +5,9 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:staff_id) %>:</strong></dt>
-  <dd><%= @staff_routine.staff_id %></dd>
+  <dd><%= @staff_routine.staff.fullname %></dd>
   <dt><strong><%= model_class.human_attribute_name(:routine_id) %>:</strong></dt>
-  <dd><%= @staff_routine.routine_id %></dd>
+  <dd><%= @staff_routine.routine.code %></dd>
 </dl>
 
 <div class="form-actions">

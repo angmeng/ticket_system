@@ -5,34 +5,28 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+    
       <th><%= model_class.human_attribute_name(:username) %></th>
       <th><%= model_class.human_attribute_name(:fullname) %></th>
       <th><%= model_class.human_attribute_name(:agent_group_id) %></th>
       <th><%= model_class.human_attribute_name(:branch_id) %></th>
-      <th><%= model_class.human_attribute_name(:phone) %></th>
-      <th><%= model_class.human_attribute_name(:fax) %></th>
-      <th><%= model_class.human_attribute_name(:email) %></th>
-      <th><%= model_class.human_attribute_name(:remark) %></th>
+   
       <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+  
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @agents.each do |agent| %>
       <tr>
-        <td><%= link_to agent.id, agent_path(agent) %></td>
-        <td><%= agent.username %></td>
+        <td><%= link_to agent.username, agent_path(agent) %></td>
+
         <td><%= agent.fullname %></td>
-        <td><%= agent.agent_group_id %></td>
-        <td><%= agent.branch_id %></td>
-        <td><%= agent.phone %></td>
-        <td><%= agent.fax %></td>
-        <td><%= agent.email %></td>
-        <td><%= agent.remark %></td>
+        <td><%= agent.agent_group.name rescue "-" %></td>
+        <td><%= agent.branch.name rescue "-" %></td>
+      
         <td><%= agent.active %></td>
-        <td><%=l agent.created_at %></td>
+
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_agent_path(agent), :class => 'btn btn-mini' %>

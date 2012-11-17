@@ -4,8 +4,8 @@
   <%= f.input :address %>
   <%= f.input :phone %>
   <%= f.input :email %>
-  <%= f.input :type_id %>
-  <%= f.input :branch_id %>
+  <%= f.input :type_id,  :as => :radio_buttons %>
+  <%= f.association :branch %>
   <%= f.input :active %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>

@@ -3,4 +3,9 @@ class UserType
 	STAFF   = 2
 	AGENT   = 3
 	USER    = 4
+
+	OPTIONS = [
+      ["Manager", MANAGER],
+      ["Staff", STAFF]
+	].freeze
 end

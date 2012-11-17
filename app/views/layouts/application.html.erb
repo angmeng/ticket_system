@@ -35,13 +35,15 @@
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body>
-
+  <%# debug current_user %>
   <% if is_manager? %>
     <%= render "/layouts/manager_menu" %>
   <% elsif is_staff? %>
     <%= render "/layouts/staff_menu" %>
   <% elsif is_agent? %>
     <%= render "/layouts/agent_menu" %>
+  <% elsif is_user? %>
+    <%= render "/layouts/user_menu" %>
   <% end %>
 
   <div class="container">

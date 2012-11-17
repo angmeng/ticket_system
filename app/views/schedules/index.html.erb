@@ -5,28 +5,28 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+     
       <th><%= model_class.human_attribute_name(:code) %></th>
       <th><%= model_class.human_attribute_name(:departure_time) %></th>
       <th><%= model_class.human_attribute_name(:routine_id) %></th>
       <th><%= model_class.human_attribute_name(:sales_quota) %></th>
       <th><%= model_class.human_attribute_name(:online_quota) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @schedules.each do |schedule| %>
       <tr>
-        <td><%= link_to schedule.id, schedule_path(schedule) %></td>
-        <td><%= schedule.code %></td>
+        <td><%= link_to schedule.code, schedule_path(schedule) %></td>
+       
         <td><%= schedule.departure_time %></td>
-        <td><%= schedule.routine_id %></td>
+        <td><%= schedule.routine.code %></td>
         <td><%= schedule.sales_quota %></td>
         <td><%= schedule.online_quota %></td>
         <td><%= schedule.active %></td>
-        <td><%=l schedule.created_at %></td>
+       
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_schedule_path(schedule), :class => 'btn btn-mini' %>

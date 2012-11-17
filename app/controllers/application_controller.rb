@@ -4,25 +4,32 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def is_manager?
-  	current_user && current_user.is_manager?	
+  ["is_manager?", "is_staff?", "is_agent?", "is_user?"].each do |m|
+    define_method m do
+      current_user && current_user.send(m)
+    end
+     helper_method :"#{m}"
   end
-  helper_method :is_manager?
 
-  def is_staff?
-  	current_user && current_user.is_staff?	
-  end
-  helper_method :is_staff?
+  # def is_manager?
+  # 	current_user && current_user.is_manager?	
+  # end
+  # helper_method :is_manager?
 
-  def is_agent?
-    current_user && current_user.is_agent?  
-  end
-  helper_method :is_agent?
+  # def is_staff?
+  # 	current_user && current_user.is_staff?	
+  # end
+  # helper_method :is_staff?
 
-  def is_user?
-    current_user && current_user.is_user?  
-  end
-  helper_method :is_user?
+  # def is_agent?
+  #   current_user && current_user.is_agent?  
+  # end
+  # helper_method :is_agent?
+
+  # def is_user?
+  #   current_user && current_user.is_user?  
+  # end
+  # helper_method :is_user?
 
   def after_sign_in_path_for(resource)
     if is_user?
@@ -30,11 +37,15 @@ class ApplicationController < ActionController::Base
     elsif is_agent?
       home_index_url
     elsif is_staff?
-      dashboard_index
+      dashboard_index_url
     elsif is_manager?
       dashboard_index_url
     else
       super
     end
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    home_info_url
   end
 end

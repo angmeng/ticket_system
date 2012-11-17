@@ -9,9 +9,9 @@
   <dt><strong><%= model_class.human_attribute_name(:fullname) %>:</strong></dt>
   <dd><%= @agent.fullname %></dd>
   <dt><strong><%= model_class.human_attribute_name(:agent_group_id) %>:</strong></dt>
-  <dd><%= @agent.agent_group_id %></dd>
+  <dd><%= @agent.agent_group.name rescue "-" %></dd>
   <dt><strong><%= model_class.human_attribute_name(:branch_id) %>:</strong></dt>
-  <dd><%= @agent.branch_id %></dd>
+  <dd><%= @agent.branch.name rescue "-" %></dd>
   <dt><strong><%= model_class.human_attribute_name(:phone) %>:</strong></dt>
   <dd><%= @agent.phone %></dd>
   <dt><strong><%= model_class.human_attribute_name(:fax) %>:</strong></dt>

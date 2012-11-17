@@ -4,7 +4,7 @@
   <%#  token_tag form_authenticity_token %>
 <fieldset>
 
-<legend>Adminintration - Sign In</legend>
+<legend>User - Sign In</legend>
 
 <div class="control-group">
 <label class="control-label">Username</label>
@@ -17,7 +17,7 @@
 <div class="control-group">
 <label class="control-label">Password</label>
 <div class="controls">
-<input type="text" class="input-xlarge" id="user_password" name="user[password]" rel="popover" data-content="What’s your login password?" data-original-title="Password">
+<input type="password" class="input-xlarge" id="user_password" name="user[password]" rel="popover" data-content="What’s your login password?" data-original-title="Password">
 </div>
 </div>
 
@@ -34,4 +34,4 @@
 
 
 
-<%# render "devise/shared/links" %>
+<%= render "devise/shared/links" %>

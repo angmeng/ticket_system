@@ -5,7 +5,7 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:vessel_id) %>:</strong></dt>
-  <dd><%= @departure.vessel_id %></dd>
+  <dd><%= @departure.vessel.name rescue "-" %></dd>
   <dt><strong><%= model_class.human_attribute_name(:sales_quota) %>:</strong></dt>
   <dd><%= @departure.sales_quota %></dd>
   <dt><strong><%= model_class.human_attribute_name(:online_quota) %>:</strong></dt>
@@ -15,7 +15,7 @@
   <dt><strong><%= model_class.human_attribute_name(:on_call) %>:</strong></dt>
   <dd><%= @departure.on_call %></dd>
   <dt><strong><%= model_class.human_attribute_name(:status_id) %>:</strong></dt>
-  <dd><%= @departure.status_id %></dd>
+  <dd><%= @departure.status %></dd>
   <dt><strong><%= model_class.human_attribute_name(:active) %>:</strong></dt>
   <dd><%= @departure.active %></dd>
 </dl>

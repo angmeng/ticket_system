@@ -7,9 +7,9 @@
   <dt><strong><%= model_class.human_attribute_name(:code) %>:</strong></dt>
   <dd><%= @routine.code %></dd>
   <dt><strong><%= model_class.human_attribute_name(:departure_jetty_id) %>:</strong></dt>
-  <dd><%= @routine.departure_jetty_id %></dd>
+  <dd><%= @routine.departure_jetty.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:arrival_jetty_id) %>:</strong></dt>
-  <dd><%= @routine.arrival_jetty_id %></dd>
+  <dd><%= @routine.arrival_jetty.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:sequence_no) %>:</strong></dt>
   <dd><%= @routine.sequence_no %></dd>
   <dt><strong><%= model_class.human_attribute_name(:active) %>:</strong></dt>

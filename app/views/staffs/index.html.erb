@@ -5,32 +5,30 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      
       <th><%= model_class.human_attribute_name(:username) %></th>
       <th><%= model_class.human_attribute_name(:fullname) %></th>
-      <th><%= model_class.human_attribute_name(:address) %></th>
-      <th><%= model_class.human_attribute_name(:phone) %></th>
+     
       <th><%= model_class.human_attribute_name(:email) %></th>
       <th><%= model_class.human_attribute_name(:type_id) %></th>
       <th><%= model_class.human_attribute_name(:branch_id) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+   
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @staffs.each do |staff| %>
       <tr>
-        <td><%= link_to staff.id, staff_path(staff) %></td>
-        <td><%= staff.username %></td>
+        <td><%= link_to staff.username, staff_path(staff) %></td>
+       
         <td><%= staff.fullname %></td>
-        <td><%= staff.address %></td>
-        <td><%= staff.phone %></td>
+    
         <td><%= staff.email %></td>
-        <td><%= staff.type_id %></td>
-        <td><%= staff.branch_id %></td>
+        <td><%= staff.type_name %></td>
+        <td><%= staff.branch.name rescue "-" %></td>
         <td><%= staff.active %></td>
-        <td><%=l staff.created_at %></td>
+    
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_staff_path(staff), :class => 'btn btn-mini' %>

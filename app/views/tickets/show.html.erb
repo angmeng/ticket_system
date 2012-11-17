@@ -4,14 +4,13 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:routine_id) %>:</strong></dt>
-  <dd><%= @ticket.routine_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:ticket_category_id) %>:</strong></dt>
-  <dd><%= @ticket.ticket_category_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:code) %>:</strong></dt>
   <dd><%= @ticket.code %></dd>
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @ticket.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:ticket_category_id) %>:</strong></dt>
+  <dd><%= @ticket.ticket_category.name %></dd>
+ 
   <dt><strong><%= model_class.human_attribute_name(:initial_number) %>:</strong></dt>
   <dd><%= @ticket.initial_number %></dd>
   <dt><strong><%= model_class.human_attribute_name(:fare) %>:</strong></dt>

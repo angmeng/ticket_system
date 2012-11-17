@@ -1,7 +1,7 @@
 <%= simple_form_for @routine, :html => { :class => 'form-vertical' } do |f| %>
   <%= f.input :code %>
-  <%= f.input :departure_jetty_id %>
-  <%= f.input :arrival_jetty_id %>
+  <%= f.association :departure_jetty %>
+  <%= f.association :arrival_jetty %>
   <%= f.input :sequence_no %>
   <%= f.input :active %>
   <div class="form-actions">

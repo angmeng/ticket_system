@@ -5,32 +5,28 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      
       <th><%= model_class.human_attribute_name(:code) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:address) %></th>
-      <th><%= model_class.human_attribute_name(:phone) %></th>
-      <th><%= model_class.human_attribute_name(:fax) %></th>
+     
       <th><%= model_class.human_attribute_name(:email) %></th>
-      <th><%= model_class.human_attribute_name(:remark) %></th>
+    
       <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+     
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @warrants.each do |warrant| %>
       <tr>
-        <td><%= link_to warrant.id, warrant_path(warrant) %></td>
-        <td><%= warrant.code %></td>
+        <td><%= link_to warrant.code, warrant_path(warrant) %></td>
+       
         <td><%= warrant.name %></td>
-        <td><%= warrant.address %></td>
-        <td><%= warrant.phone %></td>
-        <td><%= warrant.fax %></td>
+       
         <td><%= warrant.email %></td>
-        <td><%= warrant.remark %></td>
+       
         <td><%= warrant.active %></td>
-        <td><%=l warrant.created_at %></td>
+        
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_warrant_path(warrant), :class => 'btn btn-mini' %>

@@ -15,9 +15,9 @@
   <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
   <dd><%= @staff.email %></dd>
   <dt><strong><%= model_class.human_attribute_name(:type_id) %>:</strong></dt>
-  <dd><%= @staff.type_id %></dd>
+  <dd><%= @staff.type_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:branch_id) %>:</strong></dt>
-  <dd><%= @staff.branch_id %></dd>
+  <dd><%= @staff.branch.name rescue "-" %></dd>
   <dt><strong><%= model_class.human_attribute_name(:active) %>:</strong></dt>
   <dd><%= @staff.active %></dd>
 </dl>

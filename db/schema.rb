@@ -99,14 +99,14 @@ ActiveRecord::Schema.define(:version => 20121114175041) do
   add_index "schedules", ["routine_id"], :name => "index_schedules_on_routine_id"
 
   create_table "staff_routines", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "staff_id"
     t.integer  "routine_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "staff_routines", ["routine_id"], :name => "index_staff_routines_on_routine_id"
-  add_index "staff_routines", ["user_id"], :name => "index_staff_routines_on_user_id"
+  add_index "staff_routines", ["staff_id"], :name => "index_staff_routines_on_staff_id"
 
   create_table "ticket_categories", :force => true do |t|
     t.string   "code"
@@ -166,10 +166,8 @@ ActiveRecord::Schema.define(:version => 20121114175041) do
 
   add_index "users", ["agent_group_id"], :name => "index_users_on_agent_group_id"
   add_index "users", ["branch_id"], :name => "index_users_on_branch_id"
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["type_id"], :name => "index_users_on_type_id"
-  add_index "users", ["username", "type_id"], :name => "index_users_on_username_and_type_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "vessels", :force => true do |t|

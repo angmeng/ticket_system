@@ -5,12 +5,12 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:routine_id) %></th>
-      <th><%= model_class.human_attribute_name(:ticket_category_id) %></th>
       <th><%= model_class.human_attribute_name(:code) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:initial_number) %></th>
+      <th><%= model_class.human_attribute_name(:routine_id) %></th>
+      <th><%= model_class.human_attribute_name(:ticket_category_id) %></th>
+      
+      
       <th><%= model_class.human_attribute_name(:fare) %></th>
       <th><%= model_class.human_attribute_name(:inventory_count) %></th>
       <th><%= model_class.human_attribute_name(:required_passenger_details) %></th>
@@ -18,19 +18,20 @@
       <th><%= model_class.human_attribute_name(:expired_at) %></th>
       <th><%= model_class.human_attribute_name(:no_expired) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+     
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @tickets.each do |ticket| %>
       <tr>
-        <td><%= link_to ticket.id, ticket_path(ticket) %></td>
-        <td><%= ticket.routine_id %></td>
-        <td><%= ticket.ticket_category_id %></td>
-        <td><%= ticket.code %></td>
+        <td><%= link_to ticket.code, ticket_path(ticket) %></td>
         <td><%= ticket.name %></td>
-        <td><%= ticket.initial_number %></td>
+        
+        <td><%= ticket.routine.code %></td>
+        <td><%= ticket.ticket_category.name %></td>
+       
+        
         <td><%= ticket.fare %></td>
         <td><%= ticket.inventory_count %></td>
         <td><%= ticket.required_passenger_details %></td>
@@ -38,7 +39,7 @@
         <td><%= ticket.expired_at %></td>
         <td><%= ticket.no_expired %></td>
         <td><%= ticket.active %></td>
-        <td><%=l ticket.created_at %></td>
+       
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_ticket_path(ticket), :class => 'btn btn-mini' %>

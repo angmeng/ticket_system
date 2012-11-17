@@ -16,8 +16,8 @@
     <% @staff_routines.each do |staff_routine| %>
       <tr>
         <td><%= link_to staff_routine.id, staff_routine_path(staff_routine) %></td>
-        <td><%= staff_routine.staff_id %></td>
-        <td><%= staff_routine.routine_id %></td>
+        <td><%= staff_routine.staff.fullname %></td>
+        <td><%= staff_routine.routine.code %></td>
         <td><%=l staff_routine.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

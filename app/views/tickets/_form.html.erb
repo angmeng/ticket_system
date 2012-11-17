@@ -1,8 +1,9 @@
 <%= simple_form_for @ticket, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :routine_id %>
-  <%= f.input :ticket_category_id %>
+  
   <%= f.input :code %>
   <%= f.input :name %>
+  <%= f.association :routine %>
+  <%= f.association :ticket_category %>
   <%= f.input :initial_number %>
   <%= f.input :fare %>
   <%= f.input :inventory_count %>

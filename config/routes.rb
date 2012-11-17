@@ -13,6 +13,7 @@ TicketSystem::Application.routes.draw do
   resources :companies
 
   get "home/index"
+  get "home/info"
   get "dashboard/index"
 
   devise_for :staffs, :controllers => { :sessions => "staffs/sessions" }, :skip => [:sessions] do

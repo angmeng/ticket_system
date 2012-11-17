@@ -5,22 +5,22 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+      
       <th><%= model_class.human_attribute_name(:code) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+     
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @agent_groups.each do |agent_group| %>
       <tr>
-        <td><%= link_to agent_group.id, agent_group_path(agent_group) %></td>
-        <td><%= agent_group.code %></td>
+      
+        <td><%= link_to agent_group.code, agent_group_path(agent_group)  %></td>
         <td><%= agent_group.name %></td>
         <td><%= agent_group.active %></td>
-        <td><%=l agent_group.created_at %></td>
+   
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_agent_group_path(agent_group), :class => 'btn btn-mini' %>
