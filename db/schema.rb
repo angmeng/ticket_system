@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114175041) do
+ActiveRecord::Schema.define(:version => 20121121100452) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -98,6 +98,16 @@ ActiveRecord::Schema.define(:version => 20121114175041) do
   add_index "schedules", ["code"], :name => "index_schedules_on_code", :unique => true
   add_index "schedules", ["routine_id"], :name => "index_schedules_on_routine_id"
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "staff_routines", :force => true do |t|
     t.integer  "staff_id"
     t.integer  "routine_id"
@@ -127,41 +137,53 @@ ActiveRecord::Schema.define(:version => 20121114175041) do
     t.decimal  "fare",                       :precision => 10, :scale => 2, :default => 0.0
     t.boolean  "inventory_count",                                           :default => true
     t.boolean  "required_passenger_details",                                :default => true
-    t.date     "valid_from"
-    t.date     "expired_at"
     t.boolean  "no_expired",                                                :default => false
     t.boolean  "active",                                                    :default => true
     t.datetime "created_at",                                                                   :null => false
     t.datetime "updated_at",                                                                   :null => false
+    t.integer  "valid_days",                                                :default => 30
   end
 
   add_index "tickets", ["code"], :name => "index_tickets_on_code", :unique => true
   add_index "tickets", ["routine_id"], :name => "index_tickets_on_routine_id"
   add_index "tickets", ["ticket_category_id"], :name => "index_tickets_on_ticket_category_id"
 
+  create_table "topup_credits", :force => true do |t|
+    t.integer  "agent_id"
+    t.decimal  "amount",     :precision => 10, :scale => 2, :default => 0.0
+    t.text     "remark"
+    t.integer  "staff_id"
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+  end
+
+  add_index "topup_credits", ["agent_id"], :name => "index_topup_credits_on_agent_id"
+  add_index "topup_credits", ["staff_id"], :name => "index_topup_credits_on_staff_id"
+
   create_table "users", :force => true do |t|
-    t.string   "username",               :default => "",   :null => false
-    t.string   "fullname",               :default => ""
-    t.string   "email",                  :default => ""
-    t.string   "encrypted_password",     :default => "",   :null => false
+    t.string   "username",                                              :default => "",   :null => false
+    t.string   "fullname",                                              :default => ""
+    t.string   "email",                                                 :default => ""
+    t.string   "encrypted_password",                                    :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                                         :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "agent_group_id",         :default => 0
-    t.integer  "branch_id",              :default => 0
-    t.integer  "category_id",            :default => 0
+    t.integer  "agent_group_id",                                        :default => 0
+    t.integer  "branch_id",                                             :default => 0
+    t.integer  "category_id",                                           :default => 0
     t.text     "address"
     t.string   "phone"
     t.string   "fax"
     t.text     "remark"
-    t.boolean  "active",                 :default => true
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.boolean  "active",                                                :default => true
+    t.datetime "created_at",                                                              :null => false
+    t.datetime "updated_at",                                                              :null => false
+    t.decimal  "credit",                 :precision => 10, :scale => 2, :default => 0.0
   end
 
   add_index "users", ["agent_group_id"], :name => "index_users_on_agent_group_id"

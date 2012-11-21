@@ -8,6 +8,8 @@
   <dd><%= @ticket.code %></dd>
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @ticket.name %></dd>
+   <dt><strong><%= model_class.human_attribute_name(:routine_id) %>:</strong></dt>
+  <dd><%= @ticket.routine.code %></dd>
   <dt><strong><%= model_class.human_attribute_name(:ticket_category_id) %>:</strong></dt>
   <dd><%= @ticket.ticket_category.name %></dd>
  
@@ -20,9 +22,8 @@
   <dt><strong><%= model_class.human_attribute_name(:required_passenger_details) %>:</strong></dt>
   <dd><%= @ticket.required_passenger_details %></dd>
   <dt><strong><%= model_class.human_attribute_name(:valid_from) %>:</strong></dt>
-  <dd><%= @ticket.valid_from %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:expired_at) %>:</strong></dt>
-  <dd><%= @ticket.expired_at %></dd>
+  <dd><%= @ticket.valid_days %></dd>
+  
   <dt><strong><%= model_class.human_attribute_name(:no_expired) %>:</strong></dt>
   <dd><%= @ticket.no_expired %></dd>
   <dt><strong><%= model_class.human_attribute_name(:active) %>:</strong></dt>

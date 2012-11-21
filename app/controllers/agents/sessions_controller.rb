@@ -1,4 +1,5 @@
 class Agents::SessionsController < Devise::SessionsController
+  layout "sessions"
   def create
      resource = warden.authenticate!(:scope => :user, :recall => "#{controller_path}#new")
      if is_navigational_format?

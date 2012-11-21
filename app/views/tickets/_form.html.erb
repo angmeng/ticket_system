@@ -2,14 +2,13 @@
   
   <%= f.input :code, :input_html => { :class => "span6" }  %>
   <%= f.input :name, :input_html => { :class => "span6" }  %>
-  <%= f.association :routine %>
+  <%= f.association :routine, :label_method => :code %>
   <%= f.association :ticket_category %>
   <%= f.input :initial_number %>
   <%= f.input :fare %>
   <%= f.input :inventory_count %>
   <%= f.input :required_passenger_details %>
-  <%= f.input :valid_from %>
-  <%= f.input :expired_at %>
+  <%= f.input :valid_days %>
   <%= f.input :no_expired %>
   <%= f.input :active %>
   <div class="form-actions">

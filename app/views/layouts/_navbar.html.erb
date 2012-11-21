@@ -1,0 +1,11 @@
+<ul class="nav nav-list">
+   <% if is_manager? %>
+    <%= render "/layouts/manager_menu" %>
+  <% elsif is_staff? %>
+    <%= render "/layouts/staff_menu" %>
+  <% elsif is_agent? %>
+    <%= render "/layouts/agent_menu" %>
+  <% elsif is_user? %>
+    <%= render "/layouts/user_menu" %>
+  <% end %>
+</ul>

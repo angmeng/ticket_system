@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Agent:</b>
+  <%= @topup_credit.agent_id %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @topup_credit.amount %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @topup_credit.remark %>
+</p>
+
+<p>
+  <b>Staff:</b>
+  <%= @topup_credit.staff_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_topup_credit_path(@topup_credit) %> |
+<%= link_to 'Back', topup_credits_path %>

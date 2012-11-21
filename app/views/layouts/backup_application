@@ -1,0 +1,27 @@
+<%# debug current_user %>
+  <% if is_manager? %>
+    <%= render "/layouts/manager_menu" %>
+  <% elsif is_staff? %>
+    <%= render "/layouts/staff_menu" %>
+  <% elsif is_agent? %>
+    <%= render "/layouts/agent_menu" %>
+  <% elsif is_user? %>
+    <%= render "/layouts/user_menu" %>
+  <% end %>
+
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <% flash.each do |name, msg| %>
+          <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+          <a class="close" data-dismiss="alert">&#215;</a>
+          <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+
+      </div>
+
+    </div>
+  </div>

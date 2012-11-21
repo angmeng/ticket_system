@@ -1,4 +1,7 @@
 TicketSystem::Application.routes.draw do
+  resources :topup_credits
+
+
   resources :vessels
   resources :departures
   resources :schedules

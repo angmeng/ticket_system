@@ -11,19 +11,18 @@ gem 'mysql2'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'less-rails', '~> 2.2.5'
+  #gem 'less-rails', '~> 2.2.5'
   #gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+#  gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-  gem 'therubyracer', :require => 'v8'
-  gem 'uglifier', '>= 1.0.3'
+#  gem 'therubyracer', :require => 'v8'
+#  gem 'uglifier', '>= 1.0.3'
 
-  gem 'twitter-bootswatch-rails', '~> 2.2.1.0'
+  #gem 'twitter-bootswatch-rails', '~> 2.2.1.0'
 end
-gem 'twitter-bootswatch-rails-helpers'
-
+#gem 'twitter-bootswatch-rails-helpers'
 gem "rspec-rails", ">= 2.10.1", :group => [:development, :test]
 gem "factory_girl_rails", ">= 3.3.0", :group => [:development, :test]
 gem "email_spec", ">= 1.2.1", :group => :test
@@ -34,9 +33,12 @@ gem "launchy", ">= 2.1.0", :group => :test
 gem "devise"#, ">= 2.1.0"
 gem 'jquery-rails'
 gem 'rack-cache', :require => 'rack/cache'
+gem 'exception_notification'
 gem 'dragonfly'
 gem 'simple_form'
 gem 'kaminari'
+gem 'meta_search'
+gem 'asset_hat', '~> 0.4.2'
 
 
 

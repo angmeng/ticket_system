@@ -1,7 +1,7 @@
 <!-- <form accept-charset="UTF-8" action="/staffs/sign_in" class="new_staff form-horizontal" id="new_user" method="post"> -->
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal"}) do |f| %>
+<%#= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal"}) do |f| %>
   <%#  token_tag form_authenticity_token %>
-<fieldset>
+<!-- <fieldset>
 
 <legend>Adminintration - Sign In</legend>
 
@@ -27,6 +27,57 @@
 </div>
 </div>
 
-</fieldset>
+</fieldset> -->
 <!-- </form> -->
-<% end %>
+<%# end %>
+
+  <div class="container-fluid">
+            <div class="row-fluid">
+                <div class='singup' style='display:none;'>
+                    <div class="accounts-form" id="signup">
+                        <h2>Create your free account</h2>
+                        <hr class="small">
+
+                        <form id="auth-form" class="clearfix" autocomplete="off" method="POST" action="login.html">
+
+                            <div class="input">
+                                <input type="text" maxlength="30" name="username" placeholder="Username" id="id_username" required>
+                            </div>
+                            <div class="input">
+                                <input type="text" maxlength="75" name="email" placeholder="Email" id="id_email" required>
+                                <div class="email_suggestion" style="display: none;"></div>
+                            </div>
+                            <div class="input">
+                                <input type="password" id="id_password" name="password" placeholder="Password" required>
+                            </div>
+
+                            <div class="actions">
+                                <input type="submit" class="btn btn-success" value="Create account">
+                            </div>
+                            <p class="note"><span class="label label-warning">Already have an account?</span> &nbsp;<a href="#">Log in</a></p>
+                        </form>
+                    </div>
+                </div>
+                <div class='singin'  style='display:block;'>
+                    <div class="accounts-form">
+                        <h2>Administrator - Log in</h2>
+                        <hr class="small">
+                        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => "signup", :autocomplete => "off", :class => "clearfix"}) do |f| %>
+                        
+
+                            <div class="input">
+                                <input type="text" maxlength="30" name="user[username]" placeholder="Username" id="username" required>
+                            </div>
+                            <div class="input">
+                                <input type="password" id="password" name="user[password]" placeholder="Password" required>
+                            </div>
+
+                            <div class="actions">
+                                <input type="submit" class="btn btn-success" value="Log in">
+                            </div>
+                            <!-- <p class="note"><span class="label label-info"> Need an account? </span>  &nbsp; <a href="#"> Sign up</a> </p> -->
+                        <% end %>
+                    </div>
+                </div> 
+            </div>
+        </div>

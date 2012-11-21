@@ -1,0 +1,12 @@
+<%= simple_form_for @topup_credit, :html => { :class => 'form-horizontal' } do |f| %>
+
+  <%= f.association :agent, :label_method => :fullname %>
+  <%= f.input :amount  %>
+  <%= f.input :remark, :input_html => { :class => "span6" } %>
+  <%= f.input :staff_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                topup_credits_path, :class => 'btn' %>
+  </div>
+<% end %>

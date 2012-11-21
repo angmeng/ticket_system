@@ -1,10 +1,16 @@
 <%- model_class = TicketCategory -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
+<div id="accordion1" class="accordion">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#notification" data-original-title="">
+                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  <%=t '.title', :default => model_class.model_name.human.pluralize %> <i class="icon-chevron-down icon-white pull-right"></i>
+                    </a>
+                </div>
+                <div id="notification" class="accordion-body collapse in">
+                    <div class="accordion-inner paddind">
+                        <table  class="table table-bordered table-striped pull-left" id="example" >
+                            <thead>
+        <tr>
      
       <th><%= model_class.human_attribute_name(:code) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
@@ -15,7 +21,7 @@
   </thead>
   <tbody>
     <% @ticket_categories.each do |ticket_category| %>
-      <tr>
+      <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to ticket_category.code, ticket_category_path(ticket_category) %></td>
         <td><%= ticket_category.code %></td>
         <td><%= ticket_category.name %></td>
@@ -34,6 +40,13 @@
     <% end %>
   </tbody>
 </table>
+ <br />
+
+                      </div>
+                  </div>
+              </div>
+
+          </div>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_ticket_category_path,
