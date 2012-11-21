@@ -1,7 +1,5 @@
 TicketSystem::Application.routes.draw do
   resources :topup_credits
-
-
   resources :vessels
   resources :departures
   resources :schedules
@@ -32,7 +30,7 @@ TicketSystem::Application.routes.draw do
   end
   resources :agents
 
-  devise_for :users
+  devise_for :users, :controllers => { :sessions => "users/sessions" }
   resources :users do
     member do
       get "profile"
@@ -48,7 +46,7 @@ TicketSystem::Application.routes.draw do
   # authenticated :agent do
   #   root :to => 'dashboard#index'
   # end
-  root :to => "home#info"
+  root :to => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

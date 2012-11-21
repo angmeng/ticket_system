@@ -1,39 +1,25 @@
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-
-                <div class="container" style="width: auto;">
-                  <a class="brand" href="#">Ferry System</a>
-                  <ul class="nav" role="navigation">
-                   
-                    <li class="dropdown">
-                      <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">System <b class="caret"></b></a>
-                      <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                     
-                        <li class="divider"></li>
-                      
-
-                      </ul>
-                    </li>
-                  </ul>
-                  <ul class="nav pull-right">
-                    <li id="fat-menu" class="dropdown">
-                      <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
-                      <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-
-                        <% if current_user %>
-                          <li> <%= link_to 'Profile', profile_user_path(current_user), :html_options => {tabindex: "-1"} %></li>
-                          <li class="divider"></li>
-                          <li> <%= link_to 'Sign out', destroy_agent_session_path, :method => :delete, :html_options => {tabindex: "-1"} %></li>
-                        <% else %>
-                          <li><a tabindex="-1" href="#">Login</a></li>
-                        <% end %>
-                        
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div> <!-- /navbar-example -->
-          </div>
+ <li><a href="/dashboard/index" class="current"><i class="icon-th-large icon-white"></i><span> Dashboard</span></a></li>
+    <!-- <li><a href="widget.html"><i class="icon-th"></i><span> Widgets</span></a></li>
+    <li><a href="tables.html"><i class="icon-list-alt"></i><span> Tables</span></a></li>
+    <li><a href="elements.html"><i class="icon-tasks"></i><span> Elements</span></a></li>
+    <li><a href="media.html"><i class="icon-picture"></i><span> Media</span></a></li>
+    <li><a href="forms.html"><i class="icon-align-center"></i><span> Forms</span></a></li>
+    <li><a href="grid.html"><i class="icon-indent-left"></i><span> Grid</span></a></li>
+    <li><a href="buttons.html"><i class="icon-gift"></i><span> Buttons & Icons</span></a></li>
+    <li><a href="noty.html"><i class="icon-comment"></i><span> Notification</span></a></li>
+    <li><a href="callendar.html"><i class="icon-calendar"></i><span> Callendar </span></a></li>
+    <li><a href="bootstrap-ui.html"><i class="icon-ok"></i><span> Bootstrap ui </span></a></li>
+    <li><a href="chat.html"><i class="icon-bullhorn"></i><span> Chat </span></a></li>
+    <li><a href="inbox.html"><i class="icon-envelope"></i><span> Inbox </span></a></li>
+    <li><a href="charts.html" class="last"><i class="icon-warning-sign"></i><span>  Graphs & Charts</span></a></li> -->
+    <li class="accordion-menu">
+        <a href="#collapseOne" data-toggle="collapse" class="accordion-toggle"><i class="icon-signal"></i><span> Maintenance  <i class="icon-chevron-down pull-right"></i></span></a>
+        <div class="accordion-body collapse dropdown" id="collapseOne">
+            <div class="accordion-inner">
+                <ul class="nav nav-list">
+                     <li><%= link_to "Ticket", "#"  %></li>
+                </ul>
+            </div>
+        </div>
+    </li>
 

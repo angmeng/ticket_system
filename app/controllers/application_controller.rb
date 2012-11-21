@@ -33,9 +33,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if is_user?
-      home_index_url
+      dashboard_index_url
     elsif is_agent?
-      home_index_url
+      dashboard_index_url
     elsif is_staff?
       dashboard_index_url
     elsif is_manager?

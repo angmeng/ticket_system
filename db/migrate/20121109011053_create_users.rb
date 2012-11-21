@@ -39,10 +39,10 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :agent_group_id, :default => 0
       t.integer :branch_id, :default => 0
       t.integer :category_id, :default => 0
-      t.text    :address
-      t.string  :phone
-      t.string  :fax
-      t.text    :remark
+      t.text    :address,           :default => ""
+      t.string  :phone,           :default => ""
+      t.string  :fax,           :default => ""
+      t.text    :remark,           :default => ""
       t.boolean :active, :default => true
 
       t.timestamps

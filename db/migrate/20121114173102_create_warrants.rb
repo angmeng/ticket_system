@@ -3,11 +3,11 @@ class CreateWarrants < ActiveRecord::Migration
     create_table :warrants do |t|
       t.string :code
       t.string :name
-      t.text :address
-      t.string :phone, :limit => 16
-      t.string :fax, :limit => 16
-      t.string :email
-      t.text :remark
+      t.text :address,           :default => ""
+      t.string :phone, :limit => 16,           :default => ""
+      t.string :fax, :limit => 16,           :default => ""
+      t.string :email,           :default => ""
+      t.text :remark,           :default => ""
       t.boolean :active, :default => true
 
       t.timestamps

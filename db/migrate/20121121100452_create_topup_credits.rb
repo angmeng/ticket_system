@@ -3,7 +3,7 @@ class CreateTopupCredits < ActiveRecord::Migration
     create_table :topup_credits do |t|
       t.integer :agent_id
       t.decimal :amount, :precision => 10, :scale => 2, :default => 0.00
-      t.text :remark
+      t.text :remark,           :default => ""
       t.integer :staff_id
 
       t.timestamps
