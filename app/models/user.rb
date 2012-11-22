@@ -29,6 +29,13 @@ class User < ActiveRecord::Base
     self.category_id == UserType::USER
   end
 
+  def is_sub_agent?
+    self.category_id == UserType::SUB_AGENT
+  end
+
+  def sub_agents
+    SubAgent.where("branch_id = ?", self.branch_id).order(:fullname)
+  end
 
 
 	protected

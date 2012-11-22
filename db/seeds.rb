@@ -20,3 +20,7 @@ puts 'New User created: ' << user.fullname
 puts 'SETTING UP DEFAULT User LOGIN'
 user = User.create! :username => "user", :fullname => 'User', :email => 'user@gmail.com', :password => '123456', :password_confirmation => '123456', :category_id => 4
 puts 'New User created: ' << user.fullname
+
+puts 'SETTING UP DEFAULT Company'
+company = Company.create! :name => "Ferry Sdn Bhd", :register_number => 'PP123456789', :email => 'company@gmail.com', :address_1 => '123456', :address_2 => '123456', :phone => "123456", :fax => "123456"
+puts 'New Company created: ' << company.name

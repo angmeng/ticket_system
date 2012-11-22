@@ -2,7 +2,11 @@ class AgentsController < ApplicationController
   # GET /agents
   # GET /agents.json
   def index
-    @agents = Agent.all
+    if is_admin?
+      @agents = Agent.all
+    elsif is_agent?
+      @agents = current_user.sub_agents
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +17,11 @@ class AgentsController < ApplicationController
   # GET /agents/1
   # GET /agents/1.json
   def show
-    @agent = Agent.find(params[:id])
+    if is_admin?
+      @agent = Agent.find(params[:id])
+    elsif is_agent?
+      @agent = current_user.sub_agents.where("id = ?", params[:id]).first
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +32,11 @@ class AgentsController < ApplicationController
   # GET /agents/new
   # GET /agents/new.json
   def new
-    @agent = Agent.new({category_id: UserType::AGENT})
+    if is_admin?
+      @agent = Agent.new({category_id: UserType::AGENT})
+    elsif is_agent?
+      @agent = Agent.new({category_id: UserType::SUB_AGENT})
+    end
     #@agent.category_id = UserType::AGENT
 
     respond_to do |format|
@@ -35,7 +47,11 @@ class AgentsController < ApplicationController
 
   # GET /agents/1/edit
   def edit
-    @agent = Agent.find(params[:id])
+    if is_admin?
+      @agent = Agent.find(params[:id])
+    elsif is_agent?
+      @agent = current_user.sub_agents.where("id = ?", params[:id]).first
+    end
   end
 
   # POST /agents
@@ -57,7 +73,11 @@ class AgentsController < ApplicationController
   # PUT /agents/1
   # PUT /agents/1.json
   def update
-    @agent = Agent.find(params[:id])
+    if is_admin?
+      @agent = Agent.find(params[:id])
+    elsif is_agent?
+      @agent = current_user.sub_agents.where("id = ?", params[:id]).first
+    end
 
     respond_to do |format|
       if @agent.update_attributes(params[:agent])
@@ -73,7 +93,11 @@ class AgentsController < ApplicationController
   # DELETE /agents/1
   # DELETE /agents/1.json
   def destroy
-    @agent = Agent.find(params[:id])
+    if is_admin?
+      @agent = Agent.find(params[:id])
+    elsif is_agent?
+      @agent = current_user.sub_agents.where("id = ?", params[:id]).first
+    end
     @agent.destroy
 
     respond_to do |format|

@@ -4,17 +4,17 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  ["is_manager?", "is_staff?", "is_agent?", "is_user?"].each do |m|
+  ["is_manager?", "is_staff?", "is_agent?", "is_user?", "is_sub_agent?"].each do |m|
     define_method m do
       current_user && current_user.send(m)
     end
      helper_method :"#{m}"
   end
 
-  # def is_manager?
-  # 	current_user && current_user.is_manager?	
-  # end
-  # helper_method :is_manager?
+  def is_admin?
+  	current_user && (current_user.is_manager? || current_user.is_staff?)
+  end
+  helper_method :is_admin?
 
   # def is_staff?
   # 	current_user && current_user.is_staff?	
