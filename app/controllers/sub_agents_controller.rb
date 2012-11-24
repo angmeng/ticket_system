@@ -48,12 +48,12 @@ class SubAgentsController < ApplicationController
   # POST /agents.json
   def create
     if is_agent?
-      @agent = SubAgent.new(params[:agent])
+      @agent = SubAgent.new(params[:sub_agent])
     end
     
 
     respond_to do |format|
-      if @agent.save
+      if @agent.save!
         format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
         format.json { render json: @agent, status: :created, location: @agent }
       else
@@ -71,7 +71,7 @@ class SubAgentsController < ApplicationController
     end
 
     respond_to do |format|
-      if @agent.update_attributes(params[:agent])
+      if @agent.update_attributes(params[:sub_agent])
         format.html { redirect_to @agent, notice: 'Agent was successfully updated.' }
         format.json { head :no_content }
       else
