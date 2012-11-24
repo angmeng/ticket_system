@@ -5,9 +5,11 @@
   <%= f.input :address, :input_html => { :class => "span6" }  %>
   <%= f.input :phone %>
   <%= f.input :fax %>
-  <%= f.input :remark, :input_html => { :class => "span6" } %>
- 
-  <%= f.input :active %>
+  
+  <% if action_name == "edit" %>
+    <%= f.input :remark, :input_html => { :class => "span6" } %>
+    <%= f.input :active %>
+  <% end %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
     <% unless action_name == "profile" %>

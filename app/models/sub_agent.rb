@@ -4,6 +4,6 @@ class SubAgent < User
   belongs_to :branch
   has_many :topup_credits
 
-  validates :agent_group, :branch, :presence => true
+  validates :agent_group_id, :branch_id, :presence => true
 
 end

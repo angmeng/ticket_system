@@ -1,4 +1,5 @@
 TicketSystem::Application.routes.draw do
+
   resources :topup_credits
   resources :vessels
   resources :departures
@@ -29,6 +30,7 @@ TicketSystem::Application.routes.draw do
     delete '/agents/sign_out' => 'agents/sessions#destroy', :as => :destroy_agent_session
   end
   resources :agents
+  resources :sub_agents
 
   devise_for :users, :controllers => { :sessions => "users/sessions" }
   resources :users do

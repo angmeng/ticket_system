@@ -1,4 +1,4 @@
-<%- model_class = Agent -%>
+<%- model_class = SubAgent -%>
 
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
@@ -29,11 +29,11 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              agents_path, :class => 'btn'  %>
+              sub_agents_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_agent_path(@agent), :class => 'btn' %>
+              edit_sub_agent_path(@agent), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              agent_path(@agent),
+              sub_agent_path(@agent),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>

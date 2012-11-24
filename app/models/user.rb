@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def sub_agents
-    SubAgent.where("branch_id = ?", self.branch_id).order(:fullname)
+    SubAgent.where("branch_id = ?", self.branch_id)
   end
 
 
