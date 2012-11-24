@@ -32,6 +32,17 @@ class SchedulesController < ApplicationController
     end
   end
 
+  # GET /schedules/new
+  # GET /schedules/new.json
+  def new_extra_trip
+    @schedule = Schedule.new
+    @routines = Routine.order(:code)
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @schedule }
+    end
+  end
+
   # GET /schedules/1/edit
   def edit
     @schedule = Schedule.find(params[:id])
@@ -48,9 +59,13 @@ class SchedulesController < ApplicationController
         format.html { redirect_to @schedule, notice: 'Schedule was successfully created.' }
         format.json { render json: @schedule, status: :created, location: @schedule }
       else
-        format.html { 
+        format.html {
           @routines = Routine.order(:code)
-          render action: "new" 
+          if request.referer.include?("new_extra_trip")
+            render action: "new_extra_trip"
+          else
+            render action: "new"
+          end
         }
         format.json { render json: @schedule.errors, status: :unprocessable_entity }
       end

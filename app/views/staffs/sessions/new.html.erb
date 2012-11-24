@@ -60,6 +60,14 @@
                 </div>
                 <div class='singin'  style='display:block;'>
                     <div class="accounts-form">
+
+                        <% flash.each do |name, msg| %>
+                          <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+                          <a class="close" data-dismiss="alert">&#215;</a>
+                          <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+                          </div>
+                        <% end %>
+                        
                         <h2>Administrator - Log in</h2>
                         <hr class="small">
                         <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:id => "signup", :autocomplete => "off", :class => "clearfix"}) do |f| %>

@@ -27,7 +27,10 @@
         <!-- fav and touch icons -->
     </head>
     <body>
-      <%= yield %>
+         <div class="container">
+                     <%= yield %>
+        
+         </div>
 
         <!-- Le javascript
         ================================================== -->
@@ -41,6 +44,11 @@
 
 
             });
+
+            <% if flash[:error] %>
+                alert("<%= flash[:error] %>");
+
+            <% end %>
 
         </script>    
     </body>

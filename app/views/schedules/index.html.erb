@@ -16,7 +16,8 @@
       <th><%= model_class.human_attribute_name(:departure_time) %></th>
       <th><%= model_class.human_attribute_name(:routine_id) %></th>
       <th><%= model_class.human_attribute_name(:sales_quota) %></th>
-      <th><%= model_class.human_attribute_name(:online_quota) %></th>
+      <th><%= model_class.human_attribute_name(:weekday) %></th>
+      <th><%= model_class.human_attribute_name(:extra_trip) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
       
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -27,10 +28,17 @@
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to schedule.code, schedule_path(schedule) %></td>
        
-        <td><%=l schedule.departure_time, :format => :hour_minute %></td>
+        <td>
+          <% if schedule.extra_trip? %>
+            <%="#{schedule.departure_date.strftime('%d-%m-%Y')} #{l schedule.departure_time, :format => :hour_minute}" %>
+          <% else %>
+            <%=l schedule.departure_time, :format => :hour_minute %>
+          <% end %>
+        </td>
         <td><%= schedule.routine.code %></td>
         <td><%= schedule.sales_quota %></td>
-        <td><%= schedule.online_quota %></td>
+        <td><%= schedule.weekday_name %></td>
+        <td><%= schedule.extra_trip %></td>
         <td><%= schedule.active %></td>
        
         <td>
@@ -56,4 +64,8 @@
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_schedule_path,
+            :class => 'btn btn-primary' %>
+
+<%= link_to "New Extra Trip",
+            new_extra_trip_schedules_path,
             :class => 'btn btn-primary' %>

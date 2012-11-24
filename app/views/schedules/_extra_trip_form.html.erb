@@ -1,6 +1,7 @@
 <%= simple_form_for @schedule, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :extra_trip, :as => :hidden, :input_html => { :value => true }%>
   <%= f.input :code, :input_html => { :class => "span6" }  %>
-  <%= f.input :weekday, :collection => WeekDays::OPTION, :prompt => "Choose a weekday" %>
+  <%= f.input :departure_date %>
   <%= f.input :departure_time %>
   <%= f.association :routine, :collection => @routines, :label_method => :code, :prompt => "Choose a Route" %>
   <%= f.input :sales_quota %>
