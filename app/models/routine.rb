@@ -8,4 +8,5 @@ class Routine < ActiveRecord::Base
   has_many   :schedules
   has_many   :tickets
   has_many   :ticket_categories
+  has_many   :departures
 end

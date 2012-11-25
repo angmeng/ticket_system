@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124054905) do
+ActiveRecord::Schema.define(:version => 20121124113052) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -57,8 +57,13 @@ ActiveRecord::Schema.define(:version => 20121124054905) do
     t.boolean  "active",       :default => true
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.boolean  "extra_trip"
+    t.integer  "routine_id"
+    t.date     "date"
+    t.time     "time"
   end
 
+  add_index "departures", ["routine_id"], :name => "index_departures_on_routine_id"
   add_index "departures", ["vessel_id"], :name => "index_departures_on_vessel_id"
 
   create_table "jetties", :force => true do |t|

@@ -6,6 +6,10 @@
   <%= f.input :email %>
   <%= f.input :category_id,  :collection => UserType::OPTIONS, :as => :radio_buttons %>
   <%= f.association :branch %>
+  <%= f.input :password %>
+  <% if @staff.new_record? %>
+   <%= f.input :password_confirmation %>
+  <% end %>
   <%= f.input :active %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>

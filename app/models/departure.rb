@@ -4,6 +4,7 @@ class Departure < ActiveRecord::Base
   validates :vessel_id, :presence => true
 
   belongs_to :vessel
+  belongs_to :routine
 
   def status
   	case self.status_id

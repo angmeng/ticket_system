@@ -25,6 +25,7 @@ class DeparturesController < ApplicationController
   # GET /departures/new.json
   def new
     @departure = Departure.new
+    @routines = Routine.order(:code)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,6 +36,7 @@ class DeparturesController < ApplicationController
   # GET /departures/1/edit
   def edit
     @departure = Departure.find(params[:id])
+    @routines = Routine.order(:code)
   end
 
   # POST /departures

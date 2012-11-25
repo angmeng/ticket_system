@@ -1,4 +1,9 @@
 <%= simple_form_for @departure, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group departure_date optional">
+    <label class="departure_time optional control-label" for="departure_time">Departure Time</label>
+    <div class="controls"><input class="string departure_time optional" id="departure_time" name="departure[time]" size="16" type="text" value="<%= @departure.time %>" /></div></div>
+
+  <%= f.association :routine, :collection => @routines, :label_method => :code, :prompt => "Choose a Route" %>
   <%= f.association :vessel %>
   <%= f.input :sales_quota %>
   <%= f.input :online_quota %>

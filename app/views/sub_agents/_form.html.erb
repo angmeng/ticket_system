@@ -12,6 +12,10 @@
   <%= f.input :fax %>
   <%= f.input :email %>
   <%= f.input :remark, :input_html => { :class => "span6" }  %>
+  <%= f.input :password %>
+  <% if @agent.new_record? %>
+   <%= f.input :password_confirmation %>
+  <% end %>
   <%= f.input :active %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
