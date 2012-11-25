@@ -1,4 +1,4 @@
-<%= form_tag search_departure_orders_path do %>
+<%= form_tag(search_departure_orders_path, :id => "search_schedule") do %>
 
 <div class="control-group select required">
 <label class="radio inline">
@@ -28,13 +28,13 @@
 
  <div data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" id="start" class="input-append date">
     Departure Date <br />
-    <input type="text" readonly="" value="" size="16" class="span2" name="order[depart_date]">
+    <input type="text" readonly="" value="" size="16" class="span2" name="order[depart_date]" id="departure_date">
     <span class="add-on"><i class="icon-th"></i></span>
 </div>
 
 <div data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" id="end" class="input-append date">
   Return Date <br />
-  <input type="text" readonly="" value="" size="16" class="span2" name="order[return_date]">
+  <input type="text" readonly="" value="" size="16" class="span2" name="order[return_date]"  id="return_date">
   <span class="add-on"><i class="icon-th"></i></span>
 </div>
 
@@ -63,7 +63,7 @@
 
 </div>
 
-<input class="btn btn btn-primary" name="commit" type="submit" value="Search" />
+<input class="btn btn btn-primary" name="commit" type="submit" value="Search" id="search_button" />
 
 
 <% end %>

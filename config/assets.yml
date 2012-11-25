@@ -68,7 +68,7 @@ js:
   # http://mintdigital.github.com/asset_hat/doc/classes/AssetHat/JS/Vendors.html
 
   bundles:
-    application:  ["bootstrap.min", "jquery_ujs", "bootstrap-datepicker", "datepicker"]
+    application:  ["bootstrap.min", "jquery_ujs", "bootstrap-datepicker"]
     chart:        ["charts/jquery.flot", "charts/jquery.flot.resize", "charts/jquery.flot.pie"]
     #calendar:     [""]
 

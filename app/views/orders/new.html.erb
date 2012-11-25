@@ -10,7 +10,10 @@
     $(function(){
       window.prettyPrint && prettyPrint();
 
-      $('#start').datepicker();
+      $('#start').datepicker()
+        .on('changeDate', function(ev){
+          $('#start').datepicker('hide');
+        });
 
       var startDate = new Date(2012,1,20);
       var endDate = new Date(2012,1,25);
@@ -33,6 +36,36 @@
       $("#order_trip_type_round").click(function(){
         $("#end").show();
       });
+
+      $("#search_button").click(function(){
+        if($("#order_departure_jetty_id").val()=="")
+        {
+          alert("Please choose a departing");
+          return false;
+        }
+
+        if($("#order_arrival_jetty_id").val()=="")
+        {
+          alert("Please choose a destination");
+          return false;
+        }
+
+        if($("#departure_date").val()=="")
+        {
+          alert("Please select a departure date");
+          return false;
+        }
+
+        if($('input[name=order[trip_type]]:radio:checked').val() == "round")
+        {
+          if($("#return_date").val()=="")
+          {
+            alert("Please select a return date");
+            return false;
+          }
+        }
+
+      })
 
       $("#order_departure_jetty_id").change(function(){
         var newValue = $(this).val();
