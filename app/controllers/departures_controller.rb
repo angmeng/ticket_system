@@ -55,6 +55,16 @@ class DeparturesController < ApplicationController
     end
   end
 
+  def generate
+    result = DepartureGenerator.process(params[:routine_id], :from_date => params[:from_date], :to_date => params[:to_date])
+    if result[:status] == :success
+      flash[:success] = result[:message]
+    else
+      flash[:error]   = result[:message]
+    end
+    redirect_to :back
+  end
+
   # PUT /departures/1
   # PUT /departures/1.json
   def update

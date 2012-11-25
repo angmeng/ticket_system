@@ -2,7 +2,11 @@ TicketSystem::Application.routes.draw do
 
   resources :topup_credits
   resources :vessels
-  resources :departures
+  resources :departures do
+    collection do
+      post :generate
+    end
+  end
   resources :schedules do
     collection do
       get :new_extra_trip
