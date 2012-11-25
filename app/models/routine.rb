@@ -9,4 +9,16 @@ class Routine < ActiveRecord::Base
   has_many   :tickets
   has_many   :ticket_categories
   has_many   :departures
+
+  def arrival_jetty_name
+  	arrival_jetty.name
+  end
+
+  def departure_jetty_name
+  	departure_jetty.name
+  end
+
+  def as_json(options={})
+  	super(options.merge({:methods => [:arrival_jetty_name, :departure_jetty_name]}))
+  end
 end

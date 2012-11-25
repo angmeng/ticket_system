@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124113052) do
+ActiveRecord::Schema.define(:version => 20121125092209) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(:version => 20121124113052) do
   create_table "companies", :force => true do |t|
     t.string   "name"
     t.string   "register_number"
-    t.string   "address_1",                     :default => ""
-    t.string   "address_2",                     :default => ""
-    t.string   "phone",           :limit => 16, :default => ""
-    t.string   "fax",             :limit => 16, :default => ""
-    t.string   "email",                         :default => ""
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "phone",           :limit => 16
+    t.string   "fax",             :limit => 16
+    t.string   "email"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "companies", ["register_number"], :name => "index_companies_on_register_number", :unique => true
@@ -75,6 +75,36 @@ ActiveRecord::Schema.define(:version => 20121124113052) do
   end
 
   add_index "jetties", ["code"], :name => "index_jetties_on_code", :unique => true
+
+  create_table "order_items", :force => true do |t|
+    t.integer  "order_id",     :null => false
+    t.integer  "ticket_id",    :null => false
+    t.integer  "departure_id", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "order_items", ["departure_id"], :name => "index_order_items_on_departure_id"
+  add_index "order_items", ["order_id"], :name => "index_order_items_on_order_id"
+  add_index "order_items", ["ticket_id"], :name => "index_order_items_on_ticket_id"
+
+  create_table "orders", :force => true do |t|
+    t.integer  "seller_id"
+    t.integer  "buyer_id"
+    t.integer  "buyer_type_id"
+    t.integer  "payment_type_id"
+    t.integer  "free_tickets",                                   :default => 0
+    t.decimal  "discount",        :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "extra_charges",   :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "amount_tender",   :precision => 10, :scale => 2, :default => 0.0
+    t.text     "remark"
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+  end
+
+  add_index "orders", ["buyer_id", "buyer_type_id"], :name => "index_orders_on_buyer_id_and_buyer_type_id"
+  add_index "orders", ["payment_type_id"], :name => "index_orders_on_payment_type_id"
+  add_index "orders", ["seller_id"], :name => "index_orders_on_seller_id"
 
   create_table "routines", :force => true do |t|
     t.string   "code"
@@ -186,8 +216,8 @@ ActiveRecord::Schema.define(:version => 20121124113052) do
     t.integer  "branch_id",                                             :default => 0
     t.integer  "category_id",                                           :default => 0
     t.text     "address"
-    t.string   "phone",                                                 :default => ""
-    t.string   "fax",                                                   :default => ""
+    t.string   "phone"
+    t.string   "fax"
     t.text     "remark"
     t.boolean  "active",                                                :default => true
     t.datetime "created_at",                                                              :null => false
@@ -217,9 +247,9 @@ ActiveRecord::Schema.define(:version => 20121124113052) do
     t.string   "code"
     t.string   "name"
     t.text     "address"
-    t.string   "phone",      :limit => 16, :default => ""
-    t.string   "fax",        :limit => 16, :default => ""
-    t.string   "email",                    :default => ""
+    t.string   "phone",      :limit => 16
+    t.string   "fax",        :limit => 16
+    t.string   "email"
     t.text     "remark"
     t.boolean  "active",                   :default => true
     t.datetime "created_at",                                 :null => false

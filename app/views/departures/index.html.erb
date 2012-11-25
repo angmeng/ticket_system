@@ -11,11 +11,13 @@
                         <table  class="table table-bordered table-striped pull-left" id="example" >
                             <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
+     
+      <th><%= model_class.human_attribute_name(:routine_id) %></th>
+      <th>Departure time</th>
       <th><%= model_class.human_attribute_name(:vessel_id) %></th>
       <th><%= model_class.human_attribute_name(:sales_quota) %></th>
-      <th><%= model_class.human_attribute_name(:online_quota) %></th>
       <th><%= model_class.human_attribute_name(:custom_quota) %></th>
+      <th><%= model_class.human_attribute_name(:extra_trip) %></th>
       <th><%= model_class.human_attribute_name(:on_call) %></th>
       <th><%= model_class.human_attribute_name(:status_id) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
@@ -26,11 +28,13 @@
   <tbody>
     <% @departures.each do |departure| %>
       <tr class="<%= cycle("odd", "even") %>">
-        <td><%= link_to departure.id, departure_path(departure) %></td>
-        <td><%= departure.vessel.name %></td>
+       
+        <td><%= departure.routine.code %></td>
+        <td><%= departure.date_time %></td>
+        <td><%= departure.vessel.name rescue "Not assigned" %></td>
         <td><%= departure.sales_quota %></td>
-        <td><%= departure.online_quota %></td>
         <td><%= departure.custom_quota %></td>
+        <td><%= departure.extra_trip %></td>
         <td><%= departure.on_call %></td>
         <td><%= departure.status %></td>
         <td><%= departure.active %></td>

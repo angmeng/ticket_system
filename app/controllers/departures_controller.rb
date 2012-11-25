@@ -58,11 +58,12 @@ class DeparturesController < ApplicationController
   def generate
     result = DepartureGenerator.process(params[:routine_id], :from_date => params[:from_date], :to_date => params[:to_date])
     if result[:status] == :success
-      flash[:success] = result[:message]
+      flash[:notice] = result[:message]
+      redirect_to departures_url
     else
       flash[:error]   = result[:message]
+      redirect_to :back
     end
-    redirect_to :back
   end
 
   # PUT /departures/1

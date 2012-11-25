@@ -1,5 +1,11 @@
 TicketSystem::Application.routes.draw do
 
+  resources :orders do
+    collection do
+      post :search_departure
+    end
+  end
+
   resources :topup_credits
   resources :vessels
   resources :departures do
@@ -18,7 +24,11 @@ TicketSystem::Application.routes.draw do
   resources :warrants
   resources :vessells
   resources :agent_groups
-  resources :routines
+  resources :routines do
+    member do
+      get :get_destinations
+    end
+  end
   resources :branches
   resources :companies
 

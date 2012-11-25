@@ -80,4 +80,9 @@ class RoutinesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def get_destinations
+    @routines = Routine.where("departure_jetty_id = ?", params[:id])
+    render json: @routines
+  end
 end
