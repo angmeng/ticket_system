@@ -1,3 +1,5 @@
+  <%= debug @result %>
+
   <div class="row-fluid">
                                     <!--Tabs1-->
     <div class="span12">
@@ -29,7 +31,7 @@
 							       <% end %>
 							   </td>
 							   <td>
-							    <input type="radio" name="order[routine_id]" id="order_routine_id" value="<%= depart.id %>">
+							    <input type="radio" name="order[departure_routine_id]" id="order_routine_id" value="<%= depart.id %>">
 							   </td>
 							  </tr>
 
@@ -77,15 +79,15 @@
 								  </tr>
 	  						 </thead>
 	  						 <tbody>
-							 <% @result[:departures].each do |depart| %>
+							 <% @result[:arrivals].each do |depart| %>
 							  <tr>
 							   <td><%= depart.date_time %></td>
-							   <td><% @result[:departure_ticket].each do |ticket| %>
+							   <td><% @result[:arrival_ticket].each do |ticket| %>
 							         <p><%= "#{ticket.ticket_category.name} #{ticket.fare}" %> </p>
 							       <% end %>
 							   </td>
 							   <td>
-							    <input type="radio" name="order[routine_id]" id="order_routine_id" value="<%= depart.id %>">
+							    <input type="radio" name="order[arrival_routine_id]" id="order_routine_id" value="<%= depart.id %>">
 							   </td>
 							  </tr>
 
