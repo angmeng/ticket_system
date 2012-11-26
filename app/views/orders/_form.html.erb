@@ -38,33 +38,24 @@
   <span class="add-on"><i class="icon-th"></i></span>
 </div>
 
-
 <div class="controls docs-input-sizes">
- 
   Adult
   <select class="span1" name="order[adult]">
     <% 1.upto(50) do |num| %>
     <option><%= num %></option>
      <% end %>
   </select>
-
-
 </div>
 
 <div class="controls docs-input-sizes">
-
   Kid
   <select class="span1" name="order[kid]">
     <% 0.upto(50) do |num| %>
     <option><%= num %></option>
      <% end %>
   </select>
-
-
 </div>
 
 <input class="btn btn btn-primary" name="commit" type="submit" value="Search" id="search_button" />
-
-
 <% end %>
 

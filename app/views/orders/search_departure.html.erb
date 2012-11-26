@@ -1,6 +1,6 @@
   <%#= debug @result %>
-<%= form_tag payment_orders_path do %>
-  <%= render :partial => "order", :object => @result %>
+<%= form_tag orders_path(Order.new) do %>
+  <%= render :partial => "order", :locals => {:order => @result, :seller => current_user} %>
   <div class="row-fluid">
                                     <!--Tabs1-->
     <div class="span12">
@@ -177,7 +177,7 @@
           	  }
           	<% end %>
 
-          	<% if @result[:arrivals].any? && @result[:order]["trip_type"] == "round" %>
+          	<% if @result[:order]["trip_type"] == "round" %>
           	  if($("input[name='order[arrival_routine_id]']:radio:checked").length==0)
           	  {
           	  	alert("You must select a return route to continue");

@@ -39,7 +39,7 @@ class OrdersController < ApplicationController
   end
 
   def payment
-    
+    @order = Order.find params[:id]
   end
 
   # GET /orders/1/edit
@@ -50,17 +50,9 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(params[:order])
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render json: @order, status: :created, location: @order }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
-    end
+    order = OrderingMachine.make(params[:order])
+    flash[:notice] = "Order created"
+    redirect_to payment_order_path(order)
   end
 
   # PUT /orders/1

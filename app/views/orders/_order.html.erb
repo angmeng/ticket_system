@@ -1,11 +1,12 @@
 <%#= debug(order.inspect) %>
 <%= hidden_field_tag "order[trip_type]", order[:order]["trip_type"] %>
 <%= hidden_field_tag "order[departure_jetty_id]", order[:order]["departure_jetty_id"] %>
-<%= hidden_field_tag "order[order_arrival_jetty_id_div]", order[:order]["order_arrival_jetty_id_div"] %>
+<%= hidden_field_tag "order[arrival_jetty_id]", order[:order]["arrival_jetty_id"] %>
 <%= hidden_field_tag "order[depart_date]", order[:order]["depart_date"] %>
 <%= hidden_field_tag "order[return_date]", order[:order]["return_date"] %>
 <%= hidden_field_tag "order[adult]", order[:order]["adult"] %>
-<%= hidden_field_tag "order[adult]", order[:order]["kid"] %>
+<%= hidden_field_tag "order[kid]", order[:order]["kid"] %>
+<%= hidden_field_tag "order[seller_id]", seller.id %>
 
 <% order[:departure_ticket].each do |ticket| %>
 	<%= hidden_field_tag "order[departure_ticket_ids][]", ticket.id %>

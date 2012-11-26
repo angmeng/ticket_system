@@ -1,1 +1,58 @@
-payment
+ <div class="row-fluid">
+                                    <!--Tabs1-->
+    <div class="span12">
+     <div id="accordion1" class="accordion">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#notification1" data-original-title="">
+                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  Make Payment <i class="icon-chevron-down icon-white pull-right"></i>
+                    </a>
+                </div>
+                <div id="notification1" class="accordion-body collapse in">
+                    <div class="accordion-inner paddind">
+                    	
+                    	<div class="control-group select required">
+						<label class="radio inline">
+						  <input type="radio" name="payment[type]" id="payment_type_cash" value="cash" checked="checked">
+						  Cash
+						</label>
+						<label class="radio inline">
+						  <input type="radio" name="payment[type]" id="payment_type_credit" value="credit">
+						  Credit
+						</label>
+						</div>
+
+						<div id="cash_method">
+							<%= render "cash_method" %>
+						</div>
+
+						<div id="credit_method" style="display:none">
+							<%= render "credit_method" %>
+						</div>
+
+	                </div>
+	             </div>
+	            </div>
+	          </div>
+       </div>
+   </div>
+
+    <% content_for :javascripts_path do %>
+      <script>
+       $(function(){
+          $("#payment_type_cash").click(function(){
+          	$("#cash_method").show();
+          	$("#credit_method").hide();
+          })
+
+          $("#payment_type_credit").click(function(){
+          	$("#cash_method").hide();
+          	$("#credit_method").show();
+          })
+
+
+       	    });
+       </script>
+
+    <% end %>
+
