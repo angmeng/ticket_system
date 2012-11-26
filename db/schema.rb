@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121125092209) do
+ActiveRecord::Schema.define(:version => 20121126092036) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -163,9 +163,11 @@ ActiveRecord::Schema.define(:version => 20121125092209) do
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+    t.integer  "type_id",                      :null => false
   end
 
   add_index "ticket_categories", ["code"], :name => "index_ticket_categories_on_code", :unique => true
+  add_index "ticket_categories", ["type_id"], :name => "index_ticket_categories_on_type_id"
 
   create_table "tickets", :force => true do |t|
     t.integer  "routine_id"

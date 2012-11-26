@@ -1,6 +1,7 @@
 <%= simple_form_for @ticket_category, :html => { :class => 'form-horizontal' } do |f| %>
   <%= f.input :code, :input_html => { :class => "span6" }  %>
   <%= f.input :name, :input_html => { :class => "span6" }  %>
+  <%= f.input :type_id, :collection => TicketType::OPTION  %>
   <%= f.input :active %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>

@@ -34,6 +34,12 @@ class OrdersController < ApplicationController
 
   def search_departure
     @result = TripSearchEngine.search(params[:order])
+    @agents = current_user.sub_agents
+    @warrants = Warrant.order(:name)
+  end
+
+  def payment
+    
   end
 
   # GET /orders/1/edit

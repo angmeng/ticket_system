@@ -14,6 +14,7 @@
      
       <th><%= model_class.human_attribute_name(:code) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:type_id) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
   
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -25,6 +26,7 @@
         <td><%= link_to ticket_category.code, ticket_category_path(ticket_category) %></td>
         <td><%= ticket_category.code %></td>
         <td><%= ticket_category.name %></td>
+        <td><%= ticket_category.type rescue "-" %></td>
         <td><%= ticket_category.active %></td>
        
         <td>

@@ -1,5 +1,6 @@
   <%#= debug @result %>
-
+<%= form_tag payment_orders_path do %>
+  <%= render :partial => "order", :object => @result %>
   <div class="row-fluid">
                                     <!--Tabs1-->
     <div class="span12">
@@ -31,7 +32,7 @@
 							       <% end %>
 							   </td>
 							   <td>
-							    <input type="radio" name="order[departure_routine_id]" id="order_routine_id" value="<%= depart.id %>">
+							    <input type="radio" name="order[departure_routine_id]" id="order_departure_routine_id_<%= depart.id%>" value="<%= depart.id %>">
 							   </td>
 							  </tr>
 
@@ -46,11 +47,7 @@
 
 	          </div>
 	         <% else %>
-              <p>
-               Sorry, no schedules available. Please select another date or station and try again.
-
-              </p>
-
+              <p>Sorry, no schedules available. Please select another date or station and try again.</p>
 	         <% end %>
        </div>
    </div>
@@ -87,30 +84,124 @@
 							       <% end %>
 							   </td>
 							   <td>
-							    <input type="radio" name="order[arrival_routine_id]" id="order_routine_id" value="<%= depart.id %>">
+							    <input type="radio" name="order[arrival_routine_id]" id="order_arrival_routine_id_<%= depart.id%>" value="<%= depart.id %>">
 							   </td>
 							  </tr>
 
-							  <% end %>
+							 <% end %>
 							</tbody>
-						</table>
+						 </table>
 						<br />
-
 	                      </div>
 	                  </div>
 	              </div>
-
 	          </div>
+					  <% else %>
+					      <p>Sorry, no schedules available. Please select another date or station and try again.</p>
+
+					  <% end %>
+		     </div>
+		   </div>
+		<% end # endif @result[:order]["trip_type"] == "round" %>
+
+  <!-- <div class="row-fluid"> -->
+    <!--Tabs1-->
+    <div class="span11">
+      <div class="control-group select required">
+		<label class="radio inline">
+		  <input type="radio" name="order[buyer_type]" id="order_buyer_type_normal" value="normal" checked="checked">
+		  Normal
+		</label>
+		<label class="radio inline">
+		  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent">
+		  Agent
+		</label>
+		<label class="radio inline">
+		  <input type="radio" name="order[buyer_type]" id="order_buyer_type_warrant" value="warrant">
+		  Warrant
+		</label>
+		</div>
+		<div class="controls">
+		  <select class="select"  name="order[agent_id]" id="order_agent_id" style="display:none">
+		    <option value="">Choose agent</option>
+		    <% @agents.each do |agent| %>
+		      <option value="<%= agent.id %>"><%= agent.fullname%></option>
+		    <% end %>
+		</select>
+
+		<select class="select"  name="order[warrant_id]" id="order_warrant_id" style="display:none">
+		    <option value="">Choose warrant</option>
+		    <% @warrants.each do |warrant| %>
+		      <option value="<%= warrant.id %>"><%= warrant.name%></option>
+		    <% end %>
+		</select>
+	   </div>
 
 
-  <% else %>
-      <p>
-               Sorry, no schedules available. Please select another date or station and try again.
+  	   <input class="btn btn btn-primary btn-large" name="commit" type="submit" value="   Order    " id="order_button" />
+    </div>
+        <!--/Tabs1-->
+<!--   </div> -->
+    <!--/Row fluid-->
 
-              </p>
+  <% end # end of form %>
 
+    <% content_for :javascripts_path do %>
+      <script>
+       $(function(){
+          $("#order_buyer_type_agent").click(function(){
+          	$("#order_agent_id").show();
+          	$("#order_warrant_id").hide();
+          })
 
-  <% end %>
-         </div>
-   </div>
-<% end %>
+          $("#order_buyer_type_warrant").click(function(){
+          	$("#order_agent_id").hide();
+          	$("#order_warrant_id").show();
+          })
+
+          $("#order_buyer_type_normal").click(function(){
+          	$("#order_agent_id").hide();
+          	$("#order_warrant_id").hide();
+          })
+
+          $("#order_button").click(function(){
+          	<% if @result[:departures].any? %>
+          	  if($("input[name='order[departure_routine_id]']:radio:checked").length==0)
+          	  {
+          	  	alert("You must select a departing route to continue");
+          	  	return false
+          	  }
+          	<% end %>
+
+          	<% if @result[:arrivals].any? && @result[:order]["trip_type"] == "round" %>
+          	  if($("input[name='order[arrival_routine_id]']:radio:checked").length==0)
+          	  {
+          	  	alert("You must select a return route to continue");
+          	  	return false
+          	  }
+          	<% end %>
+
+          	if($("input[name='order[buyer_type]']:radio:checked").val()=="agent")
+          	{
+          		if($("#order_agent_id").val()=="")
+          		{
+          			alert("You must select an agent");
+          			return false
+          		}
+          	}
+
+          	if($("input[name='order[buyer_type]']:radio:checked").val()=="warrant")
+          	{
+          		if($("#order_warrant_id").val()=="")
+          		{
+          			alert("You must select an warrant");
+          			return false
+          		}
+          	}
+          	
+          })
+
+       	    });
+       </script>
+
+    <% end %>

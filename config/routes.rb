@@ -3,6 +3,7 @@ TicketSystem::Application.routes.draw do
   resources :orders do
     collection do
       post :search_departure
+      post :payment
     end
   end
 
