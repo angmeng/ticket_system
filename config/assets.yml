@@ -49,6 +49,7 @@ css:
   bundles:
     application:  ["bootstrap.min", "base", "bootstrap-responsive", "media-fluid", "tables", "datepicker"]
     login: ["bootstrap.min", "base", "login"]
+    home: ['bootstrap_home', 'bootstrap-responsive_home', 'sff']
 
 
 js:

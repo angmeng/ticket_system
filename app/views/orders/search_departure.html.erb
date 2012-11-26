@@ -40,15 +40,15 @@
 							</tbody>
 						</table>
 						<br />
-
+                         <% else %>
+                           <p>Sorry, no schedules available. Please select another date or station and try again.</p>
+	                     <% end %>
 	                      </div>
 	                  </div>
 	              </div>
 
 	          </div>
-	         <% else %>
-              <p>Sorry, no schedules available. Please select another date or station and try again.</p>
-	         <% end %>
+	        
        </div>
    </div>
 
@@ -92,20 +92,23 @@
 							</tbody>
 						 </table>
 						<br />
+						<% else %>
+					      <p>Sorry, no schedules available. Please select another date or station and try again.</p>
+
+					  <% end %>
+
 	                      </div>
 	                  </div>
 	              </div>
 	          </div>
-					  <% else %>
-					      <p>Sorry, no schedules available. Please select another date or station and try again.</p>
-
-					  <% end %>
+					  
 		     </div>
 		   </div>
 		<% end # endif @result[:order]["trip_type"] == "round" %>
 
   <!-- <div class="row-fluid"> -->
     <!--Tabs1-->
+   <div class="row-fluid">
     <div class="span11">
       <div class="control-group select required">
 		<label class="radio inline">
@@ -140,6 +143,7 @@
 
   	   <input class="btn btn btn-primary btn-large" name="commit" type="submit" value="   Order    " id="order_button" />
     </div>
+   </div>
         <!--/Tabs1-->
 <!--   </div> -->
     <!--/Row fluid-->
