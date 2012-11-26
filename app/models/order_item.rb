@@ -4,4 +4,8 @@ class OrderItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :departure
   belongs_to :ticket
+
+  def fare
+  	ticket.fare
+  end
 end

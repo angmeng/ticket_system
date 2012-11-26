@@ -53,7 +53,7 @@ class SubAgentsController < ApplicationController
     
 
     respond_to do |format|
-      if @agent.save!
+      if @agent.save
         format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
         format.json { render json: @agent, status: :created, location: @agent }
       else

@@ -25,6 +25,14 @@ class OrderingMachine
   end
 
   def self.make_order_items
+    
+    # @order_params["departure_jetty_id"]
+    # @order_params["arrival_jetty_id"]
+    # @order_params["depart_date"]
+    # @order_params["return_date"]
+    # @order_params["arrival_routine_id"]
+    # @order_params["arrival_ticket_ids"]
+
   	if @order_params["adult"].to_i > 0
   		item = @order.order_items.new
   		item.departure_id = @order_params["departure_routine_id"]
@@ -34,23 +42,32 @@ class OrderingMachine
   		item.save!
   	end
   	if @order_params["kid"].to_i > 0
-        item = @order.order_items.new
+      item = @order.order_items.new
   		item.departure_id = @order_params["departure_routine_id"]
   		kid_category = TicketCategory.find_by_type_id TicketType::KID
   		ticket = Ticket.where("id IN(?) and ticket_category_id = ?", [@order_params["departure_ticket_ids"]], kid_category.id).first
   		item.ticket_id = ticket.id
   		item.save!
-
   	end
 
-  	@order_params["trip_type"]
-    @order_params["departure_jetty_id"]
-    @order_params["arrival_jetty_id"]
-    @order_params["depart_date"]
-    @order_params["return_date"]
-    @order_params["kid"]
-    @order_params["arrival_routine_id"]
-    @order_params["arrival_ticket_ids"]
+    if @order_params["trip_type"] == "round"
+      if @order_params["adult"].to_i > 0
+        item = @order.order_items.new
+        item.departure_id = @order_params["arrival_routine_id"]
+        adult_category = TicketCategory.find_by_type_id TicketType::ADULT
+        ticket = Ticket.where("id IN(?) and ticket_category_id = ?", [@order_params["arrival_ticket_ids"]], adult_category.id).first
+        item.ticket_id = ticket.id
+        item.save!
+      end
+      if @order_params["kid"].to_i > 0
+        item = @order.order_items.new
+        item.departure_id = @order_params["arrival_routine_id"]
+        kid_category = TicketCategory.find_by_type_id TicketType::KID
+        ticket = Ticket.where("id IN(?) and ticket_category_id = ?", [@order_params["arrival_ticket_ids"]], kid_category.id).first
+        item.ticket_id = ticket.id
+        item.save!
+      end
+    end
   end
 
 end

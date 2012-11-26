@@ -8,4 +8,5 @@ class Ticket < ActiveRecord::Base
   validates :fare, :initial_number, :numericality => true
   validates :routine_id, :ticket_category_id, :presence => true
 
+
 end
