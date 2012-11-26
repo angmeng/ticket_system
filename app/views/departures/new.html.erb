@@ -33,7 +33,11 @@
    <script type="text/javascript">
 	    $(document).ready(function(){
          
-         $('#start').datepicker();
+         $('#start').datepicker()
+         .on('changeDate', function(ev){
+          $('#start').datepicker('hide');
+        });
+         
 
           var startDate = new Date(2012,1,20);
           var endDate = new Date(2012,1,25);
