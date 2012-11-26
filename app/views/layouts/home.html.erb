@@ -14,24 +14,25 @@
     <![endif]-->
 
     <%# stylesheet_link_tag "application", :media => "all" %>
-    <%= include_css :bundle => 'application' %>
+    <%#= include_css :bundle => 'application' %>
+    <%= include_css 'bootstrap_home', 'bootstrap-responsive_home', 'sff' %>
 
     <%= yield(:head) %>
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
-    <%# favicon_link_tag 'images/apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    <%# favicon_link_tag '/images/apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
 
     <!-- For iPhone with high-resolution Retina display: -->
     <!-- Size should be 114 x 114 pixels -->
-    <%# favicon_link_tag 'images/apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+    <%# favicon_link_tag '/images/apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
 
     <!-- For first- and second-generation iPad: -->
     <!-- Size should be 72 x 72 pixels -->
-    <%# favicon_link_tag 'images/apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+    <%# favicon_link_tag '/images/apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
 
     <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
     <!-- Size should be 57 x 57 pixels -->
-    <%# favicon_link_tag 'images/apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+    <%# favicon_link_tag '/images/apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
 
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
@@ -39,23 +40,142 @@
   </head>
   <body>
 
-  <div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span2">
-      <div style="padding: 20px 20px 20px 20px;">
-       <a class="btn btn-large btn-primary" href="/staffs/sign_in">Staff Sign in</a>
-       <br /><br />
-       <a class="btn btn-large btn-primary" href="/agents/sign_in">Agent Sign in</a>
-       <br /><br />
-       <a class="btn btn-large btn-primary" href="/users/sign_in">User Sign in</a>
-     </div>
-    </div>
+  <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+  <div id="container1">
+<div class="container">
+  <div class="row">
     <div class="span10">
+      <header>
+        <div id="topmenu">
+          <div class="navbar ">
+            <div class="navbar-inner">
+              <a class="brand" href="#"></a>
+              <ul class="nav">
+                <li class="divider-vertical"></li>
+                <li><a href="#">Book Now</a></li>
+                <li class="divider-vertical"></li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ferry Services <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Route, Schedule &amp; Fee</a></li>
+                  <li><a href="#">Ferry Info</a></li>
+                  <li><a href="#">Book Online Now</a></li>
+                </ul>
+                </li>
+                <li class="divider-vertical"></li>
+                <li><a href="#">Holiday Packages</a></li>
+                <li class="divider-vertical"></li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Useful Info <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Frequently Asked Questions</a></li>
+                  <li><a href="#">Traveller's Tips</a></li>
+                  <li><a href="#">Healthcare Tips</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">All About Langkawi</li>
+                  <li><a href="#">Attractions &amp; Map</a></li>
+                  <li><a href="#">Accommodations</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Contact Us</a></li>
+                </ul>
+                </li>           
+              </ul>
+            </div>
+          </div>
+        </div><!-- #topmenu -->
+        <a href="#"><img id="logo" src="/images/logo-sff.png" /></a>
+      </header>   
+  
+
      <%= yield %>
+
+    </div><!-- .span10 -->
+
+    <div class="span2">
+      <div id="rightAd"><a href="#"><img src="/images/sff-pulau-payar-marine-park.png" /></a></div>
+    </div><!-- .span2 -->
+  </div><!-- .row -->
+</div><!-- .container -->
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="span9">
+        <div class="row-fluid">
+          <div class="span3"><div id="iconFerry"></div><h4>Our Services</h4>
+            <div class="ropeGrey"></div>
+            <ul class="unstyled">
+            <li><a href="#">Book Ferry Online Now</a></li>
+            <li><a href="#">Ferry Services / Route</a></li>
+            <li><a href="#">Schedule & Fare</a></li>
+            <li><a href="#">Ferry Information</a></li>
+            <li><a href="#">Holiday Packages</a></li>
+            </ul>
+          </div>
+          <div class="span4 offset1"><div id="iconLady"></div><h4>Customer Service</h4>
+            <div class="ropeGrey"></div>
+            <ul class="unstyled">           
+            <li><a href="#">My Bookings</a></li>
+            <li><a href="#">Frequently Asked Questions</a></li>
+            <li><a href="#">Traveller's Tips</a></li>
+            <li><a href="#">Traveller's Healthcare Advices</a></li>
+            <li><a href="#">Langkawi Attractions & Map</a></li>
+            <li><a href="#">Accommodation</a></li>
+            </ul>
+          </div>
+          <div class="span3 offset1"><div id="iconAnchor"></div><h4>About Us</h4>
+            <div class="ropeGrey"></div>
+            <ul class="unstyled">
+            <li><a href="#">Corporate Profile</a></li>
+            <li><a href="#">Video</a></li>
+            <li><a href="#">Ad Space</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Agent Login</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="dashedLine"></div>
+        <div class="row">
+          <div class="span3">
+            <div><img src="/images/logo-sff-bw.png" alt="SFF logo"/></div>
+            <div id="copyright"><p>&copy; 2012 Super Fast Ferry Ventures</p><p>All rights reserved.</div>
+          </div>
+          <div class="span6"><p class="textJustify"><br>Super Fast Ferry Ventures management team has more than 20 years of experience in the ferry business & operations. SFF ensures <strong class="red">Fast, Efficient & Comfortable Ferry Services</strong> to our customers at all times. Our ferry capacity & speed ranges from 100 to 200 seats & operating at the speed of 30 to 40 knots. SFF has probably has the fastest ferry among other operators in this  region.</p>
+          <div class="pagination-right"><a class="viewMore" href="#">Read more about us</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="span3">
+        <div id="contactUs">
+          <div id="iconPhone"></div>
+          <h4>Contact Us</h4>
+          <div class="ropeGrey"></div>
+          <h5>Head Office</h5>
+          <p>37 & 39, Jalan Pandak Mayah 5,<br>07000 Langkawi, Kedah Darul Aman.<br><span class="icon-phone"></span>604-966 9439 / 6316 / 6272</p>
+          <h5>Langkawi Counter</h5>
+          <p><span class="icon-phone"></span>604-966 0521 / 604-966 1126</p>          
+          <h5>Kuala Kedah Counter</h5>
+          <p><span class="icon-phone"></span>604-762 6295 / 604-762 6296</p>
+          <h5>Kuala Perlis Counter</h5>
+          <p><span class="icon-phone"></span>604-985 1899 / 604-9852539</p> 
+          <h5>Satun Agent (Thailand)</h5>
+          <p><span class="icon-phone"></span>(0066) 747 30513</p> 
+          <div><a class="viewMore" href="#">Full contact list here</a></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-  
+</footer>
+
+</div><!-- #container1 -->
 
     <!-- Javascripts
     ================================================== -->
@@ -63,6 +183,27 @@
     <%# javascript_include_tag "application" %>
     <%= include_js :jquery, :jquery_ui, :bundle => %w[application] %>
     <%= yield(:javascripts_path) %>
+
+   <script>
+    $('#date-start').datepicker()
+        .on('changeDate', function(ev){
+          $('#date-start').datepicker('hide');
+        });
+
+      var startDate = new Date(2012,1,20);
+      var endDate = new Date(2012,1,25);
+      $('#date-end').datepicker()
+        .on('changeDate', function(ev){
+          if (ev.date.valueOf() > endDate.valueOf()){
+            $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+          } else {
+            $('#alert').hide();
+            startDate = new Date(ev.date);
+            $('#date-start').text($('#end').data('date'));
+          }
+          $('#date-end').datepicker('hide');
+        });
+     </script>
   </body>
 </html>
 
