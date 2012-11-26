@@ -1,18 +1,19 @@
 class Order < ActiveRecord::Base
-  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id
+  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id
 
   has_many :order_items
 
-  def total_ticket
-  	self.order_items.size
+  def going_out_item
+    @going_out ||= self.order_items.find_by_travel_type_id TravelType::GOING_OUT
   end
 
-  def total_amount
-  	self.order_items.inject(0.00) {|sum, item| sum += item.fare}
+  def coming_back_item
+    @coming_back ||= self.order_items.find_by_travel_type_id TravelType::COMING_BACK
   end
 
-  def total_adult_ticket
-  	adult_category = TicketCategory.find_by_type_id TicketType::ADULT
-  	self.order_items.where("ticket_category_id = ?", adult_category.id)
+  def is_round_trip?
+    self.travel_type_id == TravelType::ROUND_TRIP
   end
+
+
 end

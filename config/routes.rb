@@ -6,6 +6,7 @@ TicketSystem::Application.routes.draw do
     end
     member do
       get  :payment
+      post :make_payment
     end
   end
 

@@ -5,6 +5,7 @@ class Departure < ActiveRecord::Base
 
   belongs_to :vessel
   belongs_to :routine
+  has_many   :order_items
 
   def status
   	case self.status_id

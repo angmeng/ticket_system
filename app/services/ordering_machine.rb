@@ -5,7 +5,7 @@ class OrderingMachine
   	@order = Order.new
   	make_order
   	make_order_items
-
+    @order
   end
 
   def self.make_order
@@ -21,6 +21,12 @@ class OrderingMachine
    	  @order.buyer_type_id  = BuyerType::WARRANT
    	  @order.buyer_id  = @order_params["warrant_id"]
    	end
+    case @order_params["trip_type"]
+    when "round"
+      @order.travel_type_id = TravelType::ROUND_TRIP
+    when "one"
+      @order.travel_type_id = TravelType::SINGLE_TRIP
+    end
    	@order.save!
   end
 
@@ -36,38 +42,34 @@ class OrderingMachine
   	if @order_params["adult"].to_i > 0
   		item = @order.order_items.new
   		item.departure_id = @order_params["departure_routine_id"]
+      item.routine_id = item.departure.routine_id
   		adult_category = TicketCategory.find_by_type_id TicketType::ADULT
-  		ticket = Ticket.where("id IN(?) and ticket_category_id = ?", [@order_params["departure_ticket_ids"]], adult_category.id).first
-  		item.ticket_id = ticket.id
-  		item.save!
-  	end
-  	if @order_params["kid"].to_i > 0
-      item = @order.order_items.new
-  		item.departure_id = @order_params["departure_routine_id"]
-  		kid_category = TicketCategory.find_by_type_id TicketType::KID
-  		ticket = Ticket.where("id IN(?) and ticket_category_id = ?", [@order_params["departure_ticket_ids"]], kid_category.id).first
-  		item.ticket_id = ticket.id
+  		ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["departure_ticket_ids"], adult_category.id).first
+  		item.adult_fare = ticket.fare
+      kid_category = TicketCategory.find_by_type_id TicketType::KID
+      ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["departure_ticket_ids"], kid_category.id).first
+      item.kid_fare = ticket.fare
+      item.number_of_adult = @order_params["adult"].to_i
+      item.number_of_kid = @order_params["kid"].to_i
+      item.travel_type_id = TravelType::GOING_OUT
   		item.save!
   	end
 
-    if @order_params["trip_type"] == "round"
-      if @order_params["adult"].to_i > 0
-        item = @order.order_items.new
-        item.departure_id = @order_params["arrival_routine_id"]
-        adult_category = TicketCategory.find_by_type_id TicketType::ADULT
-        ticket = Ticket.where("id IN(?) and ticket_category_id = ?", [@order_params["arrival_ticket_ids"]], adult_category.id).first
-        item.ticket_id = ticket.id
-        item.save!
-      end
-      if @order_params["kid"].to_i > 0
-        item = @order.order_items.new
-        item.departure_id = @order_params["arrival_routine_id"]
-        kid_category = TicketCategory.find_by_type_id TicketType::KID
-        ticket = Ticket.where("id IN(?) and ticket_category_id = ?", [@order_params["arrival_ticket_ids"]], kid_category.id).first
-        item.ticket_id = ticket.id
-        item.save!
-      end
-    end
+    if @order_params["adult"].to_i > 0
+      item = @order.order_items.new
+      item.departure_id = @order_params["arrival_routine_id"]
+      item.routine_id = item.departure.routine_id
+      adult_category = TicketCategory.find_by_type_id TicketType::ADULT
+      ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["arrival_ticket_ids"], adult_category.id).first
+      item.adult_fare = ticket.fare
+      kid_category = TicketCategory.find_by_type_id TicketType::KID
+      ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["arrival_ticket_ids"], kid_category.id).first
+      item.kid_fare = ticket.fare
+      item.number_of_adult = @order_params["adult"].to_i
+      item.number_of_kid = @order_params["kid"].to_i
+      item.travel_type_id = TravelType::COMING_BACK
+      item.save!
+    end if @order.travel_type_id == TravelType::ROUND_TRIP
   end
 
 end

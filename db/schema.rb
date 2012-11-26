@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126092036) do
+ActiveRecord::Schema.define(:version => 20121126183620) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(:version => 20121126092036) do
   create_table "companies", :force => true do |t|
     t.string   "name"
     t.string   "register_number"
-    t.string   "address_1",                     :default => ""
-    t.string   "address_2",                     :default => ""
-    t.string   "phone",           :limit => 16, :default => ""
-    t.string   "fax",             :limit => 16, :default => ""
-    t.string   "email",                         :default => ""
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "phone",           :limit => 16
+    t.string   "fax",             :limit => 16
+    t.string   "email"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "companies", ["register_number"], :name => "index_companies_on_register_number", :unique => true
@@ -77,16 +77,22 @@ ActiveRecord::Schema.define(:version => 20121126092036) do
   add_index "jetties", ["code"], :name => "index_jetties_on_code", :unique => true
 
   create_table "order_items", :force => true do |t|
-    t.integer  "order_id",     :null => false
-    t.integer  "ticket_id",    :null => false
-    t.integer  "departure_id", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "order_id",                                                        :null => false
+    t.integer  "departure_id",                                                    :null => false
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.integer  "routine_id"
+    t.integer  "number_of_adult",                                :default => 0
+    t.integer  "number_of_kid",                                  :default => 0
+    t.decimal  "adult_fare",      :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "kid_fare",        :precision => 10, :scale => 2, :default => 0.0
+    t.integer  "travel_type_id",                                 :default => 0
   end
 
   add_index "order_items", ["departure_id"], :name => "index_order_items_on_departure_id"
   add_index "order_items", ["order_id"], :name => "index_order_items_on_order_id"
-  add_index "order_items", ["ticket_id"], :name => "index_order_items_on_ticket_id"
+  add_index "order_items", ["routine_id"], :name => "index_order_items_on_routine_id"
+  add_index "order_items", ["travel_type_id"], :name => "index_order_items_on_travel_type_id"
 
   create_table "orders", :force => true do |t|
     t.integer  "seller_id"
@@ -100,11 +106,13 @@ ActiveRecord::Schema.define(:version => 20121126092036) do
     t.text     "remark"
     t.datetime "created_at",                                                      :null => false
     t.datetime "updated_at",                                                      :null => false
+    t.integer  "travel_type_id",                                 :default => 0
   end
 
   add_index "orders", ["buyer_id", "buyer_type_id"], :name => "index_orders_on_buyer_id_and_buyer_type_id"
   add_index "orders", ["payment_type_id"], :name => "index_orders_on_payment_type_id"
   add_index "orders", ["seller_id"], :name => "index_orders_on_seller_id"
+  add_index "orders", ["travel_type_id"], :name => "index_orders_on_travel_type_id"
 
   create_table "routines", :force => true do |t|
     t.string   "code"
@@ -183,10 +191,12 @@ ActiveRecord::Schema.define(:version => 20121126092036) do
     t.datetime "created_at",                                                                   :null => false
     t.datetime "updated_at",                                                                   :null => false
     t.integer  "valid_days",                                                :default => 30
+    t.integer  "status_id",                                                 :default => 0
   end
 
   add_index "tickets", ["code"], :name => "index_tickets_on_code", :unique => true
   add_index "tickets", ["routine_id"], :name => "index_tickets_on_routine_id"
+  add_index "tickets", ["status_id"], :name => "index_tickets_on_status_id"
   add_index "tickets", ["ticket_category_id"], :name => "index_tickets_on_ticket_category_id"
 
   create_table "topup_credits", :force => true do |t|
@@ -218,8 +228,8 @@ ActiveRecord::Schema.define(:version => 20121126092036) do
     t.integer  "branch_id",                                             :default => 0
     t.integer  "category_id",                                           :default => 0
     t.text     "address"
-    t.string   "phone",                                                 :default => ""
-    t.string   "fax",                                                   :default => ""
+    t.string   "phone"
+    t.string   "fax"
     t.text     "remark"
     t.boolean  "active",                                                :default => true
     t.datetime "created_at",                                                              :null => false
@@ -249,9 +259,9 @@ ActiveRecord::Schema.define(:version => 20121126092036) do
     t.string   "code"
     t.string   "name"
     t.text     "address"
-    t.string   "phone",      :limit => 16, :default => ""
-    t.string   "fax",        :limit => 16, :default => ""
-    t.string   "email",                    :default => ""
+    t.string   "phone",      :limit => 16
+    t.string   "fax",        :limit => 16
+    t.string   "email"
     t.text     "remark"
     t.boolean  "active",                   :default => true
     t.datetime "created_at",                                 :null => false

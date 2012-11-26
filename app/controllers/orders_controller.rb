@@ -40,6 +40,7 @@ class OrdersController < ApplicationController
 
   def payment
     @order = Order.find params[:id]
+    @net_total = 0.00
   end
 
   # GET /orders/1/edit

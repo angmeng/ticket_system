@@ -9,6 +9,7 @@ class Routine < ActiveRecord::Base
   has_many   :tickets
   has_many   :ticket_categories
   has_many   :departures
+  has_many   :order_items
 
   def arrival_jetty_name
   	arrival_jetty.name
@@ -16,6 +17,10 @@ class Routine < ActiveRecord::Base
 
   def departure_jetty_name
   	departure_jetty.name
+  end
+
+  def title
+    departure_jetty_name + " to " + arrival_jetty_name
   end
 
   def as_json(options={})

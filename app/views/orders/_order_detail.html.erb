@@ -1,0 +1,96 @@
+<div class="row-fluid">
+     <!--Tabs1-->
+    <div class="span12">
+     <div id="accordion0" class="accordion">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#notification0" data-original-title="">
+                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  Order detail <i class="icon-chevron-down icon-white pull-right"></i>
+                    </a>
+                </div>
+                <div id="notification0" class="accordion-body collapse in">
+                    <div class="accordion-inner paddind">
+          			  <table  class="table table-bordered table-striped pull-left">
+          			  	<thead>
+          			  		<tr>
+          			  		  <th colspan="4">Going Out : <%= @order.going_out_item.title %></th>
+          			  		</tr>
+          			  	</thead>
+                        <tbody>
+						  <tr>
+						   <td>Adult (<%= "%.2f" % @order.going_out_item.adult_fare %>)</td>
+						   <td><%= @order.going_out_item.number_of_adult %> </td>
+						   <td></td>
+						   <td><%= "%.2f" % @order.going_out_item.total_adult_fare %></td>
+						  </tr>
+						   <tr>
+						   <td>Kid (<%= "%.2f" % @order.going_out_item.kid_fare %>)</td>
+						   <td><%= @order.going_out_item.number_of_kid %> </td>
+						   <td></td>
+						   <td><%= "%.2f" % @order.going_out_item.total_kid_fare %></td>
+						  </tr>
+						  <tr>
+                           <td></td>
+                           <td><%= @order.going_out_item.total_tickets %>  <hr/></td>
+                           <td></td>
+                           <td> <%= "%.2f" % @order.going_out_item.total_amount %>  <hr/></td>
+						  </tr>
+						 <tbody>
+                       <% @net_total += @order.going_out_item.total_amount %>
+                       <% if @order.is_round_trip? %>
+	          			  	<thead>
+	          			  		<tr>
+	          			  		  <th colspan="4">Coming Back : <%= @order.coming_back_item.title %></th>
+	          			  		</tr>
+	          			  	</thead>
+	                        <tbody>
+							  <tr>
+							   <td>Adult (<%= "%.2f" % @order.coming_back_item.adult_fare %>)</td>
+							   <td><%= @order.coming_back_item.number_of_adult %> </td>
+							   <td></td>
+							   <td><%= "%.2f" % @order.coming_back_item.total_adult_fare %></td>
+							  </tr>
+							   <tr>
+							   <td>Kid (<%= @order.coming_back_item.kid_fare %>)</td>
+							   <td><%= @order.coming_back_item.number_of_kid %> </td>
+							   <td></td>
+							   <td><%= "%.2f" % @order.coming_back_item.total_kid_fare %></td>
+							  </tr>
+							  <tr>
+	                           <td></td>
+	                           <td><%= @order.coming_back_item.total_tickets %> <hr/></td>
+	                           <td></td>
+	                           <td> <%= "%.2f" % @order.coming_back_item.total_amount %> <hr/></td>
+							  </tr>
+							 <tbody>
+							 <% @net_total += @order.coming_back_item.total_amount %>
+                       <% end %>
+                         <%# @net_total += tax + service_charges %>
+                         <tbody>
+							  <tr>
+							   <td>Tax</td>
+							   <td> %</td>
+							   <td></td>
+							   <td>0.00</td>
+							  </tr>
+							  <tr>
+							   <td>Service Charges</td>
+							   <td> %</td>
+							   <td></td>
+							   <td>0.00</td>
+							  </tr>
+							  <tr>
+	                           <td>Total Price</td>
+	                           <td> </td>
+	                           <td></td>
+	                           <td> <%= "%.2f" % @net_total %> MYR<hr/></td>
+							  </tr>
+							 <tbody>
+                       </table>
+	                </div>
+	             </div>
+	            </div>
+	          </div>
+       </div>
+   </div>
+
