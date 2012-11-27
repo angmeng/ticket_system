@@ -28,7 +28,13 @@
 							  <tr>
 							   <td><%= depart.date_time %></td>
 							   <td><% @result[:departure_ticket].each do |ticket| %>
-							         <p><%= "#{ticket.ticket_category.name} #{ticket.fare}" %> </p>
+							   	     <% if @result[:order]["adult"].to_i > 0 && ticket.adult? %>
+							           <p><%= "#{ticket.ticket_category.name} #{ticket.fare}" %> </p>
+							         <% end %>
+							         <% if @result[:order]["kid"].to_i > 0 && ticket.kid? %>
+							           <p><%= "#{ticket.ticket_category.name} #{ticket.fare}" %> </p>
+							         <% end %>
+
 							       <% end %>
 							   </td>
 							   <td>

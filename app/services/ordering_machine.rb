@@ -45,10 +45,10 @@ class OrderingMachine
       item.routine_id = item.departure.routine_id
   		adult_category = TicketCategory.find_by_type_id TicketType::ADULT
   		ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["departure_ticket_ids"], adult_category.id).first
-  		item.adult_fare = ticket.fare
+  		item.adult_fare = ticket.fare if ticket
       kid_category = TicketCategory.find_by_type_id TicketType::KID
       ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["departure_ticket_ids"], kid_category.id).first
-      item.kid_fare = ticket.fare
+      item.kid_fare = ticket.fare if ticket
       item.number_of_adult = @order_params["adult"].to_i
       item.number_of_kid = @order_params["kid"].to_i
       item.travel_type_id = TravelType::GOING_OUT
@@ -61,10 +61,10 @@ class OrderingMachine
       item.routine_id = item.departure.routine_id
       adult_category = TicketCategory.find_by_type_id TicketType::ADULT
       ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["arrival_ticket_ids"], adult_category.id).first
-      item.adult_fare = ticket.fare
+      item.adult_fare = ticket.fare if ticket
       kid_category = TicketCategory.find_by_type_id TicketType::KID
       ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["arrival_ticket_ids"], kid_category.id).first
-      item.kid_fare = ticket.fare
+      item.kid_fare = ticket.fare if ticket
       item.number_of_adult = @order_params["adult"].to_i
       item.number_of_kid = @order_params["kid"].to_i
       item.travel_type_id = TravelType::COMING_BACK

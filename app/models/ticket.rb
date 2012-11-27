@@ -8,5 +8,13 @@ class Ticket < ActiveRecord::Base
   validates :fare, :initial_number, :numericality => true
   validates :routine_id, :ticket_category_id, :presence => true
 
+  def adult?
+  	self.ticket_category.adult?
+  end
+
+  def kid?
+  	self.ticket_category.kid?
+  end
+
 
 end

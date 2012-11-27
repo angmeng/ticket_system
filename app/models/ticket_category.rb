@@ -5,12 +5,20 @@ class TicketCategory < ActiveRecord::Base
   has_many :tickets
 
   def type
-  	case type_id
+  	case self.type_id
   	when TicketType::ADULT
   	  "Adult"
   	when TicketType::KID
   	  "Kid"
   	end
+  end
+
+  def adult?
+    self.type_id == TicketType::ADULT
+  end
+
+  def kid?
+    self.type_id == TicketType::KID
   end
 
 end
