@@ -68,9 +68,21 @@
 
           $("#submit_button").click(function(){
             <% if @order.buyer_is_sub_agent? && @net_total > @order.buyer_credit %>
-              alert("Credit is not enough !");
-              return false
+            if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CREDIT %>)
+              {
+                alert("Credit is not enough !");
+                return false
+              }
             <% end %>
+
+            // if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CASH %>)
+            //   {
+            //     if($("#inputAmount").val()=="")
+            //     {
+            //       alert("You must enter an amount");
+            //       return false
+            //     }
+            //   }
           });
 
 

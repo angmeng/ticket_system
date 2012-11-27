@@ -41,6 +41,7 @@ class OrdersController < ApplicationController
   def payment
     @order = Order.find params[:id]
     @net_total = 0.00
+    redirect_to voucher_order_path(@order) if @order.is_verified? || @order.is_voided?
   end
 
   def make_payment
@@ -48,7 +49,7 @@ class OrdersController < ApplicationController
     if @order.update_attributes(params[:order])
       PaymentMachine.make_payment(@order)
       flash[:notice] = "Payment completed"
-      redirect_to receipt_order_path(@order)
+      redirect_to voucher_order_path(@order)
     else
       flash[:notice] = "Failed to save"
       redirect_to payment_order_path(@order)
@@ -58,6 +59,12 @@ class OrdersController < ApplicationController
   def voucher
     @order = Order.find params[:id]
 
+  end
+
+  def void
+    @order = Order.find params[:id]
+    flash[:notice] = "Voided successfully"
+    redirect_to :back
   end
 
   # GET /orders/1/edit

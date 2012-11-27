@@ -1,4 +1,4 @@
-class TicketStatus
+class OrderStatus
 
   PENDING   = 0
   VERIFIED  = 1

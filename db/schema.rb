@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126183620) do
+ActiveRecord::Schema.define(:version => 20121127070936) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -107,11 +107,13 @@ ActiveRecord::Schema.define(:version => 20121126183620) do
     t.datetime "created_at",                                                      :null => false
     t.datetime "updated_at",                                                      :null => false
     t.integer  "travel_type_id",                                 :default => 0
+    t.integer  "status_id",                                      :default => 0
   end
 
   add_index "orders", ["buyer_id", "buyer_type_id"], :name => "index_orders_on_buyer_id_and_buyer_type_id"
   add_index "orders", ["payment_type_id"], :name => "index_orders_on_payment_type_id"
   add_index "orders", ["seller_id"], :name => "index_orders_on_seller_id"
+  add_index "orders", ["status_id"], :name => "index_orders_on_status_id"
   add_index "orders", ["travel_type_id"], :name => "index_orders_on_travel_type_id"
 
   create_table "routines", :force => true do |t|
@@ -191,12 +193,10 @@ ActiveRecord::Schema.define(:version => 20121126183620) do
     t.datetime "created_at",                                                                   :null => false
     t.datetime "updated_at",                                                                   :null => false
     t.integer  "valid_days",                                                :default => 30
-    t.integer  "status_id",                                                 :default => 0
   end
 
   add_index "tickets", ["code"], :name => "index_tickets_on_code", :unique => true
   add_index "tickets", ["routine_id"], :name => "index_tickets_on_routine_id"
-  add_index "tickets", ["status_id"], :name => "index_tickets_on_status_id"
   add_index "tickets", ["ticket_category_id"], :name => "index_tickets_on_ticket_category_id"
 
   create_table "topup_credits", :force => true do |t|

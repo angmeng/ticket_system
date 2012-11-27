@@ -169,13 +169,13 @@
           })
 
           $("#order_button").click(function(){
-          	<% if @result[:departures].any? %>
+
           	  if($("input[name='order[departure_routine_id]']:radio:checked").length==0)
           	  {
           	  	alert("You must select a departing route to continue");
           	  	return false
           	  }
-          	<% end %>
+
 
           	<% if @result[:order]["trip_type"] == "round" %>
           	  if($("input[name='order[arrival_routine_id]']:radio:checked").length==0)

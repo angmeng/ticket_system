@@ -8,6 +8,7 @@ TicketSystem::Application.routes.draw do
       get  :payment
       post :make_payment
       get  :voucher
+      delete :void
     end
   end
 
