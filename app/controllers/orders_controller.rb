@@ -55,6 +55,11 @@ class OrdersController < ApplicationController
     end
   end
 
+  def voucher
+    @order = Order.find params[:id]
+
+  end
+
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])

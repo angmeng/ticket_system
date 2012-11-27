@@ -1,7 +1,8 @@
-<% if @order.buyer_is_sub_agent && @net_total > @order.buyer_credit %>
+<% if @order.buyer_is_sub_agent? && @net_total > @order.buyer_credit %>
 	<div class="alert">
 	  <button type="button" class="close" data-dismiss="alert">×</button>
-	  <strong>Warning!</strong> Agent credit is not enough !
+	  <h4>Warning!</h4>
+	   Agent credit is not enough !
 	</div>
 <% end %>
 
