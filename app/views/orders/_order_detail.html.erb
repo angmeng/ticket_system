@@ -51,7 +51,7 @@
 							   <td><%= "%.2f" % @order.coming_back_item.total_adult_fare %></td>
 							  </tr>
 							   <tr>
-							   <td>Kid (<%= @order.coming_back_item.kid_fare %>)</td>
+							   <td>Kid (<%= "%.2f" % @order.coming_back_item.kid_fare %>)</td>
 							   <td><%= @order.coming_back_item.number_of_kid %> </td>
 							   <td></td>
 							   <td><%= "%.2f" % @order.coming_back_item.total_kid_fare %></td>
@@ -83,7 +83,7 @@
 	                           <td>Total Price</td>
 	                           <td> </td>
 	                           <td></td>
-	                           <td> <%= "%.2f" % @net_total %> MYR<hr/></td>
+	                           <td> <span id="net-total"><%= "%.2f" % @net_total %></span> MYR<hr/></td>
 							  </tr>
 							 <tbody>
                        </table>

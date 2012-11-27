@@ -12,11 +12,11 @@ class Routine < ActiveRecord::Base
   has_many   :order_items
 
   def arrival_jetty_name
-  	arrival_jetty.name
+  	@arrival_jetty_name ||= arrival_jetty.name
   end
 
   def departure_jetty_name
-  	departure_jetty.name
+  	@departure_jetty_name ||= departure_jetty.name
   end
 
   def title

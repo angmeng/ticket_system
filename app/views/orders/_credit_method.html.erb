@@ -1,1 +1,11 @@
-credit
+<% if @order.buyer_is_sub_agent && @net_total > @order.buyer_credit %>
+	<div class="alert">
+	  <button type="button" class="close" data-dismiss="alert">×</button>
+	  <strong>Warning!</strong> Agent credit is not enough !
+	</div>
+<% end %>
+
+<dl class="dl-horizontal">
+  <dt><%= @order.buyer_title %></dt><dd><%= @order.buyer_name %></dd>
+  <dt>Current Credit</dt><dd><%= @order.buyer_credit %></dd>
+</dl>

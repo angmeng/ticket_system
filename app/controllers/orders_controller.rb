@@ -43,6 +43,18 @@ class OrdersController < ApplicationController
     @net_total = 0.00
   end
 
+  def make_payment
+    @order = Order.find params[:id]
+    if @order.update_attributes(params[:order])
+      PaymentMachine.make_payment(@order)
+      flash[:notice] = "Payment completed"
+      redirect_to receipt_order_path(@order)
+    else
+      flash[:notice] = "Failed to save"
+      redirect_to payment_order_path(@order)
+    end
+  end
+
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])
