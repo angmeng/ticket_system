@@ -32,6 +32,11 @@ class OrdersController < ApplicationController
     end
   end
 
+  def reserve
+    @jetties = Jetty.order(:name)
+    @status_id = OrderStatus::PENDING
+  end
+
   def search_departure
     @result = TripSearchEngine.search(params[:order])
     @agents = current_user.sub_agents

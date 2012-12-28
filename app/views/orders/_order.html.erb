@@ -7,6 +7,7 @@
 <%= hidden_field_tag "order[adult]", order[:order]["adult"] %>
 <%= hidden_field_tag "order[kid]", order[:order]["kid"] %>
 <%= hidden_field_tag "order[seller_id]", seller.id %>
+<%= hidden_field_tag "order[status_id]", order[:order]["status_id"] %>
 
 <% order[:departure_ticket].each do |ticket| %>
 	<%= hidden_field_tag "order[departure_ticket_ids][]", ticket.id %>

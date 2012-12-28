@@ -1,0 +1,85 @@
+<div class="page-header">
+  <h1>Reservation</h1>
+</div>
+<%= render 'form' %>
+
+<% content_for :javascripts_path do %>
+ <script>
+    $(function(){
+      window.prettyPrint && prettyPrint();
+
+      $('#start').datepicker()
+        .on('changeDate', function(ev){
+          $('#start').datepicker('hide');
+        });
+
+      var startDate = new Date(2012,1,20);
+      var endDate = new Date(2012,1,25);
+      $('#end').datepicker()
+        .on('changeDate', function(ev){
+          if (ev.date.valueOf() > endDate.valueOf()){
+            $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+          } else {
+            $('#alert').hide();
+            startDate = new Date(ev.date);
+            $('#startDate').text($('#end').data('date'));
+          }
+          $('#end').datepicker('hide');
+        });
+
+      $("#order_trip_type_one").click(function(){
+        $("#end").hide();
+      });
+
+      $("#order_trip_type_round").click(function(){
+        $("#end").show();
+      });
+
+      $("#search_button").click(function(){
+        if($("#order_departure_jetty_id").val()=="")
+        {
+          alert("Please choose a departing");
+          return false;
+        }
+
+        if($("#order_arrival_jetty_id").val()=="")
+        {
+          alert("Please choose a destination");
+          return false;
+        }
+
+        if($("#departure_date").val()=="")
+        {
+          alert("Please select a departure date");
+          return false;
+        }
+
+        if($('input[name=order[trip_type]]:radio:checked').val() == "round")
+        {
+          if($("#return_date").val()=="")
+          {
+            alert("Please select a return date");
+            return false;
+          }
+        }
+
+      })
+
+      $("#order_departure_jetty_id").change(function(){
+        var newValue = $(this).val();
+        var url = '/routines/'+newValue+'/get_destinations';
+        //alert(url);
+        var output = "<option value=''>Destination</option>";
+          $.getJSON(url, function(data) {
+                $.each(data, function(key, value) {
+                output = output+"<option value='"+value.arrival_jetty_id+"'>"+value.arrival_jetty_name+"</option>"
+                        });
+                $("#order_arrival_jetty_id").html(output);
+                   });
+            });
+
+
+    });
+  </script>
+
+<% end %>
