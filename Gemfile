@@ -30,6 +30,9 @@ gem "cucumber-rails", ">= 1.3.0", :group => :test, :require => false
 gem "capybara", ">= 1.1.2", :group => :test
 gem "database_cleaner", ">= 0.7.2", :group => :test
 gem "launchy", ">= 2.1.0", :group => :test
+group :development do
+  gem 'meta_request', '0.2.0'
+end
 gem "devise"#, ">= 2.1.0"
 gem 'jquery-rails'
 gem 'rack-cache', :require => 'rack/cache'
