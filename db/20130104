@@ -1,0 +1,626 @@
+CREATE DATABASE  IF NOT EXISTS `ticket_system_development` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `ticket_system_development`;
+-- MySQL dump 10.13  Distrib 5.5.24, for osx10.5 (i386)
+--
+-- Host: localhost    Database: ticket_system_development
+-- ------------------------------------------------------
+-- Server version	5.5.20
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `fullname` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
+  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `reset_password_sent_at` datetime DEFAULT NULL,
+  `remember_created_at` datetime DEFAULT NULL,
+  `sign_in_count` int(11) DEFAULT '0',
+  `current_sign_in_at` datetime DEFAULT NULL,
+  `last_sign_in_at` datetime DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `agent_group_id` int(11) DEFAULT '0',
+  `branch_id` int(11) DEFAULT '0',
+  `category_id` int(11) DEFAULT '0',
+  `address` text COLLATE utf8_unicode_ci,
+  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `remark` text COLLATE utf8_unicode_ci,
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `credit` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_users_on_username` (`username`),
+  UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`),
+  KEY `index_users_on_category_id` (`category_id`),
+  KEY `index_users_on_agent_group_id` (`agent_group_id`),
+  KEY `index_users_on_branch_id` (`branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin','Admin','angmeng@gmail.com','$2a$10$is8h5yvL7nVFQW55IfrSgukVPCs9P4xlTt3ad94kir.OxYiNbiQWu',NULL,NULL,NULL,16,'2012-12-28 06:15:52','2012-11-27 08:27:24','127.0.0.1','127.0.0.1',0,1,1,'','','','',1,'2012-11-17 08:42:53','2012-12-28 06:15:52',0.00),(2,'staff','Staff','staff@gmail.com','$2a$10$8TRa.wncBOAS.XWCBJcSE.WK4SR0VqTKVQGjXzTumqxogvxnm7WVW',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,0,1,2,'','',NULL,NULL,1,'2012-11-17 08:42:53','2012-11-24 10:23:11',0.00),(3,'agent','Agent','agent@gmail.com','$2a$10$4YIIhLVgzGAdbqraz7yOLOyudsSq5SwBG0lUsbykD58ir6jC9ezgm',NULL,NULL,NULL,12,'2012-11-27 14:33:48','2012-11-27 08:27:57','127.0.0.1','127.0.0.1',2,1,3,'','12345678','12345678','Remark',1,'2012-11-17 08:42:53','2012-12-28 06:53:48',-480.00),(4,'user','User','user@gmail.com','$2a$10$WA/sE853aWWkAxfTXRTO5OmihpYT4K1yKFniyN5Hj8cMzK1edKGoW',NULL,NULL,NULL,1,'2012-11-21 14:22:07','2012-11-21 14:22:07','127.0.0.1','127.0.0.1',0,0,4,'','','','',1,'2012-11-17 08:42:53','2012-11-21 14:22:07',0.00),(6,'sub_agent','Sub Agent','sub45@gmail.com','',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2,1,5,NULL,'12345645','12345645','test4545',1,'2012-11-22 16:32:42','2012-11-27 08:30:17',-180.00),(7,'sub2','sub2','8888@gmail.com','',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2,1,5,NULL,'8888','8888','teset',1,'2012-11-24 04:02:00','2012-11-27 14:40:00',-60.00);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sessions`
+--
+
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sessions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `data` text COLLATE utf8_unicode_ci,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_sessions_on_session_id` (`session_id`),
+  KEY `index_sessions_on_updated_at` (`updated_at`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sessions`
+--
+
+LOCK TABLES `sessions` WRITE;
+/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` VALUES (36,'b01e29e9076b7fc0045fedbc042e72f0','BAh7B0kiEF9jc3JmX3Rva2VuBjoGRUZJIjFoWnlYYk1xWHJZSlYzbFRXKzhD\nN0x2OVZaY25LU0ZWYXgwYkxMUHhWTlpFPQY7AEZJIhl3YXJkZW4udXNlci51\nc2VyLmtleQY7AFRbCEkiCVVzZXIGOwBGWwZpBkkiIiQyYSQxMCRpczhoNXl2\nTDduVkZRVzU1SWZyU2d1BjsAVA==\n','2012-11-26 03:42:10','2012-11-26 09:29:04'),(43,'f66ff244e8b781c9bea160f273819b73','BAh7B0kiEF9jc3JmX3Rva2VuBjoGRUZJIjFMSEUweHYyenZPbFlJaEJQcnJ5\nWGFpNWlYbUdPTjBxWGtUWGUxVVVKK1dvPQY7AEZJIhl3YXJkZW4udXNlci51\nc2VyLmtleQY7AFRbCEkiCVVzZXIGOwBGWwZpCEkiIiQyYSQxMCQ0WUlJaExW\nZ3pHQWRicXJhejd5T0xPBjsAVA==\n','2012-11-27 08:27:57','2012-11-27 08:32:10'),(45,'07b726a2599793e312072a5c1ec9ae52','BAh7B0kiEF9jc3JmX3Rva2VuBjoGRUZJIjFNNjdpeTRhNE5DUFl5cFpadTM4\nRk8vYjZQeFExanpQK1YzUnZSZEMxQ2R3PQY7AEZJIhl3YXJkZW4udXNlci51\nc2VyLmtleQY7AFRbCEkiCVVzZXIGOwBGWwZpCEkiIiQyYSQxMCQ0WUlJaExW\nZ3pHQWRicXJhejd5T0xPBjsAVA==\n','2012-11-27 14:33:48','2012-11-27 14:40:04'),(47,'33875f22d7bd285e1b7c97fe01476fff','BAh7B0kiEF9jc3JmX3Rva2VuBjoGRUZJIjFkWTZjRGU1SmxtOFgyTmc5dnZB\ncWljR3J3Ujg2WnZaRk5oUG02OTZERytjPQY7AEZJIhl3YXJkZW4udXNlci51\nc2VyLmtleQY7AFRbCEkiCVVzZXIGOwBGWwZpBkkiIiQyYSQxMCRpczhoNXl2\nTDduVkZRVzU1SWZyU2d1BjsAVA==\n','2012-12-28 06:15:52','2012-12-28 09:32:01');
+/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `warrants`
+--
+
+DROP TABLE IF EXISTS `warrants`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `warrants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8_unicode_ci,
+  `phone` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fax` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `remark` text COLLATE utf8_unicode_ci,
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_warrants_on_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `warrants`
+--
+
+LOCK TABLES `warrants` WRITE;
+/*!40000 ALTER TABLE `warrants` DISABLE KEYS */;
+INSERT INTO `warrants` VALUES (1,'W001','Warrant A','Address A','12345678','12345678','warrant@langkawi.com','remark',1,'2012-11-17 10:11:16','2012-11-17 10:11:16');
+/*!40000 ALTER TABLE `warrants` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_items`
+--
+
+DROP TABLE IF EXISTS `order_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `departure_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `routine_id` int(11) DEFAULT NULL,
+  `number_of_adult` int(11) DEFAULT '0',
+  `number_of_kid` int(11) DEFAULT '0',
+  `adult_fare` decimal(10,2) DEFAULT '0.00',
+  `kid_fare` decimal(10,2) DEFAULT '0.00',
+  `travel_type_id` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `index_order_items_on_order_id` (`order_id`),
+  KEY `index_order_items_on_departure_id` (`departure_id`),
+  KEY `index_order_items_on_routine_id` (`routine_id`),
+  KEY `index_order_items_on_travel_type_id` (`travel_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_items`
+--
+
+LOCK TABLES `order_items` WRITE;
+/*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `jetties`
+--
+
+DROP TABLE IF EXISTS `jetties`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `jetties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_jetties_on_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jetties`
+--
+
+LOCK TABLES `jetties` WRITE;
+/*!40000 ALTER TABLE `jetties` DISABLE KEYS */;
+INSERT INTO `jetties` VALUES (1,'J001','Jett Langkawi',1,'2012-11-17 10:11:39','2012-11-17 10:11:39'),(2,'J002','Jetty Penang',1,'2012-11-17 10:11:54','2012-11-17 10:11:54'),(3,'JT003','Jetty Johor',1,'2012-11-25 16:36:44','2012-11-25 16:36:44');
+/*!40000 ALTER TABLE `jetties` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `departures`
+--
+
+DROP TABLE IF EXISTS `departures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `departures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vessel_id` int(11) DEFAULT NULL,
+  `sales_quota` int(11) DEFAULT '100',
+  `online_quota` int(11) DEFAULT '0',
+  `custom_quota` tinyint(1) DEFAULT '0',
+  `on_call` tinyint(1) DEFAULT '0',
+  `status_id` int(11) DEFAULT '1',
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `extra_trip` tinyint(1) DEFAULT NULL,
+  `routine_id` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_departures_on_vessel_id` (`vessel_id`),
+  KEY `index_departures_on_routine_id` (`routine_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `departures`
+--
+
+LOCK TABLES `departures` WRITE;
+/*!40000 ALTER TABLE `departures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `departures` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `schedules`
+--
+
+DROP TABLE IF EXISTS `schedules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `schedules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `departure_time` time DEFAULT NULL,
+  `routine_id` int(11) DEFAULT NULL,
+  `sales_quota` int(11) DEFAULT '0',
+  `online_quota` int(11) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `weekday` int(11) DEFAULT NULL,
+  `departure_date` date DEFAULT NULL,
+  `extra_trip` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_schedules_on_code` (`code`),
+  KEY `index_schedules_on_routine_id` (`routine_id`),
+  KEY `index_schedules_on_extra_trip` (`extra_trip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `schedules`
+--
+
+LOCK TABLES `schedules` WRITE;
+/*!40000 ALTER TABLE `schedules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `schedules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topup_credits`
+--
+
+DROP TABLE IF EXISTS `topup_credits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topup_credits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `agent_id` int(11) DEFAULT NULL,
+  `amount` decimal(10,2) DEFAULT '0.00',
+  `remark` text COLLATE utf8_unicode_ci,
+  `staff_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_topup_credits_on_agent_id` (`agent_id`),
+  KEY `index_topup_credits_on_staff_id` (`staff_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topup_credits`
+--
+
+LOCK TABLES `topup_credits` WRITE;
+/*!40000 ALTER TABLE `topup_credits` DISABLE KEYS */;
+INSERT INTO `topup_credits` VALUES (1,3,100.00,'',1,'2012-11-21 10:39:17','2012-11-21 10:39:17'),(2,3,200.00,'',1,'2012-11-21 10:41:54','2012-11-21 10:41:54');
+/*!40000 ALTER TABLE `topup_credits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ticket_categories`
+--
+
+DROP TABLE IF EXISTS `ticket_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ticket_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `type_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_ticket_categories_on_code` (`code`),
+  KEY `index_ticket_categories_on_type_id` (`type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ticket_categories`
+--
+
+LOCK TABLES `ticket_categories` WRITE;
+/*!40000 ALTER TABLE `ticket_categories` DISABLE KEYS */;
+INSERT INTO `ticket_categories` VALUES (1,'TG001','Adult',1,'2012-11-17 10:12:51','2012-11-26 09:28:51',1),(2,'TG002','Kid',1,'2012-11-17 10:13:09','2012-11-26 09:29:02',2);
+/*!40000 ALTER TABLE `ticket_categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `staff_routines`
+--
+
+DROP TABLE IF EXISTS `staff_routines`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `staff_routines` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `staff_id` int(11) DEFAULT NULL,
+  `routine_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_staff_routines_on_staff_id` (`staff_id`),
+  KEY `index_staff_routines_on_routine_id` (`routine_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `staff_routines`
+--
+
+LOCK TABLES `staff_routines` WRITE;
+/*!40000 ALTER TABLE `staff_routines` DISABLE KEYS */;
+/*!40000 ALTER TABLE `staff_routines` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `seller_id` int(11) DEFAULT NULL,
+  `buyer_id` int(11) DEFAULT NULL,
+  `buyer_type_id` int(11) DEFAULT NULL,
+  `payment_type_id` int(11) DEFAULT NULL,
+  `free_tickets` int(11) DEFAULT '0',
+  `discount` decimal(10,2) DEFAULT '0.00',
+  `extra_charges` decimal(10,2) DEFAULT '0.00',
+  `amount_tender` decimal(10,2) DEFAULT '0.00',
+  `remark` text COLLATE utf8_unicode_ci,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `travel_type_id` int(11) DEFAULT '0',
+  `status_id` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `index_orders_on_seller_id` (`seller_id`),
+  KEY `index_orders_on_buyer_id_and_buyer_type_id` (`buyer_id`,`buyer_type_id`),
+  KEY `index_orders_on_payment_type_id` (`payment_type_id`),
+  KEY `index_orders_on_travel_type_id` (`travel_type_id`),
+  KEY `index_orders_on_status_id` (`status_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tickets`
+--
+
+DROP TABLE IF EXISTS `tickets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tickets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `routine_id` int(11) DEFAULT NULL,
+  `ticket_category_id` int(11) DEFAULT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `initial_number` int(11) DEFAULT '0',
+  `fare` decimal(10,2) DEFAULT '0.00',
+  `inventory_count` tinyint(1) DEFAULT '1',
+  `required_passenger_details` tinyint(1) DEFAULT '1',
+  `no_expired` tinyint(1) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `valid_days` int(11) DEFAULT '30',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_tickets_on_code` (`code`),
+  KEY `index_tickets_on_routine_id` (`routine_id`),
+  KEY `index_tickets_on_ticket_category_id` (`ticket_category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tickets`
+--
+
+LOCK TABLES `tickets` WRITE;
+/*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `schema_migrations`
+--
+
+DROP TABLE IF EXISTS `schema_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `schema_migrations` (
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  UNIQUE KEY `unique_schema_migrations` (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `schema_migrations`
+--
+
+LOCK TABLES `schema_migrations` WRITE;
+/*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
+INSERT INTO `schema_migrations` VALUES ('20121109011053'),('20121114171019'),('20121114171133'),('20121114172320'),('20121114172535'),('20121114172623'),('20121114173102'),('20121114173145'),('20121114173207'),('20121114173657'),('20121114173941'),('20121114174746'),('20121114175041'),('20121120124244'),('20121121014239'),('20121121085849'),('20121121100452'),('20121124054905'),('20121124113052'),('20121125085938'),('20121125092209'),('20121126092036'),('20121126155546'),('20121126175621'),('20121126182558'),('20121126183620'),('20121127070936'),('20121228092342');
+/*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `branches`
+--
+
+DROP TABLE IF EXISTS `branches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `branches` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_branches_on_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `branches`
+--
+
+LOCK TABLES `branches` WRITE;
+/*!40000 ALTER TABLE `branches` DISABLE KEYS */;
+INSERT INTO `branches` VALUES (1,'L001','Langkawi Online',1,'2012-11-17 10:09:12','2012-11-17 10:09:12');
+/*!40000 ALTER TABLE `branches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `routines`
+--
+
+DROP TABLE IF EXISTS `routines`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `routines` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `departure_jetty_id` int(11) DEFAULT NULL,
+  `arrival_jetty_id` int(11) DEFAULT NULL,
+  `sequence_no` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_routines_on_departure_jetty_id` (`departure_jetty_id`),
+  KEY `index_routines_on_arrival_jetty_id` (`arrival_jetty_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `routines`
+--
+
+LOCK TABLES `routines` WRITE;
+/*!40000 ALTER TABLE `routines` DISABLE KEYS */;
+/*!40000 ALTER TABLE `routines` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `companies`
+--
+
+DROP TABLE IF EXISTS `companies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `companies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `register_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fax` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_companies_on_register_number` (`register_number`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `companies`
+--
+
+LOCK TABLES `companies` WRITE;
+/*!40000 ALTER TABLE `companies` DISABLE KEYS */;
+INSERT INTO `companies` VALUES (1,'Super Fast Ferry Sdn Bhd','P12345678','Pulau Langkawi','','12345678','12345678','super_fast@langkawi.com','2012-11-17 10:08:22','2012-12-28 09:32:01',1);
+/*!40000 ALTER TABLE `companies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vessels`
+--
+
+DROP TABLE IF EXISTS `vessels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vessels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `total_passenger` int(11) DEFAULT '100',
+  `total_crew` int(11) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_vessels_on_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vessels`
+--
+
+LOCK TABLES `vessels` WRITE;
+/*!40000 ALTER TABLE `vessels` DISABLE KEYS */;
+INSERT INTO `vessels` VALUES (1,'V001','Vessel A',100,8,1,'2012-11-17 10:12:16','2012-11-17 10:12:16'),(2,'V002','Vessel B',100,4,1,'2012-11-17 10:12:30','2012-11-17 10:12:30');
+/*!40000 ALTER TABLE `vessels` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `agent_groups`
+--
+
+DROP TABLE IF EXISTS `agent_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `agent_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_agent_groups_on_code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `agent_groups`
+--
+
+LOCK TABLES `agent_groups` WRITE;
+/*!40000 ALTER TABLE `agent_groups` DISABLE KEYS */;
+INSERT INTO `agent_groups` VALUES (1,'AL001','Top',1,'2012-11-17 10:09:54','2012-11-17 10:09:54'),(2,'AL02','Group B',1,'2012-11-24 03:45:07','2012-11-24 03:45:07');
+/*!40000 ALTER TABLE `agent_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-01-04 15:47:15
