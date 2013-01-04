@@ -1,8 +1,8 @@
 class Staff < User
   default_scope where("category_id IN(?)", [UserType::STAFF, UserType::MANAGER])
   has_many :staff_routines
-  belongs_to :branch
   has_many :topup_credits
+  belongs_to :branch
 
   validates :branch, :presence => true
 

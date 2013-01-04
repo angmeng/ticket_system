@@ -19,6 +19,9 @@
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               vessels_path, :class => 'btn'  %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+            new_vessel_path,
+            :class => 'btn btn-primary' %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_vessel_path(@vessel), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

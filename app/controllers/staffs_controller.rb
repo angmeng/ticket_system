@@ -2,7 +2,8 @@ class StaffsController < ApplicationController
   # GET /staffs
   # GET /staffs.json
   def index
-    @staffs = Staff.all
+    @branch = Branch.find params[:branch_id]
+    @staffs = @branch.staffs
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +14,8 @@ class StaffsController < ApplicationController
   # GET /staffs/1
   # GET /staffs/1.json
   def show
-    @staff = Staff.find(params[:id])
+    @branch = Branch.find params[:branch_id]
+    @staff = @branch.staffs.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +26,8 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   # GET /staffs/new.json
   def new
-    @staff = Staff.new({category_id: UserType::STAFF})
+    @branch = Branch.find params[:branch_id]
+    @staff = @branch.staffs.new({category_id: UserType::STAFF})
     #@staff.category_id = UserType::STAFF
 
     respond_to do |format|
@@ -35,17 +38,19 @@ class StaffsController < ApplicationController
 
   # GET /staffs/1/edit
   def edit
-    @staff = Staff.find(params[:id])
+    @branch = Branch.find params[:branch_id]
+    @staff = @branch.staffs.find(params[:id])
   end
 
   # POST /staffs
   # POST /staffs.json
   def create
-    @staff = Staff.new(params[:staff])
+    @branch = Branch.find params[:branch_id]
+    @staff = @branch.staffs.new(params[:staff])
 
     respond_to do |format|
       if @staff.save
-        format.html { redirect_to @staff, notice: 'Staff was successfully created.' }
+        format.html { redirect_to branch_staff_path(@branch, @staff), notice: 'Staff was successfully created.' }
         format.json { render json: @staff, status: :created, location: @staff }
       else
         format.html { render action: "new" }
@@ -57,11 +62,12 @@ class StaffsController < ApplicationController
   # PUT /staffs/1
   # PUT /staffs/1.json
   def update
-    @staff = Staff.find(params[:id])
+    @branch = Branch.find params[:branch_id]
+    @staff = @branch.staffs.find(params[:id])
 
     respond_to do |format|
       if @staff.update_attributes(params[:staff])
-        format.html { redirect_to @staff, notice: 'Staff was successfully updated.' }
+        format.html { redirect_to branch_staff_path(@branch, @staff), notice: 'Staff was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -73,11 +79,12 @@ class StaffsController < ApplicationController
   # DELETE /staffs/1
   # DELETE /staffs/1.json
   def destroy
-    @staff = Staff.find(params[:id])
+    @branch = Branch.find params[:branch_id]
+    @staff = @branch.staffs.find(params[:id])
     @staff.destroy
 
     respond_to do |format|
-      format.html { redirect_to staffs_url }
+      format.html { redirect_to branch_staffs_url }
       format.json { head :no_content }
     end
   end

@@ -12,9 +12,14 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin?
-  	current_user && (current_user.is_manager? || current_user.is_staff?)
+  	current_user && (current_user.is_manager?)
   end
   helper_method :is_admin?
+
+  def current_branch
+    @current_branch ||= current_user.branch
+  end
+  helper_method :current_branch
 
   # def is_staff?
   # 	current_user && current_user.is_staff?	

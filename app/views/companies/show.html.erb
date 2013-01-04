@@ -18,6 +18,8 @@
   <dd><%= @company.fax %></dd>
   <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
   <dd><%= @company.email %></dd>
+  <dt><strong>Associated branch:</strong></dt>
+  <dd><%= @company.branch.try(:name) %></dd>
 </dl>
 
 <div class="form-actions">

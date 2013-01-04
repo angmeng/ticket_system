@@ -1,7 +1,10 @@
 class Branch < ActiveRecord::Base
   attr_accessible :active, :code, :name
-
+  has_many :agents
+  has_many :staffs
+  has_many :companies
+  
   validates :name, :code, :presence => true, :uniqueness => true
 
-  has_many :agents
+
 end

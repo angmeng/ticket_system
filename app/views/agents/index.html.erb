@@ -3,7 +3,7 @@
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" href="#notification" data-original-title="">
-                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  <%=t '.title', :default => model_class.model_name.human.pluralize %> <i class="icon-chevron-down icon-white pull-right"></i>
+                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  <%=t '.title', :default => model_class.model_name.human.pluralize %> for <%= @branch.name %><i class="icon-chevron-down icon-white pull-right"></i>
                     </a>
                 </div>
                 <div id="notification" class="accordion-body collapse in">
@@ -12,12 +12,11 @@
                             <thead>
     <tr>
     
-      <th><%= model_class.human_attribute_name(:username) %></th>
-      <th><%= model_class.human_attribute_name(:fullname) %></th>
-      <th><%= model_class.human_attribute_name(:agent_group_id) %></th>
-      <th><%= model_class.human_attribute_name(:branch_id) %></th>
-      <th><%= model_class.human_attribute_name(:credit) %></th>
-      <th><%= model_class.human_attribute_name(:active) %></th>
+      <th>Username</th>
+      <th>Fullname</th>
+      <th>Group</th>
+      <th>Credit</th>
+      <th>Active</th>
   
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -25,19 +24,18 @@
   <tbody>
     <% @agents.each do |agent| %>
       <tr class="<%= cycle("odd", "even") %>">
-        <td><%= link_to agent.username, agent_path(agent) %></td>
+        <td><%= link_to agent.username, branch_agent_path(@branch, agent) %></td>
 
         <td><%= agent.fullname %></td>
         <td><%= agent.agent_group.name rescue "-" %></td>
-        <td><%= agent.branch.name rescue "-" %></td>
         <td><%= agent.credit %></td>
         <td><%= agent.active %></td>
 
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_agent_path(agent), :class => 'btn btn-mini' %>
+                      edit_branch_agent_path(@branch, agent), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      agent_path(agent),
+                      branch_agent_path(@branch, agent),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
@@ -55,5 +53,8 @@
           </div>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_agent_path,
+            new_branch_agent_path(@branch),
             :class => 'btn btn-primary' %>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+            branches_url,
+            :class => 'btn' %>

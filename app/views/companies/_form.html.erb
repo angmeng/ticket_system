@@ -6,6 +6,7 @@
   <%= f.input :phone %>
   <%= f.input :fax %>
   <%= f.input :email %>
+  <%= f.association :branch, :label => 'Associated branch' %>
   <div class="form-actions">
     <%= f.button :submit, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

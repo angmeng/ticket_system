@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121127070936) do
+ActiveRecord::Schema.define(:version => 20121228092342) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -36,13 +36,14 @@ ActiveRecord::Schema.define(:version => 20121127070936) do
   create_table "companies", :force => true do |t|
     t.string   "name"
     t.string   "register_number"
-    t.string   "address_1",                     :default => ""
-    t.string   "address_2",                     :default => ""
-    t.string   "phone",           :limit => 16, :default => ""
-    t.string   "fax",             :limit => 16, :default => ""
-    t.string   "email",                         :default => ""
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "phone",           :limit => 16
+    t.string   "fax",             :limit => 16
+    t.string   "email"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.integer  "branch_id"
   end
 
   add_index "companies", ["register_number"], :name => "index_companies_on_register_number", :unique => true
@@ -228,8 +229,8 @@ ActiveRecord::Schema.define(:version => 20121127070936) do
     t.integer  "branch_id",                                             :default => 0
     t.integer  "category_id",                                           :default => 0
     t.text     "address"
-    t.string   "phone",                                                 :default => ""
-    t.string   "fax",                                                   :default => ""
+    t.string   "phone"
+    t.string   "fax"
     t.text     "remark"
     t.boolean  "active",                                                :default => true
     t.datetime "created_at",                                                              :null => false
@@ -259,9 +260,9 @@ ActiveRecord::Schema.define(:version => 20121127070936) do
     t.string   "code"
     t.string   "name"
     t.text     "address"
-    t.string   "phone",      :limit => 16, :default => ""
-    t.string   "fax",        :limit => 16, :default => ""
-    t.string   "email",                    :default => ""
+    t.string   "phone",      :limit => 16
+    t.string   "fax",        :limit => 16
+    t.string   "email"
     t.text     "remark"
     t.boolean  "active",                   :default => true
     t.datetime "created_at",                                 :null => false

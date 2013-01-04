@@ -23,6 +23,9 @@
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               departures_path, :class => 'btn'  %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+            new_departure_path,
+            :class => 'btn btn-primary' %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_departure_path(@departure), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

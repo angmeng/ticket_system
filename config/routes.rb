@@ -35,33 +35,31 @@ TicketSystem::Application.routes.draw do
       get :get_destinations
     end
   end
-  resources :branches
-  resources :companies
-
-  get "home/index"
-  get "home/info"
-  get "dashboard/index"
-
-  devise_for :staffs, :controllers => { :sessions => "staffs/sessions" }, :skip => [:sessions, :registrations] do
-    get '/staffs/sign_in' => 'staffs/sessions#new', :as => :new_staff_session
-    post '/staffs/sign_in' => 'staffs/sessions#create', :as => :staff_session
-    delete '/staffs/sign_out' => 'staffs/sessions#destroy', :as => :destroy_staff_session
-  end
-  resources :staffs
-  devise_for :agents, :controllers => { :sessions => "agents/sessions" }, :skip => [:sessions, :registrations] do
-    get '/agents/sign_in' => 'agents/sessions#new', :as => :new_agent_session
-    post '/agents/sign_in' => 'agents/sessions#create', :as => :agent_session
-    delete '/agents/sign_out' => 'agents/sessions#destroy', :as => :destroy_agent_session
-  end
-  resources :agents
-  resources :sub_agents
-
   devise_for :users, :controllers => { :sessions => "users/sessions" }
   resources :users do
     member do
       get "profile"
     end
   end
+  devise_for :agents, :controllers => { :sessions => "agents/sessions" }, :skip => [:sessions, :registrations] do
+    get '/agents/sign_in' => 'agents/sessions#new', :as => :new_agent_session
+    post '/agents/sign_in' => 'agents/sessions#create', :as => :agent_session
+    delete '/agents/sign_out' => 'agents/sessions#destroy', :as => :destroy_agent_session
+  end
+  devise_for :staffs, :controllers => { :sessions => "staffs/sessions" }, :skip => [:sessions, :registrations] do
+    get '/staffs/sign_in' => 'staffs/sessions#new', :as => :new_staff_session
+    post '/staffs/sign_in' => 'staffs/sessions#create', :as => :staff_session
+    delete '/staffs/sign_out' => 'staffs/sessions#destroy', :as => :destroy_staff_session
+  end
+  resources :branches do
+    resources :agents
+    resources :staffs
+  end
+  resources :companies
+
+  get "home/index"
+  get "home/info"
+  get "dashboard/index"
 
   # authenticated :user do
   #   root :to => 'dashboard#index'
