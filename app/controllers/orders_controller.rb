@@ -40,7 +40,8 @@ class OrdersController < ApplicationController
 
   def search_departure
     @result = TripSearchEngine.search(params[:order])
-    @agents = current_user.sub_agents
+    #todo : only call agent who under the logged in user branch
+    @agents = Agent.order(:username)
     @warrants = Warrant.order(:name)
   end
 

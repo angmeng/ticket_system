@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_branch
 
   def is_system_branch?
-    current_branch && current_branch.id == system_company.try(:id)
+    current_branch && current_branch.id == system_company.try(:branch_id)
   end
   helper_method :is_system_branch?
 

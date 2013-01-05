@@ -24,7 +24,7 @@
     <% @ticket_categories.each do |ticket_category| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to ticket_category.code, ticket_category_path(ticket_category) %></td>
-        <td><%= ticket_category.code %></td>
+       
         <td><%= ticket_category.name %></td>
         <td><%= ticket_category.type rescue "-" %></td>
         <td><%= ticket_category.active %></td>

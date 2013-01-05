@@ -33,9 +33,9 @@ class TopupCreditsController < ApplicationController
   end
 
   # GET /topup_credits/1/edit
-  def edit
-    @topup_credit = TopupCredit.find(params[:id])
-  end
+  # def edit
+  #   @topup_credit = TopupCredit.find(params[:id])
+  # end
 
   # POST /topup_credits
   # POST /topup_credits.json
@@ -55,19 +55,19 @@ class TopupCreditsController < ApplicationController
 
   # PUT /topup_credits/1
   # PUT /topup_credits/1.json
-  def update
-    @topup_credit = TopupCredit.find(params[:id])
+  # def update
+  #   @topup_credit = TopupCredit.find(params[:id])
 
-    respond_to do |format|
-      if @topup_credit.update_attributes(params[:topup_credit])
-        format.html { redirect_to @topup_credit, notice: 'Topup credit was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @topup_credit.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if @topup_credit.update_attributes(params[:topup_credit])
+  #       format.html { redirect_to @topup_credit, notice: 'Topup credit was successfully updated.' }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render action: "edit" }
+  #       format.json { render json: @topup_credit.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /topup_credits/1
   # DELETE /topup_credits/1.json

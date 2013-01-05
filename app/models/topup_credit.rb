@@ -12,8 +12,9 @@ class TopupCredit < ActiveRecord::Base
 
   private
 
-    def topup_agent_credit
-      after_topup = self.agent.credit + self.amount
-      self.agent.update_attributes(:credit => after_topup)
-    end
+  def topup_agent_credit
+    TopUpMachine.new(self).top_up
+  end
+
+   
 end

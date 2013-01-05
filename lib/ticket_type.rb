@@ -4,6 +4,6 @@ class TicketType
 
   OPTION = [
    ["Adult", ADULT],
-   ["Kid", KID]
+   ["Child", KID]
   ].freeze
 end

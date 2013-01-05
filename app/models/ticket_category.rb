@@ -9,7 +9,7 @@ class TicketCategory < ActiveRecord::Base
   	when TicketType::ADULT
   	  "Adult"
   	when TicketType::KID
-  	  "Kid"
+  	  "Child"
   	end
   end
 
