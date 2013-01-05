@@ -3,6 +3,7 @@ class Branch < ActiveRecord::Base
   has_many :agents
   has_many :staffs
   has_many :companies
+  has_many :users
   
   validates :name, :code, :presence => true, :uniqueness => true
 

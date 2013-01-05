@@ -2,7 +2,8 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    #if is_admin?
+      @orders = Order.all
 
     respond_to do |format|
       format.html # index.html.erb

@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   validates :username, :presence => true, :uniqueness => true
   validates :fullname, :presence => true
 
+  belongs_to :branch
+
 
   def is_manager?
   	self.category_id == UserType::MANAGER

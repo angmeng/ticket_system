@@ -5,6 +5,9 @@ class HomeController < ApplicationController
   end
 
   def info
+  end
+
+  def access_denied
   	
   end
 end

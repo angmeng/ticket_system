@@ -1,4 +1,5 @@
 class BranchesController < ApplicationController
+  before_filter :require_system_admin
   # GET /branches
   # GET /branches.json
   def index
