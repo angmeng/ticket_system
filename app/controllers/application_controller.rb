@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   helper_method :system_company
 
   def require_system_admin
-    unless is_system_admin?
+    unless is_admin?
       flash[:error] = "Only system admin is allowed to access"
       session[:return_from_access_denied_url] = request.referer
       redirect_to 
@@ -61,9 +61,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if is_user?
-      sales_url
+      orders_url
     elsif is_agent?
-      sales_url
+      orders_url
     elsif is_staff?
       dashboard_index_url
     elsif is_manager?
