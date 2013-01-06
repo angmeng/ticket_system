@@ -47,11 +47,20 @@
     <option><%= num %></option>
      <% end %>
   </select>
+
 </div>
 
 <div class="controls docs-input-sizes">
-  Kid
+  Child
   <select class="span1" name="order[kid]">
+    <% 0.upto(50) do |num| %>
+    <option><%= num %></option>
+     <% end %>
+  </select>
+</div>
+<div class="controls docs-input-sizes">
+  Infant
+  <select class="span1" name="order[infant]">
     <% 0.upto(50) do |num| %>
     <option><%= num %></option>
      <% end %>

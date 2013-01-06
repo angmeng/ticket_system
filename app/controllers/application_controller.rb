@@ -63,11 +63,11 @@ class ApplicationController < ActionController::Base
     if is_user?
       orders_url
     elsif is_agent?
-      orders_url
+      new_order_url
     elsif is_staff?
-      dashboard_index_url
+      new_order_url
     elsif is_manager?
-      dashboard_index_url
+      new_order_url  
     else
       super
     end
