@@ -10,6 +10,10 @@
   <dd><%= @branch.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:active) %>:</strong></dt>
   <dd><%= @branch.active %></dd>
+  <dt title="Basic Commission"><strong>Basic Comm.:</strong></dt>
+  <dd><%= number_with_precision(@branch.basic_commission, :precision => 2) %></dd>
+  <dt title="Agent Commission"><strong>Agent Comm.:</strong></dt>
+  <dd><%= number_with_precision(@branch.agent_commission, :precision => 2) %></dd>
 </dl>
 
 <div class="form-actions">

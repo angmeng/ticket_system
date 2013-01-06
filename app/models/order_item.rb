@@ -1,5 +1,5 @@
 class OrderItem < ActiveRecord::Base
-  attr_accessible :departure_id, :order_id, :routine_id, :number_of_adult, :number_of_kid, :adult_fare, :kid_fare, :travel_type_id
+  attr_accessible :departure_id, :order_id, :routine_id, :number_of_adult, :number_of_kid, :adult_fare, :kid_fare, :travel_type_id, :number_of_infant
 
   belongs_to :order
   belongs_to :departure
