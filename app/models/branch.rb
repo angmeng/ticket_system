@@ -1,5 +1,5 @@
 class Branch < ActiveRecord::Base
-  attr_accessible :active, :code, :name
+  attr_accessible :active, :code, :name, :basic_commission, :agent_commission
   has_many :agents
   has_many :staffs
   has_one :company

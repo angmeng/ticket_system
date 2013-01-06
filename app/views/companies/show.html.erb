@@ -20,10 +20,13 @@
   <dd><%= @company.email %></dd>
   <dt><strong>Associated branch:</strong></dt>
   <dd><%= @company.branch.try(:name) %></dd>
+
+  <dt><strong title="2 Way Ticket Discount">2 Way Ticket Disc:</strong></dt>
+  <dd><%= number_with_precision(@company.discount_on_two_way_ticket, :precision => 2) %></dd>
 </dl>
 
 <div class="form-actions">
-  <%#= link_to t('.back', :default => t("helpers.links.back")),
+  <%= link_to t('.back', :default => t("helpers.links.back")),
               companies_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_company_path(@company), :class => 'btn' %>
