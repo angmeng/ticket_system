@@ -7,7 +7,7 @@ TicketSystem::Application.routes.draw do
     member do
       get  :payment
       post :make_payment
-      get  :voucher
+      get  :preview
       delete :void
     end
   end

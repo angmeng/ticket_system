@@ -40,15 +40,14 @@ class OrdersController < ApplicationController
 
   def search_departure
     @result = TripSearchEngine.search(params[:order])
-    #todo : only call agent who under the logged in user branch
-    @agents = Agent.order(:username)
+    @agents = Agent.where("branch_id = ?", current_branch.id).order(:username)
     @warrants = Warrant.order(:name)
   end
 
   def payment
     @order = Order.find params[:id]
     @net_total = 0.00
-    redirect_to voucher_order_path(@order) if @order.is_verified? || @order.is_voided?
+    redirect_to preview_order_path(@order) if @order.is_verified? || @order.is_voided?
   end
 
   def make_payment
@@ -56,14 +55,14 @@ class OrdersController < ApplicationController
     if @order.update_attributes(params[:order])
       PaymentMachine.make_payment(@order)
       flash[:notice] = "Payment completed"
-      redirect_to voucher_order_path(@order)
+      redirect_to preview_order_path(@order)
     else
       flash[:notice] = "Failed to save"
       redirect_to payment_order_path(@order)
     end
   end
 
-  def voucher
+  def preview
     @order = Order.find params[:id]
 
   end
@@ -82,7 +81,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    order = OrderingMachine.make(params[:order])
+    order = OrderingMachine.new(params[:order]).process
     flash[:notice] = "Order created"
     redirect_to payment_order_path(order)
   end
