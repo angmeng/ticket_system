@@ -3,6 +3,7 @@ class DepartureGenerator
   	@routine    = Routine.find_by_id routine_id
   	@from_date  = options[:from_date]
   	@to_date    = options[:to_date]
+    @vessel     = VesselGenerator.generate
   	@result     = {}
   	if validates
   	  generate
@@ -34,6 +35,7 @@ class DepartureGenerator
       depart.date       = option_date
     end
     depart.time         = schedule.departure_time
+    depart.vessel_id    = @vessel.id
     depart.save! unless @routine.departures.where("date = ? and time = ?", depart.date, depart.time).first
   end
 
