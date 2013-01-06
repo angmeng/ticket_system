@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   helper_method :is_system_branch?
 
   def system_company
-    @system_company ||= Company.first
+    @system_company ||= Company.first || Company.create(:name => "Default Company", :register_number => "12345678")
   end
   helper_method :system_company
 

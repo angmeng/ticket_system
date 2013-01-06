@@ -33,9 +33,11 @@ class OrderingMachine
     case @order_params["trip_type"]
     when "round"
       @order.travel_type_id = TravelType::ROUND_TRIP
+      @order.discount = Company.first.discount_on_two_way_ticket
     when "one"
       @order.travel_type_id = TravelType::SINGLE_TRIP
     end
+    #@order.total_passenger = @order_params["adult"].to_i + @order_params["kid"].to_i
    	@order.save!
   end
 
