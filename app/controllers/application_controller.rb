@@ -54,8 +54,7 @@ class ApplicationController < ActionController::Base
   def require_system_admin
     unless is_admin?
       flash[:error] = "Only system admin is allowed to access"
-      session[:return_from_access_denied_url] = request.referer
-      redirect_to 
+      redirect_to "/exception_handler/access_denied"
     end
   end
 

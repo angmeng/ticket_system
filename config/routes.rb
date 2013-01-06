@@ -60,6 +60,8 @@ TicketSystem::Application.routes.draw do
   get "home/index"
   get "home/info"
   get "dashboard/index"
+  get "exception_handler/index"
+  get "exception_handler/access_denied"
 
   # authenticated :user do
   #   root :to => 'dashboard#index'
