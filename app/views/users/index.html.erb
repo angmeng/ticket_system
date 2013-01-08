@@ -22,12 +22,26 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :username_contains, :style => "width: 100px;" %></td>
+        <td><%= f.text_field :fullname_contains, :style => "width: 100px;" %></td>
+        <td><%= f.text_field :email_contains, :style => "width: 300px;" %></td>
+        <!--td>
+          <%#= f.radio_button :active_equals, true %>True&nbsp;
+          <%#= f.radio_button :active_equals, false %>False&nbsp;
+          <%#= f.radio_button :active_equals, "" %>All
+        </td-->
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @users.each do |user| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to user.username, user_path(user) %></td>
         <td><%= user.fullname %></td>
         <td><%= user.email %></td>
-       
         <td><%= user.active %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
@@ -49,7 +63,7 @@
               </div>
 
           </div>
-
+<%= paginate @users %>
 <%# link_to t('.new', :default => t("helpers.links.new")),
             new_user_path,
             :class => 'btn btn-primary' %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130106074954) do
+ActiveRecord::Schema.define(:version => 20130107190824) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -38,11 +38,11 @@ ActiveRecord::Schema.define(:version => 20130106074954) do
   create_table "companies", :force => true do |t|
     t.string   "name"
     t.string   "register_number"
-    t.string   "address_1",                                                               :default => ""
-    t.string   "address_2",                                                               :default => ""
-    t.string   "phone",                      :limit => 16,                                :default => ""
-    t.string   "fax",                        :limit => 16,                                :default => ""
-    t.string   "email",                                                                   :default => ""
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "phone",                      :limit => 16
+    t.string   "fax",                        :limit => 16
+    t.string   "email"
     t.datetime "created_at",                                                                               :null => false
     t.datetime "updated_at",                                                                               :null => false
     t.integer  "branch_id"
@@ -53,18 +53,22 @@ ActiveRecord::Schema.define(:version => 20130106074954) do
 
   create_table "departures", :force => true do |t|
     t.integer  "vessel_id"
-    t.integer  "sales_quota",  :default => 100
-    t.integer  "online_quota", :default => 0
-    t.boolean  "custom_quota", :default => false
-    t.boolean  "on_call",      :default => false
-    t.integer  "status_id",    :default => 1
-    t.boolean  "active",       :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.integer  "sales_quota",             :default => 100
+    t.integer  "online_quota",            :default => 0
+    t.boolean  "custom_quota",            :default => false
+    t.boolean  "on_call",                 :default => false
+    t.integer  "status_id",               :default => 1
+    t.boolean  "active",                  :default => true
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.boolean  "extra_trip"
     t.integer  "routine_id"
     t.date     "date"
     t.time     "time"
+    t.integer  "online_sales",            :default => 0
+    t.integer  "counter_sales",           :default => 0
+    t.integer  "available_online_sales",  :default => 0
+    t.integer  "available_counter_sales", :default => 0
   end
 
   add_index "departures", ["routine_id"], :name => "index_departures_on_routine_id"
@@ -92,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20130106074954) do
     t.decimal  "kid_fare",         :precision => 10, :scale => 2, :default => 0.0
     t.integer  "travel_type_id",                                  :default => 0
     t.integer  "number_of_infant",                                :default => 0
+    t.integer  "arrival_id",                                      :default => 0
   end
 
   add_index "order_items", ["departure_id"], :name => "index_order_items_on_departure_id"
@@ -113,6 +118,7 @@ ActiveRecord::Schema.define(:version => 20130106074954) do
     t.datetime "updated_at",                                                      :null => false
     t.integer  "travel_type_id",                                 :default => 0
     t.integer  "status_id",                                      :default => 0
+    t.integer  "total_passenger",                                :default => 0
   end
 
   add_index "orders", ["buyer_id", "buyer_type_id"], :name => "index_orders_on_buyer_id_and_buyer_type_id"
@@ -233,8 +239,8 @@ ActiveRecord::Schema.define(:version => 20130106074954) do
     t.integer  "branch_id",                                             :default => 0
     t.integer  "category_id",                                           :default => 0
     t.text     "address"
-    t.string   "phone",                                                 :default => ""
-    t.string   "fax",                                                   :default => ""
+    t.string   "phone"
+    t.string   "fax"
     t.text     "remark"
     t.boolean  "active",                                                :default => true
     t.datetime "created_at",                                                              :null => false
@@ -264,9 +270,9 @@ ActiveRecord::Schema.define(:version => 20130106074954) do
     t.string   "code"
     t.string   "name"
     t.text     "address"
-    t.string   "phone",      :limit => 16, :default => ""
-    t.string   "fax",        :limit => 16, :default => ""
-    t.string   "email",                    :default => ""
+    t.string   "phone",      :limit => 16
+    t.string   "fax",        :limit => 16
+    t.string   "email"
     t.text     "remark"
     t.boolean  "active",                   :default => true
     t.datetime "created_at",                                 :null => false

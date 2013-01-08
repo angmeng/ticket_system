@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :status_id
+  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :status_id, :total_passenger
 
   has_many :order_items
   belongs_to :seller, :class_name => "User"

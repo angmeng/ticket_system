@@ -3,7 +3,7 @@ class AgentsController < ApplicationController
   # GET /agents.json
   def index
     @branch = Branch.find params[:branch_id]
-    @agents = @branch.agents
+    @agents = @branch.agents.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -5,21 +5,21 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @company.name %></dd>
+  <dd><%= @company.name %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:register_number) %>:</strong></dt>
-  <dd><%= @company.register_number %></dd>
+  <dd><%= @company.register_number %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:address_1) %>:</strong></dt>
-  <dd><%= @company.address_1 %></dd>
+  <dd><%= @company.address_1 %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:address_2) %>:</strong></dt>
-  <dd><%= @company.address_2 %></dd>
+  <dd><%= @company.address_2 %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:phone) %>:</strong></dt>
-  <dd><%= @company.phone %></dd>
+  <dd><%= @company.phone %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:fax) %>:</strong></dt>
-  <dd><%= @company.fax %></dd>
+  <dd><%= @company.fax %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
-  <dd><%= @company.email %></dd>
+  <dd><%= @company.email %>&nbsp;</dd>
   <dt><strong>Associated branch:</strong></dt>
-  <dd><%= @company.branch.try(:name) %></dd>
+  <dd><%= @company.branch.try(:name) %>&nbsp;</dd>
 
   <dt><strong title="2 Way Ticket Discount">2 Way Ticket Disc:</strong></dt>
   <dd><%= number_with_precision(@company.discount_on_two_way_ticket, :precision => 2) %></dd>

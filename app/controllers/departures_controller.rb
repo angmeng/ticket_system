@@ -2,7 +2,9 @@ class DeparturesController < ApplicationController
   # GET /departures
   # GET /departures.json
   def index
-    @departures = Departure.includes(:routine, :vessel).order("routines.code, departures.date, departures.time")
+    @search = Departure.search(params[:search])
+    @departures = @search.includes(:routine, :vessel).order("routines.code, departures.date, departures.time")
+    @departures = @departures.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

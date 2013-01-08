@@ -23,6 +23,21 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
+        <td><%= f.text_field :name_contains, :style => "width: 100px;" %></td>
+        <td><%= f.text_field :email_contains, :style => "width: 200px;" %></td>
+        <!--td>
+          <%#= f.radio_button :active_equals, true %>True&nbsp;
+          <%#= f.radio_button :active_equals, false %>False&nbsp;
+          <%#= f.radio_button :active_equals, "" %>All
+        </td-->
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @warrants.each do |warrant| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to warrant.code, warrant_path(warrant) %></td>
@@ -53,7 +68,7 @@
               </div>
 
           </div>
-
+<%= paginate @warrants %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_warrant_path,
             :class => 'btn btn-primary' %>

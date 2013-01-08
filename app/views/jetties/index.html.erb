@@ -20,6 +20,20 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
+        <td><%= f.text_field :name_contains, :style => "width: 100px;" %></td>
+        <!--td>
+          <%#= f.radio_button :active_equals, true %>True&nbsp;
+          <%#= f.radio_button :active_equals, false %>False&nbsp;
+          <%#= f.radio_button :active_equals, "" %>All
+        </td-->
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @jetties.each do |jetty| %>
        <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to jetty.code, jetty_path(jetty) %></td>
@@ -47,6 +61,8 @@
               </div>
 
           </div>
+
+          <%= paginate @jetties %>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_jetty_path,

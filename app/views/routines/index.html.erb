@@ -22,6 +22,23 @@
     </tr>
   </thead>
   <tbody>
+
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
+        <td><%= f.select :departure_jetty_name_contains, options_from_collection_for_select(selection_jetty, :name, :name, @search.departure_jetty_name_contains), { :include_blank => true }, { :style => "width: 150px;" } %></td>
+        <td><%= f.select :arrival_jetty_name_contains, options_from_collection_for_select(selection_jetty, :name, :name, @search.arrival_jetty_name_contains), { :include_blank => true }, { :style => "width: 150px;" } %></td>
+        <td><%= f.text_field :sequence_no_equals, :style => "width: 70px;" %></td>
+        <!--td>
+          <%#= f.radio_button :active_equals, true %>True<br/>
+          <%#= f.radio_button :active_equals, false %>False<br/>
+          <%#= f.radio_button :active_equals, "" %>All
+        </td-->
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @routines.each do |routine| %>
        <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to routine.code, routine_path(routine) %></td>
@@ -51,7 +68,7 @@
               </div>
 
           </div>
-
+<%= paginate @routines %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_routine_path,
             :class => 'btn btn-primary' %>

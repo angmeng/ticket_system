@@ -2,7 +2,8 @@ class TopupCreditsController < ApplicationController
   # GET /topup_credits
   # GET /topup_credits.json
   def index
-    @topup_credits = TopupCredit.all
+    @search = TopupCredit.search(params[:search])
+    @topup_credits = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

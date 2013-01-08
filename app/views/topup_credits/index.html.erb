@@ -17,18 +17,52 @@
                                     <th><%= model_class.human_attribute_name(:agent_id) %></th>
                                     <th><%= model_class.human_attribute_name(:amount) %></th>
                                     <th><%= model_class.human_attribute_name(:staff_id) %></th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                        <% @topup_credits.each do |topup_credit| %>
-                           <tr class="<%= cycle("odd", "even") %>">
-                              <td><%=l topup_credit.created_at, :format => :long %></td>
-                              <td><%= topup_credit.agent.fullname %></td>
-                              <td><%= topup_credit.amount %></td>
-                              <td><%= topup_credit.staff.fullname %></td>
 
-                           </tr>
-                         <% end %>
+                            <tbody>
+
+                              <tr>
+                                <%= form_for @search do |f| %>
+
+                                  <td align="center">
+                                    <span data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" class="input-append date" id="start">
+                                      <% if @search.created_at_gte.present? %>
+                                        <%= f.text_field :created_at_gte, :value => "#{@search.created_at_gte.strftime("%d-%m-%Y")}", :class => "span2", :style => "width:100px;", :placeholder => "From Date" %>
+                                      <% else %>
+                                        <%= f.text_field :created_at_gte, :class => "span2", :style => "width:100px;", :placeholder => "From Date" %>
+                                      <% end %>
+                                      <span class="add-on"><i class="icon-th"></i></span>
+                                    </span>
+                                    -
+                                    <span data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" class="input-append date" id="end">
+                                      <% if @search.created_at_lte.present? %>
+                                        <%= f.text_field :created_at_lte, :value => "#{@search.created_at_lte.strftime("%d-%m-%Y")}", :class => "span2", :style => "width:100px;", :placeholder => "To Date" %>
+                                      <% else %>
+                                        <%= f.text_field :created_at_lte, :class => "span2", :style => "width:100px;", :placeholder => "To Date" %>
+                                      <% end %>
+                                      <span class="add-on"><i class="icon-th"></i></span>
+                                    </span>
+                                  </td>
+
+
+                                  <td><%= f.text_field :agent_fullname_contains, :style => "width: 100px;" %></td>
+                                  <td><%= f.text_field :amount_gte, :style => "width: 70px;", :placeholder => "From Price" %> - <%= f.text_field :amount_lte, :style => "width: 70px;", :placeholder => "To Price" %></td>
+                                  <td><%= f.text_field :staff_fullname_contains, :style => "width: 100px;" %></td>
+                                  <td><%= f.submit "Search" %></td>
+                                <% end %> 
+                              </tr>
+
+                                <% @topup_credits.each do |topup_credit| %>
+                                  <tr class="<%= cycle("odd", "even") %>">
+                                    <td><%=l topup_credit.created_at, :format => :long %></td>
+                                    <td><%= topup_credit.agent.fullname %></td>
+                                    <td><%= topup_credit.amount %></td>
+                                    <td><%= topup_credit.staff.fullname %></td>
+                                    <td>&nbsp;</td>
+                                  </tr>
+                                <% end %>
                               </tbody>
                               <tfoot>
 
@@ -42,9 +76,35 @@
 
           </div>
     <!--   </div> -->
-
+<%= paginate @topup_credits %>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_topup_credit_path,
             :class => 'btn btn-primary' %>
+
+
+<% content_for :javascripts_path do %>
+  <script>
+   $(function(){
+        window.prettyPrint && prettyPrint();
+
+        $('#start').datepicker({ dateFormat: "dd-mm-yy" }).on('changeDate', function(ev){
+            $('#start').datepicker('hide');
+          });
+
+        var startDate = new Date(2012,1,20);
+        var endDate = new Date(2012,1,25);
+
+        $('#end').datepicker({ dateFormat: "dd-mm-yy"}).on('changeDate', function(ev){
+            if (ev.date.valueOf() > endDate.valueOf()){
+              $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+            } else {
+              $('#alert').hide();
+              startDate = new Date(ev.date);
+              $('#start').text($('#end').data('date'));
+            }
+            $('#end').datepicker('hide');
+          });});
+  </script>
+<% end %>
 

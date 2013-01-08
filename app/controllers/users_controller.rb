@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   def index
-  	@users = User.where("category_id = ?", UserType::USER)
+    @search = User.search(params[:search])
+  	@users = @search.where("category_id = ?", UserType::USER)
+    @users = @users.page(params[:page]).per(25)
   end
 
   def show

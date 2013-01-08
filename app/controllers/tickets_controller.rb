@@ -2,7 +2,8 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    @search = Ticket.search(params[:search])
+    @tickets = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

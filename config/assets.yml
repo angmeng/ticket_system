@@ -48,6 +48,7 @@ css:
 
   bundles:
     application:  ["bootstrap.min", "base", "bootstrap-responsive", "media-fluid", "tables", "datepicker"]
+    # , "jquery.ui.timepicker"
     login: ["bootstrap.min", "base", "login"]
     home: ['bootstrap_home', 'bootstrap-responsive_home', 'sff']
 
@@ -70,6 +71,7 @@ js:
 
   bundles:
     application:  ["bootstrap.min", "jquery_ujs", "bootstrap-datepicker"]
+    # , "jquery.ui.timepicker"
     chart:        ["charts/jquery.flot", "charts/jquery.flot.resize", "charts/jquery.flot.pie"]
     #calendar:     [""]
 

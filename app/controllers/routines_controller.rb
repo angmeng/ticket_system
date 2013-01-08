@@ -2,7 +2,8 @@ class RoutinesController < ApplicationController
   # GET /routines
   # GET /routines.json
   def index
-    @routines = Routine.all
+    @search = Routine.search(params[:search])
+    @routines = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

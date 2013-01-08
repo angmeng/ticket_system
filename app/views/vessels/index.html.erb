@@ -22,6 +22,22 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
+        <td><%= f.text_field :name_contains, :style => "width: 100px;" %></td>
+        <td><%= f.text_field :total_passenger_gte, :style => "width: 100px;", :placeholder => "From Passenger" %> - <%= f.text_field :total_passenger_lte, :style => "width: 100px;", :placeholder => "To Passenger" %></td>
+        <td><%= f.text_field :total_crew_gte, :style => "width: 100px;", :placeholder => "From Crew" %> - <%= f.text_field :total_crew_lte, :style => "width: 100px;", :placeholder => "To Crew" %></td>
+        <!--td>
+          <%#= f.radio_button :active_equals, true %>True&nbsp;
+          <%#= f.radio_button :active_equals, false %>False&nbsp;
+          <%#= f.radio_button :active_equals, "" %>All
+        </td-->
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @vessels.each do |vessel| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to vessel.code, vessel_path(vessel) %></td>
@@ -51,7 +67,7 @@
               </div>
 
           </div>
-
+<%= paginate @vessels %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_vessel_path,
             :class => 'btn btn-primary' %>

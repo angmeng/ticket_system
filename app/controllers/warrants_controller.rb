@@ -2,7 +2,8 @@ class WarrantsController < ApplicationController
   # GET /warrants
   # GET /warrants.json
   def index
-    @warrants = Warrant.all
+    @search = Warrant.search(params[:search])
+    @warrants = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

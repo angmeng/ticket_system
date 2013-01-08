@@ -21,6 +21,32 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
+        <td><%= f.text_field :name_contains, :style => "width: 100px;" %></td>
+        <!--td>
+          <%#= f.radio_button :type_id_equals, TicketType::ADULT %>Adult&nbsp;
+          <%#= f.radio_button :type_id_equals, TicketType::KID %>Child&nbsp;
+          <%#= f.radio_button :type_id_equals, "" %>All
+        </td-->
+        <td>
+          <% if @search.type_id_equals.present? %> 
+            <%= f.select :type_id_equals, options_for_select(TicketType::OPTION, @search.type_id_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
+          <% else %>
+            <%= f.select :type_id_equals, options_for_select(TicketType::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
+          <% end %>
+        </td>
+        <!--td>
+          <%#= f.radio_button :active_equals, true %>True&nbsp;
+          <%#= f.radio_button :active_equals, false %>False&nbsp;
+          <%#= f.radio_button :active_equals, "" %>All
+        </td-->
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @ticket_categories.each do |ticket_category| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to ticket_category.code, ticket_category_path(ticket_category) %></td>
@@ -49,7 +75,7 @@
               </div>
 
           </div>
-
+<%= paginate @ticket_categories %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_ticket_category_path,
             :class => 'btn btn-primary' %>

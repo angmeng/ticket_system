@@ -15,13 +15,25 @@
       <th><%= model_class.human_attribute_name(:code) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:active) %></th>
-      <th><%= model_class.human_attribute_name(:branch_commission) %></th>
+      <th><%= model_class.human_attribute_name(:basic_commission) %></th>
       <th><%= model_class.human_attribute_name(:agent_commission) %></th>
    
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
+
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
+        <td><%= f.text_field :name_contains, :style => "width: 100px;" %></td>
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.text_field :basic_commission_gte, :style => "width: 70px;", :placeholder => "From Price" %> - <%= f.text_field :basic_commission_lte, :style => "width: 70px;", :placeholder => "To Price" %></td>
+        <td><%= f.text_field :agent_commission_gte, :style => "width: 70px;", :placeholder => "From Price" %> - <%= f.text_field :agent_commission_lte, :style => "width: 70px;", :placeholder => "To Price" %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @branches.each do |branch| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to branch.code, branch_path(branch) %></td>
@@ -54,7 +66,7 @@
               </div>
 
           </div>
-
+<%= paginate @branches %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_branch_path,
             :class => 'btn btn-primary' %>

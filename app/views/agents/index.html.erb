@@ -46,11 +46,13 @@
 </table>
  <br />
 
+
                       </div>
                   </div>
               </div>
 
           </div>
+          <%= paginate @agents %>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_branch_agent_path(@branch),

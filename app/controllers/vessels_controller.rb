@@ -2,7 +2,8 @@ class VesselsController < ApplicationController
   # GET /vessels
   # GET /vessels.json
   def index
-    @vessels = Vessel.all
+    @search = Vessel.search(params[:search])
+    @vessels = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

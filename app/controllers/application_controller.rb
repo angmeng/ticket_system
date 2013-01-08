@@ -2,6 +2,21 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!
 
+  helper_method :selection_routine
+  def selection_routine
+    @selection_routine ||= Routine.all
+  end
+
+  helper_method :selection_jetty
+  def selection_jetty
+    @selection_jetty ||= Jetty.all
+  end
+
+  helper_method :selection_vessel
+  def selection_vessel
+    @selection_vessel ||= Vessel.all
+  end
+
   protected
 
   ["is_manager?", "is_staff?", "is_agent?", "is_user?", "is_sub_agent?"].each do |m|

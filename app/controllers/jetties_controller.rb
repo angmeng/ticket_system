@@ -2,7 +2,8 @@ class JettiesController < ApplicationController
   # GET /jetties
   # GET /jetties.json
   def index
-    @jetties = Jetty.all
+    @search = Jetty.search(params[:search])
+    @jetties = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -3,7 +3,8 @@ class BranchesController < ApplicationController
   # GET /branches
   # GET /branches.json
   def index
-    @branches = Branch.all
+    @search = Branch.search(params[:search])
+    @branches = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

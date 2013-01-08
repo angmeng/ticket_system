@@ -2,7 +2,8 @@ class AgentGroupsController < ApplicationController
   # GET /agent_groups
   # GET /agent_groups.json
   def index
-    @agent_groups = AgentGroup.all
+    @search = AgentGroup.search(params[:search])
+    @agent_groups = @search.page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # index.html.erb

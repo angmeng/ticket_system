@@ -23,7 +23,28 @@
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
+
+  
   <tbody>
+    <tr>
+      <%= form_for @search do |f| %>
+        <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
+        <td></td>
+        <td><%= f.select :routine_id_equals, options_from_collection_for_select(selection_routine, :id, :code, @search.routine_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
+        <td><%= f.text_field :sales_quota_equals, :style => "width: 70px;" %></td>
+        <td><%= f.select :weekday_equals, options_for_select(WeekDays::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %></td>
+        <td>
+          <% if @search.extra_trip_equals.present? %> 
+            <%= f.select :extra_trip_equals, options_for_select(SelectionActive::OPTION, @search.extra_trip_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
+          <% else %>
+            <%= f.select :extra_trip_equals, options_for_select(SelectionActive::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
+          <% end %>
+        </td>
+        <td><%= general_active(@search.active_equals, f) %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
     <% @schedules.each do |schedule| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td><%= link_to schedule.code, schedule_path(schedule) %></td>
@@ -62,6 +83,7 @@
 
           </div>
 
+<%= paginate @schedules %>
 <%= link_to "New Schedule",
             new_schedule_path,
             :class => 'btn btn-primary' %>
@@ -69,3 +91,4 @@
 <%= link_to "New Extra Trip",
             new_extra_trip_schedules_path,
             :class => 'btn btn-primary' %>
+

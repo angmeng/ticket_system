@@ -26,6 +26,8 @@
 </div>
  
   <input class="btn btn btn-primary" name="commit" type="submit" value="Generate" />
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                departures_path, :class => 'btn' %>
 
 <% end %>
 
