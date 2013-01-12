@@ -4,7 +4,8 @@ class Ticket < ActiveRecord::Base
   belongs_to :routine
   belongs_to :ticket_category
   
-  validates :code, :name, :presence => true, :uniqueness => {:scope => [:routine_id, :ticket_category_id]}
+  validates :code, :name, :presence => true, :uniqueness => true
+  validates :ticket_category_id,  :uniqueness =>  {:scope => :routine_id}
   validates :fare, :initial_number, :numericality => true
   validates :routine_id, :ticket_category_id, :presence => true
 

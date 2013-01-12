@@ -1,9 +1,32 @@
-<div class="hero-unit">
-  <h1>Preview</h1>
-  <p>In progess</p>
-  <p>
-    <a class="btn btn-primary btn-large">
-      Detail
-    </a>
-  </p>
+<div id="accordion1" class="accordion">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" href="#notification" data-original-title="">
+                <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>Preview Ticket<i class="icon-chevron-down icon-white pull-right"></i>
+            </a>
+        </div>
+
+        <div id="notification" class="accordion-body collapse in">
+            <div class="accordion-inner paddind">
+
+              <%= link_to "Printable Preview", preview_printable_order_path(@order, :format => "pdf"), :class => 'btn', :target => "_blank"  %>
+
+            	<% if @order.is_single_trip? %>
+            		<%= render "preview_single_ticket", :order => @order %>
+          		<% elsif @order.is_round_trip? or @order.is_open_ticket? %>
+            		<%= render "preview_round_ticket", :order => @order %>
+              <% else %>
+      					"The Data has got mistaken..."
+            	<% end %>
+
+			</div>
+        </div>
+    </div>
 </div>
+
+<style type="text/css">
+  .ticket_border { border:1px solid black; padding: 5px;}
+  table { border-collapse:collapse; }
+</style>
+
+        

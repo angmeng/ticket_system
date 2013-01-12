@@ -1,10 +1,10 @@
-  <%#= debug @result %>
+<%#= debug @result %>
 <%= form_tag orders_path(Order.new) do %>
-  <%= render :partial => "order", :locals => {:order => @result, :seller => current_user} %>
-  <div class="row-fluid">
+  	<%= render :partial => "order", :locals => {:order => @result, :seller => current_user} %>
+  	<div class="row-fluid">
                                     <!--Tabs1-->
     <div class="span12">
-     <div id="accordion1" class="accordion">
+     	<div id="accordion1" class="accordion">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" href="#notification1" data-original-title="">
@@ -17,32 +17,21 @@
 	                        <table  class="table table-bordered table-striped pull-left" id="departure_table" >
 	                            <thead>
 								  <tr>
-								   <th>Depart</th>
-								   <th>Fare</th>
-
-								   <th>Select</th>
+								  	<th width="50px;">Select</th>
+								   	<th>Depart</th>
 								  </tr>
 	  						 </thead>
 	  						 <tbody>
-							 <% @result[:departures].each do |depart| %>
-							  <tr>
-							   <td><%= depart.date_time %></td>
-							   <td><% @result[:departure_ticket].each do |ticket| %>
-							   	     <% if @result[:order]["adult"].to_i > 0 && ticket.adult? %>
-							           <p><%= "#{ticket.ticket_category.name} #{ticket.fare}" %> </p>
-							         <% end %>
-							         <% if @result[:order]["kid"].to_i > 0 && ticket.kid? %>
-							           <p><%= "#{ticket.ticket_category.name} #{ticket.fare}" %> </p>
-							         <% end %>
-
-							       <% end %>
-							   </td>
-							   <td>
-							    <input type="radio" name="order[departure_routine_id]" id="order_departure_routine_id_<%= depart.id%>" value="<%= depart.id %>">
-							   </td>
-							  </tr>
-
-							  <% end %>
+								 <% @result[:departures].each do |depart| %>
+									<tr>
+										<td>
+											<% if depart.available_counter_sales >= @total_tickets.to_i %> 
+										    	<input type="radio" name="order[departure_routine_id]" id="order_departure_routine_id_<%= depart.id %>" value="<%= depart.id %>">
+									    	<% end %> 
+									   	</td>
+									   	<td><%= depart.date_time %></td>
+									</tr>
+								  <% end %>
 							</tbody>
 						</table>
 						<br />
@@ -52,11 +41,9 @@
 	                      </div>
 	                  </div>
 	              </div>
-
-	          </div>
-	        
-       </div>
-   </div>
+	        </div>    
+       	</div>
+   	</div>
 
 <% if @result[:order]["trip_type"] == "round" %>
   <div class="row-fluid">
@@ -74,26 +61,21 @@
                     	<% if @result[:arrivals].any? %>
 	                        <table  class="table table-bordered table-striped pull-left" id="departure_table" >
 	                            <thead>
-								  <tr>
-								   <th>Depart</th>
-								   <th>Fare</th>
-
-								   <th>Select</th>
-								  </tr>
-	  						 </thead>
+								  	<tr>
+								  		<th width="50px;">Select</th>
+								  		<th>Depart</th>
+								  	</tr>
+	  						 	</thead>
 	  						 <tbody>
 							 <% @result[:arrivals].each do |depart| %>
 							  <tr>
+							  	<td>
+							  		<% if depart.available_counter_sales >= @total_tickets.to_i %>
+							    		<input type="radio" name="order[arrival_routine_id]" id="order_arrival_routine_id_<%= depart.id %>" value="<%= depart.id %>">
+							    	<% end %>
+							   </td>
 							   <td><%= depart.date_time %></td>
-							   <td><% @result[:arrival_ticket].each do |ticket| %>
-							         <p><%= "#{ticket.ticket_category.name} #{ticket.fare}" %> </p>
-							       <% end %>
-							   </td>
-							   <td>
-							    <input type="radio" name="order[arrival_routine_id]" id="order_arrival_routine_id_<%= depart.id%>" value="<%= depart.id %>">
-							   </td>
 							  </tr>
-
 							 <% end %>
 							</tbody>
 						 </table>
@@ -112,26 +94,66 @@
 		   </div>
 		<% end # endif @result[:order]["trip_type"] == "round" %>
 
+	<% if @result[:order]["trip_type"] == "open_ticket" %>
+	  	<div class="row-fluid">
+	    	<div class="span12">
+	      		<div id="accordion2" class="accordion">
+	        		<div class="accordion-group">
+	          			<div class="accordion-heading">
+	            			<a class="accordion-toggle" data-toggle="collapse" href="#notification2" data-original-title="">
+	              				<i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  <%= @result[:return_title] %> <i class="icon-chevron-down icon-white pull-right"></i>
+	            			</a>
+	          			</div>
+
+	          			<div id="notification2" class="accordion-body collapse in">
+	            			<div class="accordion-inner paddind">
+	            				To be claim at counter
+
+	            				<%= hidden_field_tag "order[departure_id]", @result[:order]["arrival_jetty_id"]  %> <!-- 2 -->
+	            				<%= hidden_field_tag "order[arrival_id]", @result[:order]["departure_jetty_id"]  %> <!-- 1 -->
+		                    </div>
+		                </div>
+		            </div>
+		        </div>			  
+			</div>
+		</div>
+	<% end %>
+
   <!-- <div class="row-fluid"> -->
     <!--Tabs1-->
    <div class="row-fluid">
     <div class="span11">
       <div class="control-group select required">
-		<label class="radio inline">
-		  <input type="radio" name="order[buyer_type]" id="order_buyer_type_normal" value="normal" checked="checked">
-		  Normal
-		</label>
-		<label class="radio inline">
-		  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent">
-		  Agent
-		</label>
-		<label class="radio inline">
-		  <input type="radio" name="order[buyer_type]" id="order_buyer_type_warrant" value="warrant">
-		  Warrant
-		</label>
-		</div>
+
+      	<% if @result[:order]["trip_type"] == "open_ticket" %>
+      		<label class="radio inline">
+			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent" checked="checked">
+			  Agent
+			</label>
+      	<% else %>
+			<label class="radio inline">
+			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_normal" value="normal" checked="checked">
+			  Normal
+			</label>
+			<label class="radio inline">
+			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent">
+			  Agent
+			</label>
+			<label class="radio inline">
+			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_warrant" value="warrant">
+			  Warrant
+			</label>
+		<% end %> 
+
+	  </div>
+	  
 		<div class="controls">
-		  <select class="select"  name="order[agent_id]" id="order_agent_id" style="display:none">
+
+	<% if @result[:order]["trip_type"] == "open_ticket" %>
+		<select class="select"  name="order[agent_id]" id="order_agent_id">
+	<% else %> 
+		<select class="select"  name="order[agent_id]" id="order_agent_id" style="display:none">
+	<% end %> 
 		    <option value="">Choose agent</option>
 		    <% @agents.each do |agent| %>
 		      <option value="<%= agent.id %>"><%= agent.fullname%></option>
@@ -148,6 +170,8 @@
 
 
   	   <input class="btn btn btn-primary btn-large" name="commit" type="submit" value="   Order    " id="order_button" />
+
+  	   <%= link_to t('.back', :default => t("helpers.links.back")), new_order_path, :class => 'btn'  %>
     </div>
    </div>
         <!--/Tabs1-->
@@ -186,6 +210,18 @@
           	<% if @result[:order]["trip_type"] == "round" %>
           	  if($("input[name='order[arrival_routine_id]']:radio:checked").length==0)
           	  {
+          	  	alert("You must select a return route to continue");
+          	  	return false
+          	  }
+          	<% end %>
+
+          	<% if @result[:order]["trip_type"] == "open_ticket" %>
+          	  if ($("input[name='order[arrival_id]']").length==0){
+          	  	alert("You must select a return route to continue");
+          	  	return false
+          	  }
+
+          	  if ($("input[name='order[departure_id]']").length==0){
           	  	alert("You must select a return route to continue");
           	  	return false
           	  }

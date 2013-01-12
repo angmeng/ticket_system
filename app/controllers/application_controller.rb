@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  ["is_manager?", "is_staff?", "is_agent?", "is_user?", "is_sub_agent?"].each do |m|
+  ["is_manager?", "is_staff?", "is_agent?", "is_user?", "is_agent?"].each do |m|
     define_method m do
       current_user && current_user.send(m)
     end

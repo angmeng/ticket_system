@@ -31,11 +31,6 @@
         <td><%= f.text_field :code_contains, :style => "width: 70px;" %></td>
         <td><%= f.text_field :name_contains, :style => "width: 100px;" %></td>
         <td><%= f.select :routine_code_contains, options_from_collection_for_select(selection_routine, :code, :code, @search.routine_code_contains), { :include_blank => true }, { :style => "width: 100px;" } %></td>
-        <!--td>
-          <%#= f.radio_button :ticket_category_type_id_equals, TicketType::ADULT %>Adult<br/>
-          <%#= f.radio_button :ticket_category_type_id_equals, TicketType::KID %>Child<br/>
-          <%#= f.radio_button :ticket_category_type_id_equals, "" %>All
-        </td-->
         <td>
           <% if @search.ticket_category_type_id_equals.present? %> 
             <%= f.select :ticket_category_type_id_equals, options_for_select(TicketType::OPTION, @search.ticket_category_type_id_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
@@ -48,11 +43,6 @@
           <div><%= f.text_field :fare_gte, :style => "width: 70px;", :placeholder => "From Fare" %></div>
           <div><%= f.text_field :fare_lte, :style => "width: 70px;", :placeholder => "To Fare" %></div>
         </td>
-        <!--td>
-          <%#= f.radio_button :inventory_count_equals, true %>True<br/>
-          <%#= f.radio_button :inventory_count_equals, false %>False<br/>
-          <%#= f.radio_button :inventory_count_equals, "" %>All
-        </td-->
         <td>
           <% if @search.inventory_count_equals.present? %> 
             <%= f.select :inventory_count_equals, options_for_select(SelectionActive::OPTION, @search.inventory_count_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
@@ -60,11 +50,6 @@
             <%= f.select :inventory_count_equals, options_for_select(SelectionActive::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
           <% end %>
         </td>
-        <!--td>
-          <%#= f.radio_button :required_passenger_details_equals, true %>True<br/>
-          <%#= f.radio_button :required_passenger_details_equals, false %>False<br/>
-          <%#= f.radio_button :required_passenger_details_equals, "" %>All
-        </td-->
         <td>
           <% if @search.required_passenger_details_equals.present? %> 
             <%= f.select :required_passenger_details_equals, options_for_select(SelectionActive::OPTION, @search.required_passenger_details_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
@@ -73,11 +58,6 @@
           <% end %>
         </td>
         <td><%= f.text_field :valid_days_equals, :style => "width: 70px;" %></td>
-        <!--td>
-          <%#= f.radio_button :no_expired_equals, true %>True<br/>
-          <%#= f.radio_button :no_expired_equals, false %>False<br/>
-          <%#= f.radio_button :no_expired_equals, "" %>All
-        </td-->
         <td>
           <% if @search.no_expired_equals.present? %> 
             <%= f.select :no_expired_equals, options_for_select(SelectionActive::OPTION, @search.no_expired_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
@@ -85,11 +65,6 @@
             <%= f.select :no_expired_equals, options_for_select(SelectionActive::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
           <% end %>
         </td>
-        <!--td>
-          <%#= f.radio_button :active_equals, true %>True<br/>
-          <%#= f.radio_button :active_equals, false %>False<br/>
-          <%#= f.radio_button :active_equals, "" %>All
-        </td-->
         <td><%= general_active(@search.active_equals, f) %></td>
         <td><%= f.submit "Search" %></td>
       <% end %> 

@@ -1,0 +1,32 @@
+<table>
+	<tr>
+		<td>Receipt No.</td>
+		<td>: <%= item.serial_number rescue '-' %></td>
+	</tr>
+	<tr>
+		<td>From</td>
+		<td>: <%= item.order_item.routine.departure_jetty.name rescue '-' %></td>
+	</tr>
+	<tr>
+		<td>To</td>
+		<td>: <%= item.order_item.routine.arrival_jetty.name rescue '-' %></td>
+	</tr>
+	<tr>
+		<td>Date</td>
+		<td>: <%= item.order_item.departure.date.strftime("%a %d-%b-%Y") rescue '-' %></td>
+	</tr>
+	<tr>
+		<td>Time</td>
+		<td>: <%= item.order_item.departure.time.strftime("%I:%M %p") rescue '-' %></td>
+	</tr>
+	<tr>
+		<td colspan='2'>
+			<strong style="font-size: 15px;"><%= item.ticket_category.name rescue '-' %></strong>
+		</td>
+	</tr>
+	<tr>
+		<td colspan='2'>
+			<strong style="font-size: 15px;">RM <%= number_with_precision(item.fare, :precision => 2) rescue '-' %></strong>
+		</td>
+	</tr>
+</table>

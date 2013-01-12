@@ -1,0 +1,15 @@
+<% item.order_item_details.each do |detail| %>
+
+	<% if @count == 0 %>
+		<table>
+	<% else %> 
+		<table style="page-break-before: always;">
+	<% end %>
+		<tr>
+			<td class="ticket_border"><%= render "preview_screen_detail", :order => order, :item => detail %></td>
+			<td class="ticket_border"><%= render "preview_screen_detail", :order => order, :item => detail %></td>
+		</tr>
+	</table>
+	<% @count = @count.to_i + 1 %>
+	
+<% end %>

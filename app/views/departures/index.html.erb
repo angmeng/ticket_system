@@ -13,20 +13,15 @@
     <tr>
      
       <th><%= model_class.human_attribute_name(:routine_id) %></th>
-      <th>Departure time</th>
+      <th width="100">Departure time</th>
       <th><%= model_class.human_attribute_name(:vessel_id) %></th>
-      <th><%= model_class.human_attribute_name(:sales_quota) %></th>
-      <!--th><%#= model_class.human_attribute_name(:custom_quota) %></th-->
       <th><%= model_class.human_attribute_name(:extra_trip) %></th>
-      <!--th><%#= model_class.human_attribute_name(:on_call) %></th-->
-      <!-- <th><%#= model_class.human_attribute_name(:status_id) %></th> -->
-      <!-- <th><%#= model_class.human_attribute_name(:active) %></th> -->
-      
-      <th><%= model_class.human_attribute_name(:online_sales) %></th>
+      <th>Counter Quota</th>
       <th><%= model_class.human_attribute_name(:counter_sales) %></th>
-      <th><%= model_class.human_attribute_name(:available_online_sales) %></th>
       <th><%= model_class.human_attribute_name(:available_counter_sales) %></th>
-
+      <th><%= model_class.human_attribute_name(:online_quota) %></th>
+      <th><%= model_class.human_attribute_name(:online_sales) %></th>
+      <th><%= model_class.human_attribute_name(:available_online_sales) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -37,14 +32,6 @@
         <td><%= f.select :routine_id_equals, options_from_collection_for_select(selection_routine, :id, :code, @search.routine_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
         <td></td>
         <td><%= f.select :vessel_id_equals, options_from_collection_for_select(selection_vessel, :id, :name, @search.vessel_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
-        <td><%= f.text_field :sales_quota_gte, :style => "width: 70px;", :placeholder => "From Quota" %> - <%= f.text_field :sales_quota_lte, :style => "width: 70px;", :placeholder => "To Quota" %></td>
-        <!--td>
-          <%# if @search.custom_quota_equals.present? %> 
-            <%#= f.select :custom_quota_equals, options_for_select(SelectionActive::OPTION, @search.custom_quota_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
-          <%# else %>
-            <%#= f.select :custom_quota_equals, options_for_select(SelectionActive::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
-          <%# end %>
-        </td-->
         <td>
           <% if @search.extra_trip_equals.present? %> 
             <%= f.select :extra_trip_equals, options_for_select(SelectionActive::OPTION, @search.extra_trip_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
@@ -52,26 +39,13 @@
             <%= f.select :extra_trip_equals, options_for_select(SelectionActive::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
           <% end %>
         </td>
-        <!--td>
-          <%# if @search.on_call_equals.present? %> 
-            <%#= f.select :on_call_equals, options_for_select(SelectionActive::OPTION, @search.on_call_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
-          <%# else %>
-            <%#= f.select :on_call_equals, options_for_select(SelectionActive::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
-          <%# end %>
-        </td-->
-        <!--td>
-          <%# if @search.status_id_equals.present? %>
-            <%#= f.select :status_id_equals, options_for_select(DepartureStatusType::OPTION, @search.status_id_equals), { :include_blank => true }, { :style => "width: 70px;" } %>
-          <%# else %>
-            <%#= f.select :status_id_equals, options_for_select(DepartureStatusType::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
-          <%# end %>
-        </td--> 
-        <!--td><%#= general_active(@search.active_equals, f) %></td-->
+        <td><%= f.text_field :sales_quota_gte, :style => "width: 60px;", :placeholder => "From SQ" %><%= f.text_field :sales_quota_lte, :style => "width: 60px;", :placeholder => "To SQ" %></td>
+        <td><%= f.text_field :counter_sales_gte, :style => "width: 60px;", :placeholder => "From CS" %><%= f.text_field :counter_sales_lte, :style => "width: 60px;", :placeholder => "To CS" %></td>        
+        <td><%= f.text_field :available_counter_sales_gte, :style => "width: 60px;", :placeholder => "From ACS" %><%= f.text_field :available_counter_sales_lte, :style => "width: 60px;", :placeholder => "To ACS" %></td>        
+        <td><%= f.text_field :online_quota_gte, :style => "width: 60px;", :placeholder => "From OQ" %><%= f.text_field :online_quota_lte, :style => "width: 60px;", :placeholder => "To OQ" %></td>
+        <td><%= f.text_field :online_sales_gte, :style => "width: 60px;", :placeholder => "From OS" %><%= f.text_field :online_sales_lte, :style => "width: 60px;", :placeholder => "To OS" %></td>
+        <td><%= f.text_field :available_online_sales_gte, :style => "width: 60px;", :placeholder => "From AOS" %><%= f.text_field :available_online_sales_lte, :style => "width: 60px;", :placeholder => "To AOS" %></td>
 
-        <td><%= f.text_field :online_sales_gte, :style => "width: 70px;", :placeholder => "From Sales" %> - <%= f.text_field :online_sales_lte, :style => "width: 70px;", :placeholder => "To Sales" %></td>
-        <td><%= f.text_field :counter_sales_gte, :style => "width: 70px;", :placeholder => "From Sales" %> - <%= f.text_field :counter_sales_lte, :style => "width: 70px;", :placeholder => "To Sales" %></td>
-        <td><%= f.text_field :available_online_sales_gte, :style => "width: 70px;", :placeholder => "From Sales" %> - <%= f.text_field :available_online_sales_lte, :style => "width: 70px;", :placeholder => "To Sales" %></td>
-        <td><%= f.text_field :available_counter_sales_gte, :style => "width: 70px;", :placeholder => "From Sales" %> - <%= f.text_field :available_counter_sales_lte, :style => "width: 70px;", :placeholder => "To Sales" %></td>
         <td><%= f.submit "Search" %></td>
       <% end %> 
     </tr>
@@ -82,17 +56,13 @@
         <td><%= departure.routine.code %></td>
         <td><%= departure.date_time %></td>
         <td><%= departure.vessel.name rescue "Not assigned" %></td>
-        <td><%= departure.sales_quota %></td>
-        <!-- <td><%#= departure.custom_quota %></td> -->
         <td><%= departure.extra_trip %></td>
-        <!-- <td><%#= departure.on_call %></td> -->
-        <!-- <td><%#= departure.status %></td> -->
-        <!-- <td><%#= departure.active %></td> -->
-        <td><%= departure.online_sales %></td>
+        <td><%= departure.sales_quota %></td>
         <td><%= departure.counter_sales %></td>
-        <td><%= departure.available_online_sales %></td>
         <td><%= departure.available_counter_sales %></td>
-       
+        <td><%= departure.online_quota %></td>
+        <td><%= departure.online_sales %></td>
+        <td><%= departure.available_online_sales %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_departure_path(departure), :class => 'btn btn-mini' %>

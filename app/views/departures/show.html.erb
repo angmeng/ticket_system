@@ -4,20 +4,32 @@
 </div>
 
 <dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:routine_id) %>:</strong></dt>
+  <dd><%= @departure.routine.code rescue "-" %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:vessel_id) %>:</strong></dt>
   <dd><%= @departure.vessel.name rescue "-" %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:sales_quota) %>:</strong></dt>
   <dd><%= @departure.sales_quota %>&nbsp;</dd>
   <dt><strong><%= model_class.human_attribute_name(:online_quota) %>:</strong></dt>
   <dd><%= @departure.online_quota %>&nbsp;</dd>
-  <dt><strong><%= model_class.human_attribute_name(:custom_quota) %>:</strong></dt>
-  <dd><%= @departure.custom_quota %>&nbsp;</dd>
-  <dt><strong><%= model_class.human_attribute_name(:on_call) %>:</strong></dt>
-  <dd><%= @departure.on_call %>&nbsp;</dd>
-  <dt><strong><%= model_class.human_attribute_name(:status_id) %>:</strong></dt>
-  <dd><%= @departure.status %>&nbsp;</dd>
-  <dt><strong><%= model_class.human_attribute_name(:active) %>:</strong></dt>
-  <dd><%= @departure.active %>&nbsp;</dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:online_sales) %>:</strong></dt>
+  <dd><%= @departure.online_sales %>&nbsp;</dd>
+  <dt><strong><%= model_class.human_attribute_name(:counter_sales) %>:</strong></dt>
+  <dd><%= @departure.counter_sales %>&nbsp;</dd>
+  <dt><strong><%= model_class.human_attribute_name(:available_online_sales) %>:</strong></dt>
+  <dd><%= @departure.available_online_sales %>&nbsp;</dd>
+  <dt><strong><%= model_class.human_attribute_name(:available_counter_sales) %>:</strong></dt>
+  <dd><%= @departure.available_counter_sales %>&nbsp;</dd>
+  
+  <!--dt><strong><%#= model_class.human_attribute_name(:custom_quota) %>:</strong></dt>
+  <dd><%#= @departure.custom_quota %>&nbsp;</dd-->
+  <!--dt><strong><%#= model_class.human_attribute_name(:on_call) %>:</strong></dt>
+  <dd><%#= @departure.on_call %>&nbsp;</dd-->
+  <!--dt><strong><%#= model_class.human_attribute_name(:status_id) %>:</strong></dt>
+  <dd><%#= @departure.status %>&nbsp;</dd-->
+  <!--dt><strong><%#= model_class.human_attribute_name(:active) %>:</strong></dt>
+  <dd><%#= @departure.active %>&nbsp;</dd-->
 </dl>
 
 <div class="form-actions">

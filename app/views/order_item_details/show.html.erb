@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Order item:</b>
+  <%= @order_item_detail.order_item_id %>
+</p>
+
+<p>
+  <b>Serial number:</b>
+  <%= @order_item_detail.serial_number %>
+</p>
+
+<p>
+  <b>Ticket status:</b>
+  <%= @order_item_detail.ticket_status_id %>
+</p>
+
+<p>
+  <b>Fare:</b>
+  <%= @order_item_detail.fare %>
+</p>
+
+<p>
+  <b>Ticket category:</b>
+  <%= @order_item_detail.ticket_category_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_order_item_detail_path(@order_item_detail) %> |
+<%= link_to 'Back', order_item_details_path %>

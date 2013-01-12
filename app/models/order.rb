@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :status_id, :total_passenger
+  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :total_passenger
 
   has_many :order_items
   belongs_to :seller, :class_name => "User"
@@ -21,12 +21,20 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def is_single_trip?
+    self.travel_type_id == TravelType::SINGLE_TRIP
+  end
+
   def is_round_trip?
     self.travel_type_id == TravelType::ROUND_TRIP
   end
 
-  def buyer_is_sub_agent?
-    self.buyer_type_id == BuyerType::SUB_AGENT
+  def is_open_ticket?
+    self.travel_type_id == TravelType::OPEN_TICKET
+  end
+
+  def buyer_is_agent?
+    self.buyer_type_id == BuyerType::AGENT
   end
 
   def buyer_is_public?
@@ -37,8 +45,8 @@ class Order < ActiveRecord::Base
     self.buyer_type_id == BuyerType::WARRANT
   end
 
-  def sub_agent
-    @sub_agent ||= SubAgent.find_by_id(self.buyer_id)
+  def agent
+    @agent ||= Agent.find_by_id(self.buyer_id)
   end
 
   def warrant
@@ -49,8 +57,8 @@ class Order < ActiveRecord::Base
     case self.buyer_type_id
     when BuyerType::PUBLIC
       "Public User"
-    when BuyerType::SUB_AGENT
-      sub_agent.fullname rescue "-"
+    when BuyerType::AGENT
+      agent.fullname rescue "-"
     when BuyerType::WARRANT
       warrant.name rescue "-"
     end
@@ -60,8 +68,8 @@ class Order < ActiveRecord::Base
     case self.buyer_type_id
     when BuyerType::PUBLIC
       "Buyer Type"
-    when BuyerType::SUB_AGENT
-      "Sub Agent"
+    when BuyerType::AGENT
+      "Agent"
     when BuyerType::WARRANT
       "Warrant"
     end
@@ -71,8 +79,8 @@ class Order < ActiveRecord::Base
     case self.buyer_type_id
     when BuyerType::PUBLIC
       "Not Available"
-    when BuyerType::SUB_AGENT
-      sub_agent.credit rescue "-"
+    when BuyerType::AGENT
+      agent.credit rescue "-"
     when BuyerType::WARRANT
       "Not Available"
     end
@@ -118,9 +126,35 @@ class Order < ActiveRecord::Base
   end
 
   def verified!
-    if is_pending?
-      self.status_id = OrderStatus::VERIFIED 
-      save!
+    #if is_pending?
+      #self.status_id = OrderStatus::VERIFIED 
+      #save!
+    #end
+
+    if self.order_items.present?
+      if self.is_open_ticket?
+
+        go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
+        go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
+
+        come_back = self.order_items.find_by_travel_type_id(TravelType::COMING_BACK)
+        come_back.update_attributes!(:status_id => OrderStatus::VERIFIED) if come_back
+        # :voucher_no => 
+
+      elsif self.is_round_trip?
+
+        go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
+        go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
+
+        come_back = self.order_items.find_by_travel_type_id(TravelType::COMING_BACK)
+        come_back.update_attributes!(:status_id => OrderStatus::VERIFIED) if come_back
+
+      else
+
+        go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
+        go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
+
+      end
     end
   end
 

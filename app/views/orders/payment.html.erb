@@ -67,7 +67,7 @@
           });
 
           $("#submit_button").click(function(){
-            <% if @order.buyer_is_sub_agent? && @net_total > @order.buyer_credit %>
+            <% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
             if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CREDIT %>)
               {
                 alert("Credit is not enough !");

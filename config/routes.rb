@@ -1,5 +1,8 @@
 TicketSystem::Application.routes.draw do
 
+  resources :order_item_details
+
+
   resources :orders do
     collection do
       post :search_departure
@@ -8,6 +11,7 @@ TicketSystem::Application.routes.draw do
       get  :payment
       post :make_payment
       get  :preview
+      get  :preview_printable
       delete :void
     end
   end

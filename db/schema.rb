@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130107190824) do
+ActiveRecord::Schema.define(:version => 20130111055142) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(:version => 20130107190824) do
     t.datetime "updated_at",                                                                               :null => false
     t.integer  "branch_id"
     t.decimal  "discount_on_two_way_ticket",               :precision => 10, :scale => 2, :default => 5.0
+    t.integer  "last_voucher_number",                                                     :default => 0
+    t.integer  "last_receipt_number",                                                     :default => 0
   end
 
   add_index "companies", ["register_number"], :name => "index_companies_on_register_number", :unique => true
@@ -84,6 +86,16 @@ ActiveRecord::Schema.define(:version => 20130107190824) do
 
   add_index "jetties", ["code"], :name => "index_jetties_on_code", :unique => true
 
+  create_table "order_item_details", :force => true do |t|
+    t.integer  "order_item_id",                                     :default => 0
+    t.string   "serial_number"
+    t.integer  "ticket_status_id",                                  :default => 0
+    t.decimal  "fare",               :precision => 10, :scale => 2, :default => 0.0
+    t.integer  "ticket_category_id",                                :default => 0
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
+  end
+
   create_table "order_items", :force => true do |t|
     t.integer  "order_id",                                                         :null => false
     t.integer  "departure_id",                                                     :null => false
@@ -97,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20130107190824) do
     t.integer  "travel_type_id",                                  :default => 0
     t.integer  "number_of_infant",                                :default => 0
     t.integer  "arrival_id",                                      :default => 0
+    t.integer  "status_id",                                       :default => 0
+    t.decimal  "infant_fare",      :precision => 10, :scale => 2, :default => 0.0
   end
 
   add_index "order_items", ["departure_id"], :name => "index_order_items_on_departure_id"
@@ -109,22 +123,22 @@ ActiveRecord::Schema.define(:version => 20130107190824) do
     t.integer  "buyer_id"
     t.integer  "buyer_type_id"
     t.integer  "payment_type_id"
-    t.integer  "free_tickets",                                   :default => 0
-    t.decimal  "discount",        :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "extra_charges",   :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "amount_tender",   :precision => 10, :scale => 2, :default => 0.0
+    t.integer  "free_tickets",                                            :default => 0
+    t.decimal  "discount",                 :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "extra_charges",            :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "amount_tender",            :precision => 10, :scale => 2, :default => 0.0
     t.text     "remark"
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
-    t.integer  "travel_type_id",                                 :default => 0
-    t.integer  "status_id",                                      :default => 0
-    t.integer  "total_passenger",                                :default => 0
+    t.datetime "created_at",                                                                 :null => false
+    t.datetime "updated_at",                                                                 :null => false
+    t.integer  "travel_type_id",                                          :default => 0
+    t.integer  "total_passenger",                                         :default => 0
+    t.boolean  "bypass_credit",                                           :default => false
+    t.integer  "bypass_credit_manager_id",                                :default => 0
   end
 
   add_index "orders", ["buyer_id", "buyer_type_id"], :name => "index_orders_on_buyer_id_and_buyer_type_id"
   add_index "orders", ["payment_type_id"], :name => "index_orders_on_payment_type_id"
   add_index "orders", ["seller_id"], :name => "index_orders_on_seller_id"
-  add_index "orders", ["status_id"], :name => "index_orders_on_status_id"
   add_index "orders", ["travel_type_id"], :name => "index_orders_on_travel_type_id"
 
   create_table "routines", :force => true do |t|

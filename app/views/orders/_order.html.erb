@@ -6,8 +6,12 @@
 <%= hidden_field_tag "order[return_date]", order[:order]["return_date"] %>
 <%= hidden_field_tag "order[adult]", order[:order]["adult"] %>
 <%= hidden_field_tag "order[kid]", order[:order]["kid"] %>
+<%= hidden_field_tag "order[infant]", order[:order]["infant"] %>
 <%= hidden_field_tag "order[seller_id]", seller.id %>
-<%= hidden_field_tag "order[status_id]", order[:order]["status_id"] %>
+<%#= hidden_field_tag "order[status_id]", order[:order]["status_id"] %>
+<% @total_tickets = order[:order]["adult"].to_i + order[:order]["kid"].to_i %>
+<%# @passengers = order[:order]["adult"].to_i + order[:order]["kid"].to_i + order[:order]["infant"] %>
+<%#= hidden_field_tag "order[total_passenger]", @passengers %>
 
 <% order[:departure_ticket].each do |ticket| %>
 	<%= hidden_field_tag "order[departure_ticket_ids][]", ticket.id %>

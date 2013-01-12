@@ -41,6 +41,7 @@ gem 'simple_form'
 gem 'kaminari'
 gem 'meta_search'
 gem 'asset_hat', '~> 0.4.2'
+gem 'pdfkit'
 
 
 

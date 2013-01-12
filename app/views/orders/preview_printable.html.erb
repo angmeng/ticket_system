@@ -1,0 +1,17 @@
+<div>
+	<% if @order.is_single_trip? %>
+		<%= render "preview_single_ticket", :order => @order %>
+	<% elsif @order.is_round_trip? or @order.is_open_ticket? %>
+		<%= render "preview_round_ticket", :order => @order %>
+	<% else %>
+		"The Data has got mistaken..."
+	<% end %>
+</div>
+
+<style type="text/css">
+
+  .ticket_border { border:1px solid black; padding: 5px;}
+  table { border-collapse:collapse; }
+  p, ol, ul, td { font-size: 11px; }
+
+</style>

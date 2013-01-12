@@ -1,0 +1,31 @@
+<h1>Listing order_item_details</h1>
+
+<table>
+  <tr>
+    <th>Order item</th>
+    <th>Serial number</th>
+    <th>Ticket status</th>
+    <th>Fare</th>
+    <th>Ticket category</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @order_item_details.each do |order_item_detail| %>
+  <tr>
+    <td><%= order_item_detail.order_item_id %></td>
+    <td><%= order_item_detail.serial_number %></td>
+    <td><%= order_item_detail.ticket_status_id %></td>
+    <td><%= order_item_detail.fare %></td>
+    <td><%= order_item_detail.ticket_category_id %></td>
+    <td><%= link_to 'Show', order_item_detail %></td>
+    <td><%= link_to 'Edit', edit_order_item_detail_path(order_item_detail) %></td>
+    <td><%= link_to 'Destroy', order_item_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Order item detail', new_order_item_detail_path %>

@@ -3,6 +3,7 @@ class TicketCategory < ActiveRecord::Base
   validates :name, :code, :type_id, :presence => true, :uniqueness => true
 
   has_many :tickets
+  has_one  :order_item_detail
 
   def type
   	case self.type_id

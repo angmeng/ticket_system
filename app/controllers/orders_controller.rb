@@ -47,7 +47,7 @@ class OrdersController < ApplicationController
   def payment
     @order = Order.find params[:id]
     @net_total = 0.00
-    redirect_to preview_order_path(@order) if @order.is_verified? || @order.is_voided?
+    #redirect_to preview_order_path(@order) if  @order.is_voided?
   end
 
   def make_payment
@@ -64,7 +64,12 @@ class OrdersController < ApplicationController
 
   def preview
     @order = Order.find params[:id]
+  end
 
+  def preview_printable
+    @order = Order.find params[:id]
+    @count = 0
+    render :layout => false
   end
 
   def void
@@ -81,7 +86,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    order = OrderingMachine.new(params[:order]).process
+    order = OrderingMachine.new(params[:order], system_company).process
     flash[:notice] = "Order created"
     redirect_to payment_order_path(order)
   end

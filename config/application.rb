@@ -64,5 +64,7 @@ module TicketSystem
       g.helper_specs false
     end
 
+    config.middleware.use "PDFKit::Middleware", :print_media_type => true
+
   end
 end

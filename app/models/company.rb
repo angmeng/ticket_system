@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  attr_accessible :address_1, :address_2, :email, :fax, :name, :phone, :register_number, :branch_id, :discount_on_two_way_ticket
+  attr_accessible :address_1, :address_2, :email, :fax, :name, :phone, :register_number, :branch_id, :discount_on_two_way_ticket,  :last_voucher_number, :last_receipt_number
   belongs_to :branch
 
   validates :name, :register_number, :presence => true, :uniqueness => true

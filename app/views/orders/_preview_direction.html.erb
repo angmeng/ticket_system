@@ -1,0 +1,21 @@
+<% if item.is_going_out? %>
+
+	<%= render "preview_details", :order => order, :item => item %>
+
+<% elsif item.is_coming_back? %>
+
+	<% if item.order_item_details.first.ticket_status_id == TicketStatus::VOUCHER %>
+	
+		<%= render "preview_details_voucher", :order => order, :item => item %>				
+
+	<% else %>
+
+		<%= render "preview_details", :order => order, :item => item %>
+
+	<% end %>
+
+<% else %>
+
+	"Data has mistaken.."
+	
+<% end %>

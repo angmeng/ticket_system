@@ -1,0 +1,2 @@
+module OrderItemDetailsHelper
+end

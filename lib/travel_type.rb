@@ -4,4 +4,6 @@ class TravelType
 
 	SINGLE_TRIP = 3
 	ROUND_TRIP  = 4
+	
+	OPEN_TICKET = 5
 end

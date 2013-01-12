@@ -3,7 +3,7 @@ class DeparturesController < ApplicationController
   # GET /departures.json
   def index
     @search = Departure.search(params[:search])
-    @departures = @search.includes(:routine, :vessel).order("routines.code, departures.date, departures.time")
+    @departures = @search.includes(:routine, :vessel).order("departures.date, departures.time, routines.code")
     @departures = @departures.page(params[:page]).per(25)
 
     respond_to do |format|
@@ -72,7 +72,6 @@ class DeparturesController < ApplicationController
   # PUT /departures/1.json
   def update
     @departure = Departure.find(params[:id])
-
     respond_to do |format|
       if @departure.update_attributes(params[:departure])
         format.html { redirect_to @departure, notice: 'Departure was successfully updated.' }

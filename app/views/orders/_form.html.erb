@@ -1,6 +1,6 @@
 <%= form_tag(search_departure_orders_path, :id => "search_schedule") do %>
 
-<%= hidden_field_tag "order[status_id]", OrderStatus::PENDING %>
+<%#= hidden_field_tag "order[status_id]", OrderStatus::PENDING %>
 
 <div class="control-group select required">
 <label class="radio inline">
@@ -10,6 +10,10 @@
 <label class="radio inline">
   <input type="radio" name="order[trip_type]" id="order_trip_type_one" value="one">
   One Way
+</label>
+<label class="radio inline">
+  <input type="radio" name="order[trip_type]" id="order_trip_type_open_ticket" value="open_ticket">
+  Open Ticket
 </label>
 </div>
 
