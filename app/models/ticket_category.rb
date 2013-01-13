@@ -11,6 +11,8 @@ class TicketCategory < ActiveRecord::Base
   	  "Adult"
   	when TicketType::KID
   	  "Child"
+    when TicketType::INFANT
+      "Infant"
   	end
   end
 
@@ -20,6 +22,10 @@ class TicketCategory < ActiveRecord::Base
 
   def kid?
     self.type_id == TicketType::KID
+  end
+
+  def infant?
+    self.type_id == TicketType::INFANT
   end
 
 end

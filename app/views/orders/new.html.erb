@@ -68,15 +68,19 @@
       })
 
       $("#order_departure_jetty_id").change(function(){
+        var arrival_select_tag = $("#order_arrival_jetty_id");
+        arrival_select_tag.attr("disabled", "disabled");
+        arrival_select_tag.html("<option value=''>Fetching data ... </option>");
         var newValue = $(this).val();
         var url = '/routines/'+newValue+'/get_destinations';
         //alert(url);
-        var output = "<option value=''>Destination</option>";
+        var output = "<option value=''>Choose a destination</option>";
           $.getJSON(url, function(data) {
                 $.each(data, function(key, value) {
-                output = output+"<option value='"+value.arrival_jetty_id+"'>"+value.arrival_jetty_name+"</option>"
+                  output = output+"<option value='"+value.arrival_jetty_id+"'>"+value.arrival_jetty_name+"</option>"
                         });
-                $("#order_arrival_jetty_id").html(output);
+                arrival_select_tag.removeAttr("disabled")
+                arrival_select_tag.html(output);
                    });
             });
 
