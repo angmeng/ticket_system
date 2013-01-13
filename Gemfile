@@ -31,6 +31,8 @@ gem "database_cleaner", ">= 0.7.2", :group => :test
 gem "launchy", ">= 2.1.0", :group => :test
 group :development do
   gem 'meta_request', '0.2.0'
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 gem "devise"#, ">= 2.1.0"
 gem 'jquery-rails'
