@@ -1,8 +1,8 @@
 PDFKit.configure do |config|
 
-  config.wkhtmltopdf = '/usr/local/bin/wkhtmltopdf' if Rails.env.production?
+  config.wkhtmltopdf = '/usr/local/bin/wkhtmltopdf' #if Rails.env.production?
 
-  config.root_url = "http://localhost:3000"
+  #config.root_url = "http://localhost:3000"
 
   config.default_options = {
     :encoding => "UTF-8",
@@ -17,10 +17,10 @@ PDFKit.configure do |config|
 end
 
 
-ActionController::Base.asset_host = Proc.new { |source, request|
-  if request.format.pdf?
-    "#{request.protocol}#{request.host_with_port}"
-  else
-    nil
-  end
-}
+# ActionController::Base.asset_host = Proc.new { |source, request|
+#   if request.format.pdf?
+#     "#{request.protocol}#{request.host_with_port}"
+#   else
+#     nil
+#   end
+# }

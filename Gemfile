@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.10'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -43,6 +43,7 @@ gem 'meta_search'
 gem 'asset_hat', '~> 0.4.2'
 gem 'pdfkit'
 gem 'country-select'
+gem 'wkhtmltopdf-binary' #for linux and mac
 
 
 # To use ActiveModel has_secure_password
