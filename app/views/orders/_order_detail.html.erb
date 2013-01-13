@@ -19,7 +19,7 @@
           			  			<th>Age</th>
           			  			<th>Price</th>
           			  			<th>Quantity</th>
-          			  			<th>Amount</th>
+          			  			<th>Amount (MYR)</th>
           			  		</tr>
           			  	</thead>
 
@@ -46,7 +46,7 @@
                            <td></td>
                            <td></td>
                            <td><%= @order.going_out_item.total_tickets rescue '0' %></td>
-                           <td> <%= "%.2f" % @order.going_out_item.total_amount rescue '0' %></td>
+                           <th> <%= "%.2f" % @order.going_out_item.total_amount rescue '0' %></th>
 						  </tr>
 						 <tbody>
 
@@ -87,14 +87,10 @@
 	                           <td></td>
 	                           <td></td>
 	                           <td><%= @order.coming_back_item.total_tickets %></td>
-	                           <td> <%= "%.2f" % @order.coming_back_item.total_amount %></td>
+	                           <th> <%= "%.2f" % @order.coming_back_item.total_amount %></th>
 							  </tr>
 							 <tbody>
 							 <% @net_total += @order.coming_back_item.total_amount %>
-                       <% end %>
-
-                       <% if @order.is_round_trip? or @order.is_open_ticket? %>
-                       	<% @net_total -= @order.discount %>
                        <% end %>
 
                          <%# @net_total += tax + service_charges %>
@@ -102,35 +98,46 @@
                          
                          	<tbody>
                          		<tr>
-	                        		<td>Discount</td>
+	                        		<td>2 way ticket discount</td>
 	                        		<td></td>
 	                        		<td></td>
 	                        		<td>
 	                        			<% if @order.is_round_trip? or @order.is_open_ticket? %>
-	                        				<%= "%.2f" % @order.discount %> 
-                        				<% else %>
-                        					0
+	                        				(<%= "%.2f" % @order.discount %>)
+	                        				<% @net_total -= @order.discount %>
                         				<% end %>
-                        				MYR
+                        			</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>Agent discount</td>
+	                        		<td></td>
+	                        		<td></td>
+	                        		<td>
+                        				<% if @order.buyer_is_agent? %>
+                        				  <% agent_discount = @net_total * current_branch.agent_commission / 100 %>
+                        				  (<%= "%.2f" % agent_discount %>) 
+                                          <% @net_total -= agent_discount %>
+
+                        				<% end %>
                         			</td>
 	                        	</tr>
 								<tr>
 								 <td>Tax</td>
 								 <td></td>
 								 <td></td>
-								 <td>0.00 %</td>
+								 <td></td>
 								</tr>
 								<tr>
 								 <td>Service Charges</td>
 								 <td></td>
 								 <td></td>
-								 <td>0.00 %</td>
+								 <td></td>
 								</tr>
 								<tr>
-		                         <td>Total Price</td>
+		                         <th>Total Price</th>
 		                         <td> </td>
 		                         <td></td>
-		                         <td> <span id="net-total"><%= "%.2f" % @net_total %></span> MYR</td>
+		                         <th> <span id="net-total"><%= "%.2f" % @net_total %></span></th>
 								</tr>
 							<tbody>
                        </table>

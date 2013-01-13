@@ -116,43 +116,32 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def is_voided?
-    self.status_id == OrderStatus::VOIDED
-  end
-
-  def is_verified?
-    self.status_id == OrderStatus::VERIFIED
-  end
-
-  def is_pending?
-    self.status_id == OrderStatus::PENDING
-  end
-
   def verified!
     if self.order_items.present?
-      if self.is_open_ticket?
+      self.order_items.each {|item| item.update_attributes!(:status_id => OrderStatus::VERIFIED) if item.is_pending? }
+      # if self.is_open_ticket?
 
-        go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
-        go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
+      #   go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
+      #   go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
 
-        come_back = self.order_items.find_by_travel_type_id(TravelType::COMING_BACK)
-        come_back.update_attributes!(:status_id => OrderStatus::VERIFIED) if come_back
-        # :voucher_no => 
+      #   come_back = self.order_items.find_by_travel_type_id(TravelType::COMING_BACK)
+      #   come_back.update_attributes!(:status_id => OrderStatus::VERIFIED) if come_back
+      #   # :voucher_no => 
 
-      elsif self.is_round_trip?
+      # elsif self.is_round_trip?
 
-        go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
-        go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
+      #   go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
+      #   go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
 
-        come_back = self.order_items.find_by_travel_type_id(TravelType::COMING_BACK)
-        come_back.update_attributes!(:status_id => OrderStatus::VERIFIED) if come_back
+      #   come_back = self.order_items.find_by_travel_type_id(TravelType::COMING_BACK)
+      #   come_back.update_attributes!(:status_id => OrderStatus::VERIFIED) if come_back
 
-      else
+      # else
 
-        go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
-        go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
+      #   go_out = self.order_items.find_by_travel_type_id(TravelType::GOING_OUT)
+      #   go_out.update_attributes!(:status_id => OrderStatus::VERIFIED) if go_out
 
-      end
+      # end
     end
   end
 

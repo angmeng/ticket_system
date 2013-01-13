@@ -74,6 +74,7 @@ class OrderingMachine
       item.number_of_kid = @order_params["kid"].to_i
       item.number_of_infant = @order_params["infant"].to_i
       item.travel_type_id = TravelType::GOING_OUT
+      item.status_id = OrderStatus::VERIFIED
       if item.save
         generate_item_detail(item)
         update_departure_balance(item.departure_id)
@@ -100,6 +101,7 @@ class OrderingMachine
       item.number_of_kid = @order_params["kid"].to_i
       item.number_of_infant = @order_params["infant"].to_i
       item.travel_type_id = TravelType::COMING_BACK
+      item.status_id = OrderStatus::VERIFIED
       if item.save
         generate_item_detail(item)
         update_departure_balance(item.departure_id)
@@ -137,6 +139,7 @@ class OrderingMachine
     item.number_of_kid = @order_params["kid"].to_i
     item.number_of_infant = @order_params["infant"].to_i
     item.travel_type_id = TravelType::COMING_BACK
+    item.status_id = OrderStatus::VERIFIED
     if item.save
       generate_item_detail(item)
     end

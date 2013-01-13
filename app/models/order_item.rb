@@ -43,4 +43,16 @@ class OrderItem < ActiveRecord::Base
     self.routine.title
   end
 
+  def is_voided?
+    self.status_id == OrderStatus::VOIDED
+  end
+
+  def is_verified?
+    self.status_id == OrderStatus::VERIFIED
+  end
+
+  def is_pending?
+    self.status_id == OrderStatus::PENDING
+  end
+
 end

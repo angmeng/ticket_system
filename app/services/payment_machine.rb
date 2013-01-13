@@ -10,7 +10,6 @@ class PaymentMachine
 		  	buyer.credit -= @order.total_amount
 		    buyer.save!
 		  end
-		  @order.verified!
 		end
 	end
 
