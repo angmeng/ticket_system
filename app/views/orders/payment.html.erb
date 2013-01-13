@@ -1,4 +1,4 @@
- <%= form_tag(make_payment_order_path(@order), :class => "form-vertical") do %>
+ <%= form_tag(make_payment_order_path(@order), :class => "form-vertical", :id => "submit_payment_form") do %>
 
   <%= render "order_detail" %>
 
@@ -7,7 +7,7 @@
  <div class="row-fluid">
      <!--Tabs1-->
     <div class="span12">
-     <div id="accordion1" class="accordion">
+     <div id="accordion0" class="accordion">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" href="#notification1" data-original-title="">
@@ -36,6 +36,7 @@
 
 						<div id="credit_method" style="display:none">
 							<%= render "credit_method" %>
+              <%= hidden_field_tag :show_manager_id, params[:show_manager_id], :id => "input_manager_id" %>
 						</div>
 
              <!--button type="submit" class="btn btn-primary btn-large" id="submit_button">Submit</button-->
@@ -81,18 +82,9 @@
 
             var fullname_string = $("#fullname").val();
             if (fullname_string.length == 0) {
-              alert("Full Name Must Have Enter.");
+              alert("Fullname must key-in in the Passenger Detail. Thanks.");
               return false
             }
-
-            // if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CASH %>)
-            //   {
-            //     if($("#inputAmount").val()=="")
-            //     {
-            //       alert("You must enter an amount");
-            //       return false
-            //     }
-            //   }
           });
 
 
