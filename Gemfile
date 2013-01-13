@@ -42,6 +42,7 @@ gem 'kaminari'
 gem 'meta_search'
 gem 'asset_hat', '~> 0.4.2'
 gem 'pdfkit'
+gem 'wkhtmltopdf-binary' #for linux and mac
 
 
 
