@@ -83,7 +83,6 @@ class RoutinesController < ApplicationController
   end
 
   def get_destinations
-    sleep 3
     @routines = Routine.where("departure_jetty_id = ?", params[:id])
     render json: @routines
   end
