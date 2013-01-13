@@ -125,12 +125,6 @@
     <div class="span11">
       <div class="control-group select required">
 
-      	<% if @result[:order]["trip_type"] == "open_ticket" %>
-      		<label class="radio inline">
-			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent" checked="checked">
-			  Agent
-			</label>
-      	<% else %>
 			<label class="radio inline">
 			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_normal" value="normal" checked="checked">
 			  Normal
@@ -143,17 +137,13 @@
 			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_warrant" value="warrant">
 			  Warrant
 			</label>
-		<% end %> 
 
 	  </div>
 	  
 		<div class="controls">
 
-	<% if @result[:order]["trip_type"] == "open_ticket" %>
-		<select class="select"  name="order[agent_id]" id="order_agent_id">
-	<% else %> 
+
 		<select class="select"  name="order[agent_id]" id="order_agent_id" style="display:none">
-	<% end %> 
 		    <option value="">Choose agent</option>
 		    <% @agents.each do |agent| %>
 		      <option value="<%= agent.id %>"><%= agent.fullname%></option>

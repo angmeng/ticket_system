@@ -1,11 +1,15 @@
 TicketSystem::Application.routes.draw do
 
+  resources :passengers
+
+
   resources :order_item_details
 
 
   resources :orders do
     collection do
       post :search_departure
+      post :user_authorize
     end
     member do
       get  :payment

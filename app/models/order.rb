@@ -1,8 +1,9 @@
 class Order < ActiveRecord::Base
-  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :total_passenger
+  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :total_passenger, :bypass_credit, :bypass_credit_manager_id
 
   has_many :order_items
   belongs_to :seller, :class_name => "User"
+  has_many :passengers
 
   def going_out_item
     @going_out ||= self.order_items.find_by_travel_type_id TravelType::GOING_OUT

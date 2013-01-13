@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @passenger.title %>
+</p>
+
+<p>
+  <b>Fullname:</b>
+  <%= @passenger.fullname %>
+</p>
+
+<p>
+  <b>Date of birth:</b>
+  <%= @passenger.date_of_birth %>
+</p>
+
+<p>
+  <b>Travel document:</b>
+  <%= @passenger.travel_document %>
+</p>
+
+<p>
+  <b>Issuing country:</b>
+  <%= @passenger.issuing_country %>
+</p>
+
+<p>
+  <b>Document no:</b>
+  <%= @passenger.document_no %>
+</p>
+
+<p>
+  <b>Expiration date:</b>
+  <%= @passenger.expiration_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_passenger_path(@passenger) %> |
+<%= link_to 'Back', passengers_path %>

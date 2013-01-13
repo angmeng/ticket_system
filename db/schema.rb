@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111055142) do
+ActiveRecord::Schema.define(:version => 20130112193405) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -140,6 +140,21 @@ ActiveRecord::Schema.define(:version => 20130111055142) do
   add_index "orders", ["payment_type_id"], :name => "index_orders_on_payment_type_id"
   add_index "orders", ["seller_id"], :name => "index_orders_on_seller_id"
   add_index "orders", ["travel_type_id"], :name => "index_orders_on_travel_type_id"
+
+  create_table "passengers", :force => true do |t|
+    t.string   "title"
+    t.string   "fullname"
+    t.date     "date_of_birth"
+    t.string   "travel_document"
+    t.string   "issuing_country"
+    t.string   "document_no"
+    t.date     "expiration_date"
+    t.integer  "order_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "passengers", ["order_id"], :name => "index_passengers_on_order_id"
 
   create_table "routines", :force => true do |t|
     t.string   "code"

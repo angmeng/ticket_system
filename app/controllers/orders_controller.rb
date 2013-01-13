@@ -52,13 +52,24 @@ class OrdersController < ApplicationController
 
   def make_payment
     @order = Order.find params[:id]
-    if @order.update_attributes(params[:order])
+    psg = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
+    if @order.update_attributes(params[:order]) && psg.save
       PaymentMachine.make_payment(@order)
       flash[:notice] = "Payment completed"
       redirect_to preview_order_path(@order)
     else
       flash[:notice] = "Failed to save"
       redirect_to payment_order_path(@order)
+    end
+  end
+
+  def user_authorize
+    user = User.find_by_username_and_category_id(params[:username], UserType::MANAGER)
+    # user.valid_password?(params[:password]) unless user.nil?
+    if user.valid_password?(params[:password])
+       return render(:text => {:status => true,  :message => "User created succesfully", :layout => false })
+    else
+      return render(:text => {:status => false,  :message => "Username & Password are invalid.", :layout => false})
     end
   end
 

@@ -27,12 +27,16 @@ class OrderItem < ActiveRecord::Base
   	self.number_of_kid * self.kid_fare
   end
 
+  def total_infant_fare
+    self.number_of_infant * self.infant_fare
+  end
+
   def total_tickets
-  	self.number_of_adult + self.number_of_kid
+  	self.number_of_adult + self.number_of_kid + self.number_of_infant
   end
 
   def total_amount
-  	total_adult_fare + total_kid_fare
+  	total_adult_fare + total_kid_fare + total_infant_fare
   end
 
   def title

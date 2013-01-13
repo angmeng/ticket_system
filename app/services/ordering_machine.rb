@@ -64,13 +64,16 @@ class OrderingMachine
       kid_category = TicketCategory.find_by_type_id TicketType::KID
       ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["departure_ticket_ids"], kid_category.id).first
       item.kid_fare = ticket.fare if ticket
+      infant_category = TicketCategory.find_by_type_id TicketType::INFANT
+      ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["departure_ticket_ids"], infant_category.id).first
+      item.infant_fare = ticket.fare if ticket
       item.number_of_adult = @order_params["adult"].to_i
       item.number_of_kid = @order_params["kid"].to_i
       item.number_of_infant = @order_params["infant"].to_i
       item.travel_type_id = TravelType::GOING_OUT
       if item.save
         generate_item_detail(item)
-        total_ticket = item.number_of_adult + item.number_of_kid
+        total_ticket = item.number_of_adult + item.number_of_kid + item.number_of_infant
         update_departure_balance(item.departure_id, total_ticket)
       end
     end
@@ -88,13 +91,16 @@ class OrderingMachine
       kid_category = TicketCategory.find_by_type_id TicketType::KID
       ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["arrival_ticket_ids"], kid_category.id).first
       item.kid_fare = ticket.fare if ticket
+      infant_category = TicketCategory.find_by_type_id TicketType::INFANT
+      ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["departure_ticket_ids"], infant_category.id).first
+      item.infant_fare = ticket.fare if ticket
       item.number_of_adult = @order_params["adult"].to_i
       item.number_of_kid = @order_params["kid"].to_i
       item.number_of_infant = @order_params["infant"].to_i
       item.travel_type_id = TravelType::COMING_BACK
       if item.save
         generate_item_detail(item)
-        total_ticket = item.number_of_adult + item.number_of_kid
+        total_ticket = item.number_of_adult + item.number_of_kid + item.number_of_infant
         update_departure_balance(item.departure_id, total_ticket)
       end
     end if @order.is_round_trip?
@@ -116,13 +122,15 @@ class OrderingMachine
 
         adult_category = TicketCategory.find_by_type_id TicketType::ADULT
         ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, adult_category.id)
-        # ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["arrival_ticket_ids"], adult_category.id).first
         item.adult_fare = ticket.fare if ticket
 
         kid_category = TicketCategory.find_by_type_id TicketType::KID
         ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, kid_category.id)
-        # ticket = Ticket.where("id IN(?) and ticket_category_id = ?", @order_params["arrival_ticket_ids"], kid_category.id).first
         item.kid_fare = ticket.fare if ticket
+
+        infant_category = TicketCategory.find_by_type_id TicketType::INFANT
+        ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, infant_category.id)
+        item.infant_fare = ticket.fare if ticket
       end
       
       item.number_of_adult = @order_params["adult"].to_i
@@ -131,8 +139,6 @@ class OrderingMachine
       item.travel_type_id = TravelType::COMING_BACK
       if item.save
         generate_item_detail(item)
-        # total_ticket = item.number_of_adult + item.number_of_kid
-        # update_departure_balance(item.departure_id, total_ticket)
       end
     end if @order.is_open_ticket?
   end
@@ -195,6 +201,7 @@ class OrderingMachine
           detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
           current_receipt_no += 1
         end
+
         detail.fare = order_item.kid_fare
         detail.ticket_category_id = TicketType::KID
         detail.save!
@@ -220,8 +227,9 @@ class OrderingMachine
           detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
           current_receipt_no += 1
         end
-        detail.fare = order_item.kid_fare
-        detail.ticket_category_id = TicketType::KID
+
+        detail.fare = order_item.infant_fare
+        detail.ticket_category_id = TicketType::INFANT
         detail.save!
       end
     end

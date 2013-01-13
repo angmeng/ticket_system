@@ -26,21 +26,27 @@
                         <tbody>
 						  <tr>
 						   <td>Adult</td>
-						   <td><%= "%.2f" % @order.going_out_item.adult_fare %></td>
-						   <td><%= @order.going_out_item.number_of_adult %> </td>
-						   <td><%= "%.2f" % @order.going_out_item.total_adult_fare %></td>
+						   <td><%= "%.2f" % @order.going_out_item.adult_fare rescue '0' %></td>
+						   <td><%= @order.going_out_item.number_of_adult rescue '0' %> </td>
+						   <td><%= "%.2f" % @order.going_out_item.total_adult_fare rescue '0' %></td>
 						  </tr>
-						   <tr>
+						  <tr>
 						   <td>Child</td>
-						   <td><%= "%.2f" % @order.going_out_item.kid_fare %></td>
-						   <td><%= @order.going_out_item.number_of_kid %> </td>
-						   <td><%= "%.2f" % @order.going_out_item.total_kid_fare %></td>
+						   <td><%= "%.2f" % @order.going_out_item.kid_fare rescue '0' %></td>
+						   <td><%= @order.going_out_item.number_of_kid rescue '0' %> </td>
+						   <td><%= "%.2f" % @order.going_out_item.total_kid_fare rescue '0' %></td>
+						  </tr>
+						  <tr>
+						   <td>Infant</td>
+						   <td><%= "%.2f" % @order.going_out_item.infant_fare rescue '0' %></td>
+						   <td><%= @order.going_out_item.number_of_infant rescue '0' %> </td>
+						   <td><%= "%.2f" % @order.going_out_item.total_infant_fare rescue '0' %></td>
 						  </tr>
 						  <tr>
                            <td></td>
                            <td></td>
-                           <td><%= @order.going_out_item.total_tickets %></td>
-                           <td> <%= "%.2f" % @order.going_out_item.total_amount %></td>
+                           <td><%= @order.going_out_item.total_tickets rescue '0' %></td>
+                           <td> <%= "%.2f" % @order.going_out_item.total_amount rescue '0' %></td>
 						  </tr>
 						 <tbody>
 
@@ -72,6 +78,12 @@
 							   <td><%= "%.2f" % @order.coming_back_item.total_kid_fare %></td>
 							  </tr>
 							  <tr>
+							   <td>Infant</td>
+							   <td><%= "%.2f" % @order.coming_back_item.infant_fare %></td>
+							   <td><%= @order.coming_back_item.number_of_infant %> </td>
+							   <td><%= "%.2f" % @order.coming_back_item.total_infant_fare %></td>
+							  </tr>
+							  <tr>
 	                           <td></td>
 	                           <td></td>
 	                           <td><%= @order.coming_back_item.total_tickets %></td>
@@ -93,7 +105,14 @@
 	                        		<td>Discount</td>
 	                        		<td></td>
 	                        		<td></td>
-	                        		<td><%= @order.is_round_trip? ? "%.2f" % @order.discount : 0 %> MYR</td>
+	                        		<td>
+	                        			<% if @order.is_round_trip? or @order.is_open_ticket? %>
+	                        				<%= "%.2f" % @order.discount %> 
+                        				<% else %>
+                        					0
+                        				<% end %>
+                        				MYR
+                        			</td>
 	                        	</tr>
 								<tr>
 								 <td>Tax</td>
