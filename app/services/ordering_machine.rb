@@ -1,8 +1,9 @@
 class OrderingMachine
 
-  def initialize(order, company)
+  def initialize(order, company, branch)
   	@order_params = order
     @company = company
+    @branch  = branch
     # @order_params["departure_jetty_id"]
     # @order_params["arrival_jetty_id"]
     # @order_params["depart_date"]
@@ -10,7 +11,7 @@ class OrderingMachine
     # @order_params["arrival_routine_id"]
     # @order_params["arrival_ticket_ids"]
     @total_ticket = @order_params["adult"].to_i + @order_params["kid"].to_i + @order_params["infant"].to_i
-  	@order = Order.new
+  	@order = Order.new(:branch_id => @branch.id)
   end
 
   def process

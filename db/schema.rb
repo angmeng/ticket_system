@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130112193405) do
+ActiveRecord::Schema.define(:version => 20130113143335) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -96,6 +96,10 @@ ActiveRecord::Schema.define(:version => 20130112193405) do
     t.datetime "updated_at",                                                         :null => false
   end
 
+  add_index "order_item_details", ["order_item_id"], :name => "index_order_item_details_on_order_item_id"
+  add_index "order_item_details", ["serial_number"], :name => "index_order_item_details_on_serial_number"
+  add_index "order_item_details", ["ticket_status_id"], :name => "index_order_item_details_on_ticket_status_id"
+
   create_table "order_items", :force => true do |t|
     t.integer  "order_id",                                                         :null => false
     t.integer  "departure_id",                                                     :null => false
@@ -134,8 +138,10 @@ ActiveRecord::Schema.define(:version => 20130112193405) do
     t.integer  "total_passenger",                                         :default => 0
     t.boolean  "bypass_credit",                                           :default => false
     t.integer  "bypass_credit_manager_id",                                :default => 0
+    t.integer  "branch_id",                                               :default => 0
   end
 
+  add_index "orders", ["branch_id"], :name => "index_orders_on_branch_id"
   add_index "orders", ["buyer_id", "buyer_type_id"], :name => "index_orders_on_buyer_id_and_buyer_type_id"
   add_index "orders", ["payment_type_id"], :name => "index_orders_on_payment_type_id"
   add_index "orders", ["seller_id"], :name => "index_orders_on_seller_id"

@@ -2,8 +2,10 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    #if is_admin?
-      @orders = Order.all
+    @search = OrderItem.search(params[:search])
+    @search.order_branch_id_equals = current_branch.id #unless is_admin?
+    @search.buyer_id_equals = current_user.id if is_agent?
+    @order_items = @search.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -97,7 +99,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    order = OrderingMachine.new(params[:order], system_company).process
+    order = OrderingMachine.new(params[:order], system_company, current_branch).process
     flash[:notice] = "Order created"
     redirect_to payment_order_path(order)
   end

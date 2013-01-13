@@ -5,4 +5,9 @@ class PaymentType
   CREDIT_CARD = 3
   ONLINE      = 4
 
+  OPTIONS = [
+    ["Cash", CASH],
+    ["Credit", CREDIT]
+  ]
+
 end

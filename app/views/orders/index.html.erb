@@ -12,27 +12,59 @@
                             <thead>
   <tr>
     <th>Buyer</th>
-    <th>Route Type</th>
+    <th>Route</th>
+    <th>Datetime</th>
     <th>Total tickets</th>
-    <th>Total Amount</th>
     <th>Payment type</th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
   </thead>
   <tbody>
-<% @orders.each do |order| %>
+     <tr>
+      <%= form_for @search, :url => orders_path do |f| %>
+        <td></td>
+        <td><%= f.select :routine_id_equals, options_from_collection_for_select(selection_routine, :id, :code, @search.routine_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
+         <td align="center">
+                                    <span data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" class="input-append date" id="start">
+                                      <% if @search.departure_date_gte.present? %>
+                                        <%= f.text_field :departure_date_gte, :value => "#{@search.departure_date_gte.strftime("%d-%m-%Y")}", :class => "span2", :style => "width:100px;", :placeholder => "From Date" %>
+                                      <% else %>
+                                        <%= f.text_field :departure_date_gte, :class => "span2", :style => "width:100px;", :placeholder => "From Date" %>
+                                      <% end %>
+                                      <span class="add-on"><i class="icon-th"></i></span>
+                                    </span>
+                                    -
+                                    <span data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" class="input-append date" id="end">
+                                      <% if @search.departure_date_lte.present? %>
+                                        <%= f.text_field :departure_date_lte, :value => "#{@search.departure_date_lte.strftime("%d-%m-%Y")}", :class => "span2", :style => "width:100px;", :placeholder => "To Date" %>
+                                      <% else %>
+                                        <%= f.text_field :departure_date_lte, :class => "span2", :style => "width:100px;", :placeholder => "To Date" %>
+                                      <% end %>
+                                      <span class="add-on"><i class="icon-th"></i></span>
+                                    </span>
+                                  </td>
+
+
+        <td></td>
+        <td><%= f.select :order_payment_type_id_equals, PaymentType::OPTIONS, { :include_blank => true }, { :style => "width: 100px;" } %></td>
+        <td><%= f.submit "Search" %></td>
+      <% end %> 
+    </tr>
+
+<% @order_items.each do |item| %>
+  <% order = item.order %>
    <tr class="<%= cycle("odd", "even") %>">
     <td><%= order.buyer_name %></td>
-    <td><%= order.travel_type %></td>
-    <td><%= order.total_tickets %></td>
-    <td><%= order.total_amount %></td>
+    <td><%= item.routine.code rescue "-" %></td>
+    <td><%= item.departure.date_time rescue "-" %></td>
+    <td><%= item.total_tickets %></td>
     <td><%= order.payment_type %></td>
     <td>
-          <%= link_to t('.show', :default => t("helpers.links.show")), preview_order_path(order), :class => 'btn btn-mini' %>
+          <%# link_to t('.show', :default => t("helpers.links.show")), preview_order_path(item), :class => 'btn btn-mini' %>
 
-          <%# if order.is_pending? %>
-            <%= link_to "Void",
-                        void_order_path(order),
+          <%# if item.is_pending? %>
+            <%# link_to "Void",
+                        void_order_path(item),
                         :method => :delete,
                         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                         :class => 'btn btn-mini btn-danger' %>
@@ -43,4 +75,29 @@
 </table>
 
 <br />
+
+<% content_for :javascripts_path do %>
+  <script>
+   $(function(){
+        window.prettyPrint && prettyPrint();
+
+        $('#start').datepicker({ dateFormat: "dd-mm-yy" }).on('changeDate', function(ev){
+            $('#start').datepicker('hide');
+          });
+
+        var startDate = new Date(2012,1,20);
+        var endDate = new Date(2012,1,25);
+
+        $('#end').datepicker({ dateFormat: "dd-mm-yy"}).on('changeDate', function(ev){
+            if (ev.date.valueOf() > endDate.valueOf()){
+              $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+            } else {
+              $('#alert').hide();
+              startDate = new Date(ev.date);
+              $('#start').text($('#end').data('date'));
+            }
+            $('#end').datepicker('hide');
+          });});
+  </script>
+<% end %>
 

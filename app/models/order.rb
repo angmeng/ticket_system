@@ -19,6 +19,8 @@ class Order < ActiveRecord::Base
       "Round Trip"
     when TravelType::SINGLE_TRIP
       "Single Trip"
+    when TravelType::OPEN_TICKET
+      "Open ticket"
     end
   end
 
@@ -127,11 +129,6 @@ class Order < ActiveRecord::Base
   end
 
   def verified!
-    #if is_pending?
-      #self.status_id = OrderStatus::VERIFIED 
-      #save!
-    #end
-
     if self.order_items.present?
       if self.is_open_ticket?
 
@@ -169,6 +166,8 @@ class Order < ActiveRecord::Base
       "Credit Card"
     when PaymentType::ONLINE
       "Online Payment Gateway"
+    else
+      "Unpaid"
     end
   end
 
