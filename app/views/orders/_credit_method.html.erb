@@ -27,49 +27,47 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <a href="#" class="btn btn-primary" id="ok_button">OK</a>
+    <a href="#" class="btn btn-primary" id="accept_button">Accept</a>
   </div>
 </div>
 
 <% content_for :javascripts_path do %>
-      <script>
-       $(function(){
+  <script>
+    $(function(){
+      <% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
 
-          $("#ok_button").click(function(){
-            // <% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
+            
+
+        $("#accept_button").click(function(){
+              var fullname_string = $("#fullname").val();
+              if (fullname_string.length == 0) {
+                alert("Fullname must key-in in the Passenger Detail. Thanks.");
+                return false
+              }
 
             	var username = $("#username").val();
             	var password = $("#password").val();
-
-            	alert(username);
-            	alert(password);
-
-
             	$.ajax({
     		  			type:'POST', 
     		  			dataType:"json",
     		  			url: '/orders/user_authorize', 
     		  			data: { 'username' : username, 'password' : password },
     		  			success: function(response) {
-                        // var obj = $.parseJSON(response);
                       	if( response.status == true ) {
-                      		alert ("testing 1");
+                          $("#input_manager_id").val(response.manager_id);
+                          $("#byPass").modal('hide');
+                      		$("form#submit_payment_form").submit();
+                          return true;
                         } else {
-                          alert("testing 2");
+                          alert("Sorry, you are not authority...");
+                          return false;
           							}				
-					    }
-					});
+					      }
+					    });
 				});
-
-            	// return false;
-
-            // <% end %>
-          });
-
-
-       	    });
-       </script>
-
-    <% end %>
+      <% end %>
+    });
+  </script>
+<% end %>
 
 

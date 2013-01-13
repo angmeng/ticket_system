@@ -4,11 +4,11 @@
 	    <div id="accordion0" class="accordion">
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" href="#notification0" data-original-title="">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#notification2" data-original-title="">
                         <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  Passenger Detail <i class="icon-chevron-down icon-white pull-right"></i>
                     </a>
                 </div>
-                <div id="notification0" class="accordion-body collapse in">
+                <div id="notification2" class="accordion-body collapse in">
                     <div class="accordion-inner paddind">
                     	<table>
                     		<tr>
@@ -33,7 +33,9 @@
                     		</tr>
                     		<tr>
                     			<td>Issuing Country</td>
-                    			<td><%= select_tag :issuing_country, options_for_select([ "Malaysia" ]), :include_blank => true %></td>
+                    			<td>
+                                    <%= country_select("issuing_country", "country_name", nil, { :include_blank => true }) %>
+                                </td>
                     		</tr>
                     		<tr>
                     			<td>Document No.</td>

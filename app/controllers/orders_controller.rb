@@ -52,7 +52,8 @@ class OrdersController < ApplicationController
 
   def make_payment
     @order = Order.find params[:id]
-    psg = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
+    @order.bypass(params[:show_manager_id])
+    psg = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country][:country_name], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
     if @order.update_attributes(params[:order]) && psg.save
       PaymentMachine.make_payment(@order)
       flash[:notice] = "Payment completed"
@@ -65,11 +66,10 @@ class OrdersController < ApplicationController
 
   def user_authorize
     user = User.find_by_username_and_category_id(params[:username], UserType::MANAGER)
-    # user.valid_password?(params[:password]) unless user.nil?
     if user.valid_password?(params[:password])
-       return render(:text => {:status => true,  :message => "User created succesfully", :layout => false })
+      return render(:text => {:status => true,  :message => "Transactions succesfully!", :layout => false, :manager_id => user.id }.to_json)
     else
-      return render(:text => {:status => false,  :message => "Username & Password are invalid.", :layout => false})
+      return render(:text => {:status => false,  :message => "Username & Password are invalid.", :layout => false}.to_json)
     end
   end
 

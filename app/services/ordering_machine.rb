@@ -42,7 +42,7 @@ class OrderingMachine
       @order.travel_type_id = TravelType::OPEN_TICKET
       @order.discount = Company.first.discount_on_two_way_ticket
     end
-    #@order.total_passenger = @order_params["adult"].to_i + @order_params["kid"].to_i
+    @order.total_passenger = @order_params["adult"].to_i + @order_params["kid"].to_i + @order_params["infant"].to_i
    	@order.save!
   end
 

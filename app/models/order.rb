@@ -172,5 +172,11 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def bypass(manager_id)
+    if manager_id.present?
+      self.bypass_credit = true
+      self.bypass_credit_manager_id = manager_id.to_s
+    end
+  end
 
 end

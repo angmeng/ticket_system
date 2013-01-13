@@ -42,6 +42,7 @@ gem 'kaminari'
 gem 'meta_search'
 gem 'asset_hat', '~> 0.4.2'
 gem 'pdfkit'
+gem 'country-select'
 gem 'wkhtmltopdf-binary' #for linux and mac
 # sudo aptitude install openssl build-essential xorg libssl-dev
 # for 64bits OS
@@ -56,7 +57,6 @@ gem 'wkhtmltopdf-binary' #for linux and mac
 # tar xvjf wkhtmltopdf-0.9.9-static-i386.tar.bz2
 #  mv wkhtmltopdf-i386 /usr/local/bin/wkhtmltopdf
 # chmod +x /usr/local/bin/wkhtmltopdf
-
 
 
 # To use ActiveModel has_secure_password
