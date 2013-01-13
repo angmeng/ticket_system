@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SFF - Ferry Info</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">	
+    
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+	<link href="css/sff.css" rel="stylesheet" media="screen">
+	<link rel="shortcut icon" href="images/favicon-sff.ico" />
+
+	<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+</head>
+
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div id="container1">
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div id="mainContent" class="span10">
+			<header>
+			   <div class="navbar" id="topmenu">
+				  <div class="navbar-inner">
+					<div class="container">
+					  <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					  </a>
+					  <div class="row-fluid">
+						<div class="span3">
+							<a id="logo" href="index.html" title="Visit Homepage"><img src="images/logo-sff.png" alt="logo"/></a>
+						</div>
+						<div class=""></div>
+						<div class="span8" id="topLinks">
+						  <div class="nav-collapse collapse navbar-responsive-collapse">
+							<ul class="nav">
+							  <li class="horizontalLine spaceControl"></li>
+							  <li class="divider-vertical hide1"></li>
+							  <li class="hide1"><a href="#">Book Now</a></li>
+							  <li class="divider-vertical"></li>
+							  <li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Ferry Services <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+								  <li><a href="schedule-fare.html">Route, Schedule &amp; Fee</a></li>
+								  <li><a href="ferry-info.html">Ferry Info</a></li>
+								  <li><a href="#">Book Online Now</a></li>
+								</ul>
+							  </li>
+							  <li class="divider-vertical"></li>
+							  <li><a href="holiday-packages.html">Holiday Packages</a></li>
+							  <li class="divider-vertical"></li>
+							  <li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Useful Info <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+								  <li><a href="faq.html">Frequently Asked Questions</a></li>
+								  <li><a href="travel-tips.html">Traveller's Tips</a></li>
+								  <li><a href="healthcare-tips.html">Healthcare Tips</a></li>
+								  <li class="divider"></li>
+								  <li class="nav-header">All About Langkawi</li>
+								  <li><a href="langkawi-attraction-map.html">Attractions &amp; Map</a></li>
+								  <li><a href="#">Accommodations</a></li>
+								  <li class="divider"></li>
+								  <li><a href="contact-us.html">Contact Us</a></li>
+								</ul>
+							  </li>					  
+							</ul>
+						  </div><!-- /.nav-collapse -->
+						</div><!-- .span -->
+					  </div><!-- .row-fluid -->
+					</div>
+				  </div><!-- /navbar-inner -->
+				</div><!-- /navbar #topmenu-->			
+			</header>		
+			<div class="row-fluid">
+				<div class="span4" id="leftCol">
+					<div class="wrapper">
+						<div id="bookNow">
+							<h4>Book Ferry Now</h4>
+							<div class="rope"></div>
+							<form class="form-horizontal"><fieldset>
+								 <div class="control-group">
+								   <label class="radio inline"><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Return Trip</label>
+								   <label class="radio inline"><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">One Way</label>
+								</div>
+								<div class="control-group leftWidth1"><label class="control-label" for="selectFrom">From</label>
+								  <div class="controls"><select class="span10 id="selectFrom"> <option>- Origin -</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select></div>
+								</div>
+								<div class="control-group leftWidth1"><label class="control-label" for="selectTo">To</label>
+								  <div class="controls"><select class="span10 id="selectTo"> <option>- Destination -</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select></div>
+								</div>	
+								<div class="control-group leftWidth2"><label class="control-label" for="selectFrom">Departure Date</label>
+								  <div class="controls"> <div class="input-append date" id="date-start" data-date="11-25-2012" data-date-format="dd-mm-yyyy">
+									<input class="span5" size="16" type="text" value="11-25-2012" readonly>
+									<span class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+								  </div>
+								</div>
+								<div class="control-group leftWidth2"><label class="control-label" for="selectFrom">Return Date</label>
+								  <div class="controls"> <div class="input-append date" id="date-end" data-date="11-25-2012" data-date-format="dd-mm-yyyy">
+									<input class="span5" size="16" type="text" value="11-25-2012" readonly>
+									<span class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+								  </div>
+								</div>
+								<div class="control-group leftWidth3"><label class="control-label" for="selectAdult">Adults (above 12 yrs)</label>
+								  <div class="controls"><select class="span4 id="selectAdult"> <option>0</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select></div>
+								</div>
+								<div class="control-group leftWidth3"><label class="control-label" for="selectAdult">Child (3-12 yrs)</label>
+								  <div class="controls"><select class="span4 id="selectAdult"> <option>0</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select></div>
+								</div>
+								<div class="control-group leftWidth3"><label class="control-label" for="selectAdult">Infants (Below 3 yrs)</label>
+								  <div class="controls"><select class="span4 id="selectAdult"> <option>0</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select></div>
+								</div>						
+								<div class="form-actions"><button type="submit" class="btn btn-primary span6 offset3">Search <i class="icon-search icon-white"></i></button></div>
+							</fieldset></form>							
+						</div>
+					</div><!-- wrapper -->
+					<div class="wrapper" id="leftBox">
+						<div class="innerWrapper">
+						  <div class="row-fluid">
+							<div class="span2 rope1 hidden-phone"></div>
+							<div class="span8">
+							  <h4>Stay Connected</h4>
+							  <h5>with us all time!</h5>
+							</div>
+							<div class="span2 rope1"></div>
+						  </div>
+						  <div class="fb-like" data-href="https://www.facebook.com/pages/Langkawi-ferry-services-sdn-bhd/419442944778142" data-send="false" data-width="240" data-show-faces="true"></div>
+						
+						  <div class="dashedLine"></div>
+						  <div class="row-fluid">
+							<div class="span4">Follow us on</div>
+							<a class="span2" id="fb" href="#" title="Visit our Facebook page"></a>
+							<a class="span2" id="twitter" href="#" title="Visit our Twitter page"></a>
+							<a class="span2" id="youtube" href="#" title="Visit our YouTube channel"></a>
+						  </div>
+						</div>
+					</div><!-- .wrapper -->
+					<div class="wrapper" id="leftBox">
+					  <div class="innerWrapper">
+						  <div class="row-fluid">
+							<div class="span2 rope1 hidden-phone"></div>
+							<div class="span8">
+							  <h4>Register Now</h4>
+							  <h5>For the Best Perks!</h5>
+							</div>
+							<div class="span2 rope1"></div>
+						  </div>			
+						  <p>Be a member and receive our newsletters, making you the first to know about our latest low fares and other fantastic offers!</p>
+						  <div class="pagination-centered">
+							<button class="btn btn-primary btn-small" type="button">Sign Up Now!</button>
+							<div class="dashedLine marginTop15"></div>
+							<p>Already a member? <a class="btn-link">Login</a> here.</p>
+						  </div>
+					  </div>
+					</div><!-- .wrapper -->
+					<div id="leftAd"><a href="#"><img src="images/special-promotion.png" alt="Special Promotion"/></a></div>
+				</div><!-- .span4 -->
+				<div class="span8">
+					<div class="wrapperContent">
+						<img class="pull-right" src="images/sff-ferries.png" alt="ferries"/>
+						<h2>Ferry Info</h2>
+						<h3>Super Fast Ferry Ventures</h3>
+						<p>Our ferry capacity and speed ranges from 100 to 200 seats and operating at the speed of 30 to 40 knots. SFF has probably has the fastest ferry among other operators in this region. Our ferries are equiped with air-condition, reclining seats, in-house video, and some even with mini canteen to ensure maximum comfort to our passengers.</p>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Alaf-Baru-1.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>116 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> ALAF BARU 1</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Alaf-Baru-2.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>152 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> ALAF BARU 2</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Impian-2.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>164 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> IMPIAN 2</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Impian-3.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>93 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> IMPIAN 3</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Kenangan-1.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>117 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> KENANGAN 1</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Kenangan-2.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>191 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> KENANGAN 2</h3></div>
+						</div>
+													<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Kenangan-3.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>192 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>38 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats, Mini canteen</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> KENANGAN 3</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Kenangan-6.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>218 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>38 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats, Mini canteen</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> KENANGAN 6</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Lambaian-1.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>162 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> LAMBAIAN 1</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Lambaian-2.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>164 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> LAMBAIAN 2</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Lambaian-3.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>155 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> LAMBAIAN 3</h3></div>
+						</div>
+						<div class="boxWrap halfWidth">
+							<div>
+								<img src="images/sff-ferry-Satun-1.png" />
+								<table>
+								<tr><td class="gray">Capacity</td><td width="10px">:</td><td>110 passengers</td></tr>
+								<tr><td class="gray">Speed</td><td>:</td><td>32 knots</td></tr>
+								<tr><td class="gray">Facilities</td><td>:</td><td>Air-conditioned, In-house video, Reclining seats</td></tr>
+								</table>
+							</div>
+							<div class="title icon-ferry"><h3><span>Name:</span> SATUN 1</h3></div>
+						</div>							
+						<div class="clearfix"></div>
+						<div class="dashedLine"></div>
+					</div>
+	
+				</div><!-- .span8 -->
+			</div><!-- .row-fluid -->
+		</div><!-- .span10 -->
+
+		<div class="span2 visible-desktop" id="rightAd">
+			<a href="#"><img src="images/sff-pulau-payar-marine-park.png" /></a>
+		</div><!-- .span2 -->
+	</div><!-- .row -->
+</div><!-- .container -->
+
+<footer>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span9">
+				<div class="row-fluid">
+					<div class="span3"><div id="iconFerry"></div><h4>Our Services</h4>
+					  <div class="ropeGrey"></div>
+					  <ul class="unstyled">
+						<li><a href="#">Book Ferry Online Now</a></li>
+						<li><a href="#">Ferry Services / Route</a></li>
+						<li><a href="#">Schedule & Fare</a></li>
+						<li><a href="#">Ferry Information</a></li>
+						<li><a href="#">Holiday Packages</a></li>
+					  </ul>
+					</div>
+					<div class="span4 offset1"><div id="iconLady"></div><h4>Customer Service</h4>
+					  <div class="ropeGrey"></div>
+					  <ul class="unstyled">					  
+						<li><a href="#">My Bookings</a></li>
+						<li><a href="#">Frequently Asked Questions</a></li>
+						<li><a href="#">Traveller's Tips</a></li>
+						<li><a href="#">Traveller's Healthcare Advices</a></li>
+						<li><a href="#">Langkawi Attractions & Map</a></li>
+						<li><a href="#">Accommodation</a></li>
+					  </ul>
+					</div>
+					<div class="span3 offset1"><div id="iconAnchor"></div><h4>About Us</h4>
+					  <div class="ropeGrey"></div>
+					  <ul class="unstyled">
+						<li><a href="#">Corporate Profile</a></li>
+						<li><a href="#">Video</a></li>
+						<li><a href="#">Ad Space</a></li>
+						<li><a href="#">Terms & Conditions</a></li>
+						<li><a href="/agents/sign_in">Agent Login</a></li>
+					  </ul>
+					</div>
+				</div>
+				<div class="dashedLine"></div>
+				<div class="row">
+					<div class="span3">
+						<div><img src="images/logo-sff-bw.png" alt="SFF logo"/></div>
+						<div id="copyright"><p>&copy; 2012 Super Fast Ferry Ventures</p><p>All rights reserved.</div>
+					</div>
+					<div class="span9"><p class="textJustify"><br>Super Fast Ferry Ventures management team has more than 20 years of experience in the ferry business & operations. SFF ensures <strong class="red">Fast, Efficient & Comfortable Ferry Services</strong> to our customers at all times. Our ferry capacity & speed ranges from 100 to 200 seats & operating at the speed of 30 to 40 knots. SFF has probably has the fastest ferry among other operators in this  region.</p>
+					<div class="pagination-right"><a class="viewMore" href="#">Read more about us</a></div>
+					</div>
+				</div><br>
+				<div class="dashedLine"></div>
+			</div>
+			<div class="span3">
+				<div id="contactUs">
+					<div id="iconPhone"></div>
+					<h4>Contact Us</h4>
+					<div class="ropeGrey"></div>
+					<h5>Head Office</h5>
+					<p>37 & 39, Jalan Pandak Mayah 5,<br>07000 Langkawi, Kedah Darul Aman.<br><span class="icon-phone"></span>604-966 9439 / 6316 / 6272</p>
+					<h5>Langkawi Counter</h5>
+					<p><span class="icon-phone"></span>604-966 0521 / 604-966 1126</p>					
+					<h5>Kuala Kedah Counter</h5>
+					<p><span class="icon-phone"></span>604-762 6295 / 604-762 6296</p>
+					<h5>Kuala Perlis Counter</h5>
+					<p><span class="icon-phone"></span>604-985 1899 / 604-9852539</p>	
+					<h5>Satun Agent (Thailand)</h5>
+					<p><span class="icon-phone"></span>(0066) 747 30513</p>	
+					<div><a class="viewMore" href="#">Full contact list here</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+</div><!-- #container1 -->
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script>
+	$('#date-start').datepicker();
+	$('#date-end').datepicker();
+</script>
+
+</body>
+</html>
