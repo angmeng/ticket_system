@@ -11,7 +11,8 @@ class OrderingMachine
     # @order_params["arrival_routine_id"]
     # @order_params["arrival_ticket_ids"]
     @total_ticket = @order_params["adult"].to_i + @order_params["kid"].to_i + @order_params["infant"].to_i
-  	@order = Order.new(:branch_id => @branch.id)
+  	@order = Order.new
+    @order.branch_id = @branch.id
   end
 
   def process

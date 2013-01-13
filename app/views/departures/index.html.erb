@@ -31,7 +31,25 @@
     <tr>
       <%= form_for @search do |f| %>
         <td><%= f.select :routine_id_equals, options_from_collection_for_select(selection_routine, :id, :code, @search.routine_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
-        <td></td>
+         <td style="width:150px">
+                                    <span data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" class="input-append date" id="start">
+                                      <% if @search.date_gte.present? %>
+                                        <%= f.text_field :date_gte, :value => "#{@search.date_gte.strftime("%d-%m-%Y")}", :class => "span2", :style => "width:100px;", :placeholder => "From Date" %>
+                                      <% else %>
+                                        <%= f.text_field :date_gte, :class => "span2", :style => "width:100px;", :placeholder => "From Date" %>
+                                      <% end %>
+                                      <span class="add-on"><i class="icon-th"></i></span>
+                                    </span>
+                                    -
+                                    <span data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" class="input-append date" id="end">
+                                      <% if @search.date_lte.present? %>
+                                        <%= f.text_field :date_lte, :value => "#{@search.date_lte.strftime("%d-%m-%Y")}", :class => "span2", :style => "width:100px;", :placeholder => "To Date" %>
+                                      <% else %>
+                                        <%= f.text_field :date_lte, :class => "span2", :style => "width:100px;", :placeholder => "To Date" %>
+                                      <% end %>
+                                      <span class="add-on"><i class="icon-th"></i></span>
+                                    </span>
+                                  </td>
         <td><%= f.select :vessel_id_equals, options_from_collection_for_select(selection_vessel, :id, :name, @search.vessel_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
         <td>
           <% if @search.extra_trip_equals.present? %> 
@@ -92,3 +110,29 @@
               new_departure_path,
               :class => 'btn btn-primary' %>
 <% end %>
+
+<% content_for :javascripts_path do %>
+  <script>
+   $(function(){
+        window.prettyPrint && prettyPrint();
+
+        $('#start').datepicker({ dateFormat: "dd-mm-yy" }).on('changeDate', function(ev){
+            $('#start').datepicker('hide');
+          });
+
+        var startDate = new Date(2012,1,20);
+        var endDate = new Date(2012,1,25);
+
+        $('#end').datepicker({ dateFormat: "dd-mm-yy"}).on('changeDate', function(ev){
+            if (ev.date.valueOf() > endDate.valueOf()){
+              $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+            } else {
+              $('#alert').hide();
+              startDate = new Date(ev.date);
+              $('#start').text($('#end').data('date'));
+            }
+            $('#end').datepicker('hide');
+          });});
+  </script>
+<% end %>
+
