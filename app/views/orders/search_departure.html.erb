@@ -188,6 +188,18 @@
           	$("#order_warrant_id").hide();
           })
 
+          // $("#order_agent_id").change(function(){
+          // 	var agent_id = $(this).val();
+          // 	if(agent_id > 0)
+	         //  	{
+	         //  	  var url = '/api/agents/'+agent_id;
+		        //   $.getJSON(url, function(data) {
+		        //   	if(data.status == "success")
+		        //       {alert("Agent credit is " + data.agent.credit);}
+		        //    });
+	         //  	}
+          // })
+
           $("#order_button").click(function(){
 
           	  if($("input[name='order[departure_routine_id]']:radio:checked").length==0)

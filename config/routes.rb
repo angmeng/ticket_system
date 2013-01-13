@@ -1,14 +1,19 @@
 TicketSystem::Application.routes.draw do
 
+  namespace :api do
+    resources :agents do
+      collection do
+      
+      end
+    end
+  end
+
   get "reservations/index"
 
   get "reservations/new"
 
   resources :passengers
-
-
   resources :order_item_details
-
 
   resources :orders do
     collection do
