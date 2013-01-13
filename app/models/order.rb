@@ -156,7 +156,7 @@ class Order < ActiveRecord::Base
     when PaymentType::ONLINE
       "Online Payment Gateway"
     else
-      "Unpaid"
+      "Cash"
     end
   end
 

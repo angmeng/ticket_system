@@ -1,5 +1,9 @@
 TicketSystem::Application.routes.draw do
 
+  get "reservations/index"
+
+  get "reservations/new"
+
   resources :passengers
 
 
