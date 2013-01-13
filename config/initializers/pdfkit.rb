@@ -17,10 +17,10 @@ PDFKit.configure do |config|
 end
 
 
-ActionController::Base.asset_host = Proc.new { |source, request|
-  if request.format.pdf?
-    "#{request.protocol}#{request.host_with_port}"
-  else
-    nil
-  end
-}
+# ActionController::Base.asset_host = Proc.new { |source, request|
+#   if request.format.pdf?
+#     "#{request.protocol}#{request.host_with_port}"
+#   else
+#     nil
+#   end
+# }
