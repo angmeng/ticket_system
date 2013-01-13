@@ -8,6 +8,7 @@
                 </div>
                 <div id="notification" class="accordion-body collapse in">
                     <div class="accordion-inner paddind">
+                      <p><strong>Legend : </strong> CQ = Counter quota, CS = Counter sales, ACS = Available counter sales, OQ = Online quota, OS = Online sales, AOS = available online sales </p>
                         <table  class="table table-bordered table-striped pull-left" id="example" >
                             <thead>
     <tr>
@@ -16,12 +17,12 @@
       <th width="100">Departure time</th>
       <th><%= model_class.human_attribute_name(:vessel_id) %></th>
       <th><%= model_class.human_attribute_name(:extra_trip) %></th>
-      <th>Counter Quota</th>
-      <th><%= model_class.human_attribute_name(:counter_sales) %></th>
-      <th><%= model_class.human_attribute_name(:available_counter_sales) %></th>
-      <th><%= model_class.human_attribute_name(:online_quota) %></th>
-      <th><%= model_class.human_attribute_name(:online_sales) %></th>
-      <th><%= model_class.human_attribute_name(:available_online_sales) %></th>
+      <th>CQ</th>
+      <th>CS</th>
+      <th>ACS</th>
+      <th>OQ</th>
+      <th>OS</th>
+      <th>AOS</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -39,12 +40,12 @@
             <%= f.select :extra_trip_equals, options_for_select(SelectionActive::OPTION), { :include_blank => true }, { :style => "width: 70px;" } %>
           <% end %>
         </td>
-        <td><%= f.text_field :sales_quota_gte, :style => "width: 60px;", :placeholder => "From SQ" %><%= f.text_field :sales_quota_lte, :style => "width: 60px;", :placeholder => "To SQ" %></td>
-        <td><%= f.text_field :counter_sales_gte, :style => "width: 60px;", :placeholder => "From CS" %><%= f.text_field :counter_sales_lte, :style => "width: 60px;", :placeholder => "To CS" %></td>        
-        <td><%= f.text_field :available_counter_sales_gte, :style => "width: 60px;", :placeholder => "From ACS" %><%= f.text_field :available_counter_sales_lte, :style => "width: 60px;", :placeholder => "To ACS" %></td>        
-        <td><%= f.text_field :online_quota_gte, :style => "width: 60px;", :placeholder => "From OQ" %><%= f.text_field :online_quota_lte, :style => "width: 60px;", :placeholder => "To OQ" %></td>
-        <td><%= f.text_field :online_sales_gte, :style => "width: 60px;", :placeholder => "From OS" %><%= f.text_field :online_sales_lte, :style => "width: 60px;", :placeholder => "To OS" %></td>
-        <td><%= f.text_field :available_online_sales_gte, :style => "width: 60px;", :placeholder => "From AOS" %><%= f.text_field :available_online_sales_lte, :style => "width: 60px;", :placeholder => "To AOS" %></td>
+        <td><%= f.text_field :sales_quota_gte, :style => "width: 30px;", :placeholder => "From" %><%= f.text_field :sales_quota_lte, :style => "width: 30px;", :placeholder => "To" %></td>
+        <td><%= f.text_field :counter_sales_gte, :style => "width: 30px;", :placeholder => "From" %><%= f.text_field :counter_sales_lte, :style => "width: 30px;", :placeholder => "To" %></td>        
+        <td><%= f.text_field :available_counter_sales_gte, :style => "width: 30px;", :placeholder => "From" %><%= f.text_field :available_counter_sales_lte, :style => "width: 30px;", :placeholder => "To" %></td>
+        <td><%= f.text_field :online_quota_gte, :style => "width: 30px;", :placeholder => "From" %><%= f.text_field :online_quota_lte, :style => "width: 30px;", :placeholder => "To" %></td>
+        <td><%= f.text_field :online_sales_gte, :style => "width: 30px;", :placeholder => "From" %><%= f.text_field :online_sales_lte, :style => "width: 30px;", :placeholder => "To" %></td>
+        <td><%= f.text_field :available_online_sales_gte, :style => "width: 30px;", :placeholder => "From" %><%= f.text_field :available_online_sales_lte, :style => "width: 30px;", :placeholder => "To" %></td>
 
         <td><%= f.submit "Search" %></td>
       <% end %> 
@@ -64,13 +65,15 @@
         <td><%= departure.online_sales %></td>
         <td><%= departure.available_online_sales %></td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_departure_path(departure), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      departure_path(departure),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
+          <% if is_admin? %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_departure_path(departure), :class => 'btn btn-mini' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        departure_path(departure),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-mini btn-danger' %>
+          <% end %>
         </td>
       </tr>
     <% end %>
@@ -84,6 +87,8 @@
 
           </div>
 <%= paginate @departures %>
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_departure_path,
-            :class => 'btn btn-primary' %>
+<% if is_admin? %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_departure_path,
+              :class => 'btn btn-primary' %>
+<% end %>

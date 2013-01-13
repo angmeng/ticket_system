@@ -2,11 +2,7 @@
   <%= f.input :username, :input_html => { :class => "span6" }  %>
   <%= f.input :fullname, :input_html => { :class => "span6" }  %>
   <%= f.association :agent_group %>
-  <% if is_admin? %>
-    <%= f.input :category_id, :as => :hidden, :input_html => { :value => UserType::AGENT } %>
-  <% elsif is_agent? %>
-    <%= f.input :category_id, :as => :hidden, :input_html => { :value => UserType::SUB_AGENT } %>
-  <% end %>
+  <%= f.input :category_id, :as => :hidden, :input_html => { :value => UserType::AGENT } %>
   <%# f.association :branch %>
   <%= f.input :phone %>
   <%= f.input :fax %>

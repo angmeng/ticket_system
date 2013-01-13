@@ -73,6 +73,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_manager
+    unless is_manager?
+      flash[:error] = "Only manager is allowed to access"
+      redirect_to "/exception_handler/access_denied"
+    end
+  end
+
   def after_sign_in_path_for(resource)
     if is_user?
       orders_url

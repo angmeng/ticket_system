@@ -9,6 +9,7 @@ class OrderingMachine
     # @order_params["return_date"]
     # @order_params["arrival_routine_id"]
     # @order_params["arrival_ticket_ids"]
+    @total_ticket = @order_params["adult"].to_i + @order_params["kid"].to_i + @order_params["infant"].to_i
   	@order = Order.new
   end
 
@@ -42,14 +43,14 @@ class OrderingMachine
       @order.travel_type_id = TravelType::OPEN_TICKET
       @order.discount = Company.first.discount_on_two_way_ticket
     end
-    @order.total_passenger = @order_params["adult"].to_i + @order_params["kid"].to_i + @order_params["infant"].to_i
+    @order.total_passenger = @total_ticket
    	@order.save!
   end
 
   def make_order_items
   	make_departure_order
-    make_arrival_order
-    make_voucher
+    make_arrival_order if @order.is_round_trip?
+    make_voucher if @order.is_open_ticket?
   end
 
   def make_departure_order
@@ -73,8 +74,7 @@ class OrderingMachine
       item.travel_type_id = TravelType::GOING_OUT
       if item.save
         generate_item_detail(item)
-        total_ticket = item.number_of_adult + item.number_of_kid + item.number_of_infant
-        update_departure_balance(item.departure_id, total_ticket)
+        update_departure_balance(item.departure_id)
       end
     end
   end
@@ -100,53 +100,50 @@ class OrderingMachine
       item.travel_type_id = TravelType::COMING_BACK
       if item.save
         generate_item_detail(item)
-        total_ticket = item.number_of_adult + item.number_of_kid + item.number_of_infant
-        update_departure_balance(item.departure_id, total_ticket)
+        update_departure_balance(item.departure_id)
       end
-    end if @order.is_round_trip?
+    end
   end
 
   def make_voucher
-    if @order_params["adult"].to_i > 0
-      item = @order.order_items.new
+    item = @order.order_items.new
 
-        # Notice, please read carefully... 
-        # When first go out, departure_id is Penang, arrival_id is Langkawi..
-        # When anytime want to back home, departure_id is Langkawi, arrival_id is Penang, this sentence will be as below..
-      item.departure_id = @order_params["departure_id"]
-      item.arrival_id = @order_params["arrival_id"]
-      routine = Routine.find_by_departure_jetty_id_and_arrival_jetty_id(item.departure_id, item.arrival_id)
+      # Notice, please read carefully... 
+      # When first go out, departure_id is Penang, arrival_id is Langkawi..
+      # When anytime want to back home, departure_id is Langkawi, arrival_id is Penang, this sentence will be as below..
+    item.departure_id = @order_params["departure_id"]
+    item.arrival_id = @order_params["arrival_id"]
+    routine = Routine.find_by_departure_jetty_id_and_arrival_jetty_id(item.departure_id, item.arrival_id)
 
-      if routine.present?
-        item.routine_id = routine.id 
+    if routine.present?
+      item.routine_id = routine.id
 
-        adult_category = TicketCategory.find_by_type_id TicketType::ADULT
-        ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, adult_category.id)
-        item.adult_fare = ticket.fare if ticket
+      adult_category = TicketCategory.find_by_type_id TicketType::ADULT
+      ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, adult_category.id)
+      item.adult_fare = ticket.fare if ticket
 
-        kid_category = TicketCategory.find_by_type_id TicketType::KID
-        ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, kid_category.id)
-        item.kid_fare = ticket.fare if ticket
+      kid_category = TicketCategory.find_by_type_id TicketType::KID
+      ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, kid_category.id)
+      item.kid_fare = ticket.fare if ticket
 
-        infant_category = TicketCategory.find_by_type_id TicketType::INFANT
-        ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, infant_category.id)
-        item.infant_fare = ticket.fare if ticket
-      end
-      
-      item.number_of_adult = @order_params["adult"].to_i
-      item.number_of_kid = @order_params["kid"].to_i
-      item.number_of_infant = @order_params["infant"].to_i
-      item.travel_type_id = TravelType::COMING_BACK
-      if item.save
-        generate_item_detail(item)
-      end
-    end if @order.is_open_ticket?
+      infant_category = TicketCategory.find_by_type_id TicketType::INFANT
+      ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, infant_category.id)
+      item.infant_fare = ticket.fare if ticket
+    end
+    
+    item.number_of_adult = @order_params["adult"].to_i
+    item.number_of_kid = @order_params["kid"].to_i
+    item.number_of_infant = @order_params["infant"].to_i
+    item.travel_type_id = TravelType::COMING_BACK
+    if item.save
+      generate_item_detail(item)
+    end
   end
 
-  def update_departure_balance(departure_id, total_ticket)
+  def update_departure_balance(departure_id)
     dep = Departure.find(departure_id)
-    dep.counter_sales += total_ticket
-    dep.save
+    dep.counter_sales += @total_ticket
+    dep.save!
   end
 
   def generate_item_detail(order_item)

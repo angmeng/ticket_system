@@ -1,8 +1,14 @@
 class TopupCreditsController < ApplicationController
+  #before_filter :require_manager, :only => [:edit, :new, :create, :update, :destroy]
   # GET /topup_credits
   # GET /topup_credits.json
   def index
-    @search = TopupCredit.search(params[:search])
+    if is_admin?
+      @search = TopupCredit.search(params[:search])
+    else
+      @search = TopupCredit.search(params[:search])
+      @search.agent_branch_id_equals = current_branch.id
+    end
     @topup_credits = @search.page(params[:page]).per(25)
 
     respond_to do |format|
@@ -26,6 +32,7 @@ class TopupCreditsController < ApplicationController
   # GET /topup_credits/new.json
   def new
     @topup_credit = TopupCredit.new
+    @agents = Agent.where("branch_id = ?", current_branch.id)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,6 +55,7 @@ class TopupCreditsController < ApplicationController
         format.html { redirect_to topup_credits_url, notice: 'Topup credit was successfully created.' }
         format.json { render json: @topup_credit, status: :created, location: @topup_credit }
       else
+        @agents = Agent.where("branch_id = ?", current_branch.id)
         format.html { render action: "new" }
         format.json { render json: @topup_credit.errors, status: :unprocessable_entity }
       end
@@ -74,7 +82,7 @@ class TopupCreditsController < ApplicationController
   # DELETE /topup_credits/1.json
   def destroy
     @topup_credit = TopupCredit.find(params[:id])
-    @topup_credit.destroy
+    #@topup_credit.destroy
 
     respond_to do |format|
       format.html { redirect_to topup_credits_url }

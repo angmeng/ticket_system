@@ -1,6 +1,7 @@
+ <li><a href="/dashboard/index"><i class="icon-th-large icon-black"></i><span> Dashboard</span></a></li>
  <li><a href="/orders/new" class="current"><i class="icon-th-large icon-white"></i><span> Ordering</span></a></li>
  <li><a href="#" class="current"><i class="icon-th-large icon-white"></i><span> Reservation</span></a></li>
- <li><a href="/dashboard/index"><i class="icon-th-large icon-black"></i><span> Dashboard</span></a></li>
+ 
     <!-- <li><a href="widget.html"><i class="icon-th"></i><span> Widgets</span></a></li>
     <li><a href="tables.html"><i class="icon-list-alt"></i><span> Tables</span></a></li>
     <li><a href="elements.html"><i class="icon-tasks"></i><span> Elements</span></a></li>
@@ -19,13 +20,21 @@
         <div class="accordion-body collapse dropdown" id="collapseOne">
             <div class="accordion-inner">
                 <ul class="nav nav-list">
-                    <li><%= link_to "Company", system_company %></li>
-                    <li><%= link_to "Branch", branches_path %></li>
-                    <li><%= link_to "Warrant", warrants_path  %></li>
-                    <li><%= link_to "Agent Group", agent_groups_path  %></li>
+                    
+                    <% if is_admin? %>
+                      <li><%= link_to "Company", system_company %></li>
+                      <li><%= link_to "Branch", branches_path %></li>
+                      <li><%= link_to "Warrant", warrants_path  %></li>
+                      <li><%= link_to "Agent Group", agent_groups_path  %></li>
+                      <li><%= link_to "User", users_path  %></li>
+                    <% elsif is_manager? %>
+                      <li><%= link_to "Staff", branch_staffs_path(current_branch)  %></li>
+                      <li><%= link_to "Agent", branch_agents_path(current_branch)  %></li>
+                   
+                    <% end %>
+
                     <li><%= link_to "Topup Credit", topup_credits_path  %></li>
-                    <li><%= link_to "User", users_path  %></li>
-                </ul>
+                                    </ul>
             </div>
         </div>
     </li>
@@ -35,13 +44,16 @@
         <div class="accordion-body collapse dropdown" id="collapseTwo">
             <div class="accordion-inner">
                 <ul class="nav nav-list">
-                    <li><%= link_to "Jetty", jetties_path  %></li>
-                    <li><%= link_to "Vessel", vessels_path  %></li>
-                    <li><%= link_to "Ticket Category", ticket_categories_path  %></li>
-                    <li><%= link_to "Ticket", tickets_path  %></li>
-                    <li><%= link_to "Route", routines_path  %></li>
-                    <li><%= link_to "Schedule", schedules_path  %></li>
-                    <li><%= link_to "Departure", departures_path  %></li>
+                    <% if is_admin? %>
+                        <li><%= link_to "Jetty", jetties_path  %></li>
+                        <li><%= link_to "Vessel", vessels_path  %></li>
+                        <li><%= link_to "Ticket Category", ticket_categories_path  %></li>
+                        <li><%= link_to "Ticket", tickets_path  %></li>
+                        <li><%= link_to "Route", routines_path  %></li>
+                        <li><%= link_to "Schedule", schedules_path  %></li>
+
+                    <% end %>
+                        <li><%= link_to "Departure", departures_path  %></li>
                 </ul>
             </div>
         </div>

@@ -47,9 +47,9 @@
                                   </td>
 
 
-                                  <td><%= f.text_field :agent_fullname_contains, :style => "width: 100px;" %></td>
+                                  <td><%= f.text_field :agent_fullname_contains, :style => "width: 100px;", :placeholder => "Name" %></td>
                                   <td><%= f.text_field :amount_gte, :style => "width: 70px;", :placeholder => "From Price" %> - <%= f.text_field :amount_lte, :style => "width: 70px;", :placeholder => "To Price" %></td>
-                                  <td><%= f.text_field :staff_fullname_contains, :style => "width: 100px;" %></td>
+                                  <td><%= f.text_field :staff_fullname_contains, :style => "width: 100px;", :placeholder => "Name" %></td>
                                   <td><%= f.submit "Search" %></td>
                                 <% end %> 
                               </tr>
@@ -78,9 +78,12 @@
     <!--   </div> -->
 <%= paginate @topup_credits %>
 
+
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_topup_credit_path,
             :class => 'btn btn-primary' %>
+
+
 
 
 <% content_for :javascripts_path do %>

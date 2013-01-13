@@ -1,4 +1,5 @@
 class DeparturesController < ApplicationController
+  before_filter :require_system_admin, :only => [:edit, :new, :create, :update, :destroy]
   # GET /departures
   # GET /departures.json
   def index
