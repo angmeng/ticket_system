@@ -150,6 +150,15 @@
                 //     return false;
                 // });
 
+                 $('.timepicker-default').timepicker({
+                    showSeconds: true,
+                    showMeridian: false,
+                    showInputs: true,
+                    defaultTime: "09:00:00",
+                    secondStep: 60,
+                    minuteStep: 1
+                 });
+
                 $(".switcher").click(function(){
                     if($(this).find('i').hasClass('icon-circle-arrow-right'))
                     $('.theme').animate({left:'0px'},500);

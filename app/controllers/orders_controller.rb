@@ -2,10 +2,14 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @search = OrderItem.search(params[:search])
+    if params[:time_eq] && !params[:time_eq].blank?
+      @search = OrderItem.includes(:departure).where("departures.time = ?", params[:time_eq]).search(params[:search])
+    else
+      @search = OrderItem.search(params[:search])
+    end
     @search.order_branch_id_equals = current_branch.id #unless is_admin?
     @search.order_buyer_id_equals = current_user.id if is_agent?
-    @order_items = @search.order("created_at DESC")
+    @order_items = @search.order("order_items.created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb
