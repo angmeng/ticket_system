@@ -1,15 +1,15 @@
 TicketSystem::Application.routes.draw do
 
-
-
-
   resources :warrant_purchases
-
-
   namespace :api do
     resources :agents do
       collection do
       
+      end
+    end
+    resources :staffs do
+      collection do
+        post :authorize
       end
     end
   end
@@ -24,7 +24,6 @@ TicketSystem::Application.routes.draw do
   resources :orders do
     collection do
       post :search_departure
-      post :user_authorize
     end
     member do
       get  :payment
