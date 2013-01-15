@@ -1,0 +1,25 @@
+<h1>Listing warrant_purchases</h1>
+
+<table>
+  <tr>
+    <th>Warrant</th>
+    <th>Order</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @warrant_purchases.each do |warrant_purchase| %>
+  <tr>
+    <td><%= warrant_purchase.warrant_id %></td>
+    <td><%= warrant_purchase.order_id %></td>
+    <td><%= link_to 'Show', warrant_purchase %></td>
+    <td><%= link_to 'Edit', edit_warrant_purchase_path(warrant_purchase) %></td>
+    <td><%= link_to 'Destroy', warrant_purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Warrant purchase', new_warrant_purchase_path %>

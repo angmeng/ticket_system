@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113143335) do
+ActiveRecord::Schema.define(:version => 20130114035808) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -300,6 +300,16 @@ ActiveRecord::Schema.define(:version => 20130113143335) do
   end
 
   add_index "vessels", ["code"], :name => "index_vessels_on_code", :unique => true
+
+  create_table "warrant_purchases", :force => true do |t|
+    t.integer  "warrant_id", :default => 0
+    t.integer  "order_id",   :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "warrant_purchases", ["order_id"], :name => "index_warrant_purchases_on_order_id"
+  add_index "warrant_purchases", ["warrant_id"], :name => "index_warrant_purchases_on_warrant_id"
 
   create_table "warrants", :force => true do |t|
     t.string   "code"

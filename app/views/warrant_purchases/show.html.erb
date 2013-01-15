@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Warrant:</b>
+  <%= @warrant_purchase.warrant_id %>
+</p>
+
+<p>
+  <b>Order:</b>
+  <%= @warrant_purchase.order_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_warrant_purchase_path(@warrant_purchase) %> |
+<%= link_to 'Back', warrant_purchases_path %>

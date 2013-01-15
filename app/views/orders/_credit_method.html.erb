@@ -15,59 +15,5 @@
   <dt>Current Credit</dt><dd><%= @order.buyer_credit %></dd>
 </dl>
  
-<!-- Modal -->
-<div id="byPass" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Authorize</h3>
-  </div>
-  <div class="modal-body">
-	<p><%= text_field_tag :username, params[:username], :placeholder => "Username" %></p>
-	<p><%= password_field_tag :password, params[:password], :placeholder => "Password" %></p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <a href="#" class="btn btn-primary" id="accept_button">Accept</a>
-  </div>
-</div>
-
-<% content_for :javascripts_path do %>
-  <script>
-    $(function(){
-      <% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
-
-            
-
-        $("#accept_button").click(function(){
-              var fullname_string = $("#fullname").val();
-              if (fullname_string.length == 0) {
-                alert("Fullname must key-in in the Passenger Detail. Thanks.");
-                return false
-              }
-
-            	var username = $("#username").val();
-            	var password = $("#password").val();
-            	$.ajax({
-    		  			type:'POST', 
-    		  			dataType:"json",
-    		  			url: '/orders/user_authorize', 
-    		  			data: { 'username' : username, 'password' : password },
-    		  			success: function(response) {
-                      	if( response.status == true ) {
-                          $("#input_manager_id").val(response.manager_id);
-                          $("#byPass").modal('hide');
-                      		$("form#submit_payment_form").submit();
-                          return true;
-                        } else {
-                          alert("Sorry, you are not authority...");
-                          return false;
-          							}				
-					      }
-					    });
-				});
-      <% end %>
-    });
-  </script>
-<% end %>
 
 

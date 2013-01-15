@@ -1,5 +1,11 @@
 TicketSystem::Application.routes.draw do
 
+
+
+
+  resources :warrant_purchases
+
+
   namespace :api do
     resources :agents do
       collection do

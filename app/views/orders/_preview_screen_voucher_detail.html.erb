@@ -19,6 +19,9 @@
 	<tr>
 		<td colspan='2'>
 			<strong style="font-size: 15px;">RM <%= number_with_precision(item.fare, :precision => 2) rescue '-' %></strong>
+			<% if order.payment_type_is_free? %>
+				<span style="float: right;">(F.O.C)</span>
+			<% end %> 
 		</td>
 	</tr>
 </table>

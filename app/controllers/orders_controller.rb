@@ -4,8 +4,8 @@ class OrdersController < ApplicationController
   def index
     @search = OrderItem.search(params[:search])
     @search.order_branch_id_equals = current_branch.id #unless is_admin?
-    @search.buyer_id_equals = current_user.id if is_agent?
-    @order_items = @search.all
+    @search.order_buyer_id_equals = current_user.id if is_agent?
+    @order_items = @search.order("created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,8 +16,9 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @order = Order.find(params[:id])
-
+    @order_item = OrderItem.find(params[:id])
+    @order = @order_item.order
+    @net_total = 0.00
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @order }
@@ -54,7 +55,7 @@ class OrdersController < ApplicationController
 
   def make_payment
     @order = Order.find params[:id]
-    @order.bypass(params[:show_manager_id])
+    PaymentMachine.bypass(@order, params[:show_manager_id]) if params[:show_manager_id].present?
     psg = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country][:country_name], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
     if @order.update_attributes(params[:order]) && psg.save
       PaymentMachine.make_payment(@order)
@@ -86,7 +87,7 @@ class OrdersController < ApplicationController
   end
 
   def void
-    @order = Order.find params[:id]
+    @order_item = OrderItem.find params[:id]
     flash[:notice] = "Voided successfully"
     redirect_to :back
   end

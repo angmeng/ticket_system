@@ -9,12 +9,13 @@
         <div id="notification" class="accordion-body collapse in">
             <div class="accordion-inner paddind">
 
-              <%= link_to "Printable Preview", preview_printable_order_path(@order, :format => "pdf"), :class => 'btn', :target => "_blank"  %>
+              <%= link_to "Printable Version", preview_printable_order_path(@order, :format => "pdf"), :class => 'btn btn-primary', :target => "_blank", :style => "float: right;"  %>
 
-            	<% if @order.is_single_trip? %>
-            		<%= render "preview_single_ticket", :order => @order %>
-          		<% elsif @order.is_round_trip? or @order.is_open_ticket? %>
-            		<%= render "preview_round_ticket", :order => @order %>
+            	<% if @order.is_single_trip? or  @order.is_round_trip? or @order.is_open_ticket? %>
+                <%= render "preview_direction", :order => @order %>
+            		<%#= render "preview_single_ticket", :order => @order %>
+          		<%# elsif @order.is_round_trip? or @order.is_open_ticket? %>
+            		<%#= render "preview_round_ticket", :order => @order %>
               <% else %>
       					"The Data has got mistaken..."
             	<% end %>

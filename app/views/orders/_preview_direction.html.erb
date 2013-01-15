@@ -1,21 +1,15 @@
-<% if item.is_going_out? %>
-
-	<%= render "preview_details", :order => order, :item => item %>
-
-<% elsif item.is_coming_back? %>
-
-	<% if item.order_item_details.first.ticket_status_id == TicketStatus::VOUCHER %>
-	
-		<%= render "preview_details_voucher", :order => order, :item => item %>				
-
-	<% else %>
-
-		<%= render "preview_details", :order => order, :item => item %>
-
+<% if order.order_items.present? %>
+	<% order.order_items.each do |item| %>
+		<% if item.is_going_out? %>
+			<%= render "preview_details", :order => order, :item => item %>
+		<% elsif item.is_coming_back? %>
+			<% if item.order_item_details.first.ticket_status_id == TicketStatus::VOUCHER %>
+				<%= render "preview_details_voucher", :order => order, :item => item %>				
+			<% else %>
+				<%= render "preview_details", :order => order, :item => item %>
+			<% end %>
+		<% else %>
+			"The Data has got mistaken..."
+		<% end %>
 	<% end %>
-
-<% else %>
-
-	"Data has mistaken.."
-	
 <% end %>

@@ -114,22 +114,19 @@ class OrderingMachine
 
       # Notice, please read carefully... 
       # When first go out, departure_id is Penang, arrival_id is Langkawi..
-      # When anytime want to back home, departure_id is Langkawi, arrival_id is Penang, this sentence will be as below..
+      # When anytime want to back home, departure_id is Langkawi(_id), arrival_id is Penang(_id), this sentence will be as below..
     item.departure_id = @order_params["departure_id"]
     item.arrival_id = @order_params["arrival_id"]
     routine = Routine.find_by_departure_jetty_id_and_arrival_jetty_id(item.departure_id, item.arrival_id)
 
     if routine.present?
       item.routine_id = routine.id
-
       adult_category = TicketCategory.find_by_type_id TicketType::ADULT
       ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, adult_category.id)
       item.adult_fare = ticket.fare if ticket
-
       kid_category = TicketCategory.find_by_type_id TicketType::KID
       ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, kid_category.id)
       item.kid_fare = ticket.fare if ticket
-
       infant_category = TicketCategory.find_by_type_id TicketType::INFANT
       ticket = Ticket.find_by_routine_id_and_ticket_category_id(routine.id, infant_category.id)
       item.infant_fare = ticket.fare if ticket
@@ -155,88 +152,58 @@ class OrderingMachine
     count_adult = order_item.number_of_adult.to_i
     count_child = order_item.number_of_kid.to_i
     count_infant = order_item.number_of_infant.to_i
-    current_voucher_no = @company.last_voucher_number
-    current_receipt_no = @company.last_receipt_number
+    @current_voucher_no = @company.last_voucher_number
+    @current_receipt_no = @company.last_receipt_number
 
     if count_adult > 0
       count_adult.times.each do |adult|
-        detail = order_item.order_item_details.new
-
-        if @order.is_open_ticket?
-          if order_item.is_coming_back?
-            detail.ticket_status_id = TicketStatus::VOUCHER
-            detail.serial_number = "VOU #{"%05d" % current_voucher_no}" 
-            current_voucher_no += 1
-          else
-            detail.ticket_status_id = TicketStatus::RECEIPT
-            detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
-            current_receipt_no += 1
-          end
-        else
-          detail.ticket_status_id = TicketStatus::RECEIPT
-          detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
-          current_receipt_no += 1
-        end
-
-        detail.fare = order_item.adult_fare
-        detail.ticket_category_id = TicketType::ADULT
-        detail.save!
+        @detail = order_item.order_item_details.new
+        adding_detail(order_item)
+        @detail.fare = order_item.adult_fare
+        @detail.ticket_category_id = TicketType::ADULT
+        @detail.save!
       end
     end
 
     if count_child > 0
       count_child.times.each do |kid|
-        detail = order_item.order_item_details.new
-
-        if @order.is_open_ticket?
-          if order_item.is_coming_back?
-            detail.ticket_status_id = TicketStatus::VOUCHER
-            detail.serial_number = "VOU #{"%05d" % current_voucher_no}" 
-            current_voucher_no += 1
-          else
-            detail.ticket_status_id = TicketStatus::RECEIPT
-            detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
-            current_receipt_no += 1
-          end
-        else
-          detail.ticket_status_id = TicketStatus::RECEIPT
-          detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
-          current_receipt_no += 1
-        end
-
-        detail.fare = order_item.kid_fare
-        detail.ticket_category_id = TicketType::KID
-        detail.save!
+        @detail = order_item.order_item_details.new
+        adding_detail(order_item)
+        @detail.fare = order_item.kid_fare
+        @detail.ticket_category_id = TicketType::KID
+        @detail.save!
       end
     end
 
     if count_infant > 0
       count_infant.times.each do |infant|
-        detail = order_item.order_item_details.new
-
-        if @order.is_open_ticket?
-          if order_item.is_coming_back?
-            detail.ticket_status_id = TicketStatus::VOUCHER
-            detail.serial_number = "VOU #{"%05d" % current_voucher_no}" 
-            current_voucher_no += 1
-          else
-            detail.ticket_status_id = TicketStatus::RECEIPT
-            detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
-            current_receipt_no += 1
-          end
-        else
-          detail.ticket_status_id = TicketStatus::RECEIPT
-          detail.serial_number = "REC #{"%05d" % current_receipt_no}" 
-          current_receipt_no += 1
-        end
-
-        detail.fare = order_item.infant_fare
-        detail.ticket_category_id = TicketType::INFANT
-        detail.save!
+        @detail = order_item.order_item_details.new
+        adding_detail(order_item)
+        @detail.fare = order_item.infant_fare
+        @detail.ticket_category_id = TicketType::INFANT
+        @detail.save!
       end
     end
     
-    @company.update_attributes(:last_voucher_number => current_voucher_no, :last_receipt_number => current_receipt_no)
+    @company.update_attributes(:last_voucher_number => @current_voucher_no, :last_receipt_number => @current_receipt_no)
+  end
+
+  def adding_detail(order_item) 
+    if @order.is_open_ticket?
+      if order_item.is_coming_back?
+        @detail.ticket_status_id = TicketStatus::VOUCHER
+        @detail.serial_number = "VOU #{"%05d" % @current_voucher_no}" 
+        @current_voucher_no += 1
+      else
+        @detail.ticket_status_id = TicketStatus::RECEIPT
+        @detail.serial_number = "REC #{"%05d" % @current_receipt_no}" 
+        @current_receipt_no += 1
+      end
+    else
+      @detail.ticket_status_id = TicketStatus::RECEIPT
+      @detail.serial_number = "REC #{"%05d" % @current_receipt_no}" 
+      @current_receipt_no += 1
+    end
   end
 
 end

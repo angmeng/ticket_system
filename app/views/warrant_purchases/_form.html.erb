@@ -1,0 +1,25 @@
+<%= form_for(@warrant_purchase) do |f| %>
+  <% if @warrant_purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@warrant_purchase.errors.count, "error") %> prohibited this warrant_purchase from being saved:</h2>
+
+      <ul>
+      <% @warrant_purchase.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :warrant_id %><br />
+    <%= f.number_field :warrant_id %>
+  </div>
+  <div class="field">
+    <%= f.label :order_id %><br />
+    <%= f.number_field :order_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<% if order.order_items.present? %>
+
+	<% order.order_items.each do |item| %>
+
+		<%= render "preview_direction", :order => order, :item => item %>
+
+	<% end %>
+
+<% end %>

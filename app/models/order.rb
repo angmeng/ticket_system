@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   has_many :order_items
   belongs_to :seller, :class_name => "User"
   has_many :passengers
+  has_one :warrant_purchase
 
   def going_out_item
     @going_out ||= self.order_items.find_by_travel_type_id TravelType::GOING_OUT
@@ -160,11 +161,12 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def bypass(manager_id)
-    if manager_id.present?
-      self.bypass_credit = true
-      self.bypass_credit_manager_id = manager_id.to_s
-    end
+  def payment_type_is_credit?
+    self.payment_type_id == PaymentType::CREDIT
+  end
+
+  def payment_type_is_free?
+    self.payment_type_id == PaymentType::FREE
   end
 
 end
