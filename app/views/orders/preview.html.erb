@@ -13,9 +13,6 @@
 
             	<% if @order.is_single_trip? or  @order.is_round_trip? or @order.is_open_ticket? %>
                 <%= render "preview_direction", :order => @order %>
-            		<%#= render "preview_single_ticket", :order => @order %>
-          		<%# elsif @order.is_round_trip? or @order.is_open_ticket? %>
-            		<%#= render "preview_round_ticket", :order => @order %>
               <% else %>
       					"The Data has got mistaken..."
             	<% end %>
