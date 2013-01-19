@@ -47,7 +47,7 @@ css:
   # http://mintdigital.github.com/asset_hat/doc/classes/AssetHat/CSS/Engines.html
 
   bundles:
-    application:  ["bootstrap.min", "base", "bootstrap-responsive", "media-fluid", "tables", "datepicker"]
+    application:  ["bootstrap.min", "base", "bootstrap-responsive", "media-fluid", "tables", "datepicker", "timepicker"]
     # , "jquery.ui.timepicker"
     login: ["bootstrap.min", "base", "login"]
     home: ['bootstrap_home', 'bootstrap-responsive_home', 'sff']
@@ -70,7 +70,7 @@ js:
   # http://mintdigital.github.com/asset_hat/doc/classes/AssetHat/JS/Vendors.html
 
   bundles:
-    application:  ["bootstrap.min", "jquery_ujs", "bootstrap-datepicker"]
+    application:  ["bootstrap.min", "jquery_ujs", "bootstrap-datepicker", "bootstrap-timepicker"]
     # , "jquery.ui.timepicker"
     chart:        ["charts/jquery.flot", "charts/jquery.flot.resize", "charts/jquery.flot.pie"]
     #calendar:     [""]

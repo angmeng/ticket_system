@@ -3,7 +3,11 @@ class DeparturesController < ApplicationController
   # GET /departures
   # GET /departures.json
   def index
-    @search = Departure.search(params[:search])
+    if params[:time_eq] && !params[:time_eq].blank?
+      @search = Departure.where("departures.time = ?", params[:time_eq]).search(params[:search])
+    else
+      @search = Departure.search(params[:search])
+    end
     @departures = @search.includes(:routine, :vessel).order("departures.date, departures.time, routines.code")
     @departures = @departures.page(params[:page]).per(25)
 

@@ -49,7 +49,14 @@
                                       <% end %>
                                       <span class="add-on"><i class="icon-th"></i></span>
                                     </span>
-                                  </td>
+                                    <!-- time picker -->
+                                    <div class="input-append bootstrap-timepicker-component">
+                                      <input type="text" class="timepicker-default input-small" name="time_eq">
+                                      <span class="add-on">
+                                          <i class="icon-time"></i>
+                                      </span>
+                                  </div>
+        </td>
         <td><%= f.select :vessel_id_equals, options_from_collection_for_select(selection_vessel, :id, :name, @search.vessel_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
         <td>
           <% if @search.extra_trip_equals.present? %> 
@@ -132,7 +139,9 @@
               $('#start').text($('#end').data('date'));
             }
             $('#end').datepicker('hide');
-          });});
+          });
+
+      });
   </script>
 <% end %>
 

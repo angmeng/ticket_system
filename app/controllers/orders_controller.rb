@@ -2,10 +2,14 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @search = OrderItem.search(params[:search])
+    if params[:time_eq] && !params[:time_eq].blank?
+      @search = OrderItem.includes(:departure).where("departures.time = ?", params[:time_eq]).search(params[:search])
+    else
+      @search = OrderItem.search(params[:search])
+    end
     @search.order_branch_id_equals = current_branch.id #unless is_admin?
     @search.order_buyer_id_equals = current_user.id if is_agent?
-    @order_items = @search.order("created_at DESC")
+    @order_items = @search.order("order_items.created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -64,15 +68,6 @@ class OrdersController < ApplicationController
     else
       flash[:notice] = "Failed to save"
       redirect_to payment_order_path(@order)
-    end
-  end
-
-  def user_authorize
-    user = User.find_by_username_and_category_id(params[:username], UserType::MANAGER)
-    if user.valid_password?(params[:password])
-      return render(:text => {:status => true,  :message => "Transactions succesfully!", :layout => false, :manager_id => user.id }.to_json)
-    else
-      return render(:text => {:status => false,  :message => "Username & Password are invalid.", :layout => false}.to_json)
     end
   end
 
