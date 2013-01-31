@@ -5,5 +5,5 @@ class Agent < User
   has_many :topup_credits
 
   validates :agent_group_id, :branch_id, :presence => true
-  
+
 end

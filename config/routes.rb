@@ -24,10 +24,14 @@ TicketSystem::Application.routes.draw do
   resources :orders do
     collection do
       post :search_departure
-    end
-    member do
+      get  :before_payment
+      
       get  :payment
       post :make_payment
+    end
+    member do
+      # get  :payment
+      # post :make_payment
       get  :preview
       get  :preview_printable
       delete :void

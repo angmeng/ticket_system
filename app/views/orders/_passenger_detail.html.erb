@@ -4,22 +4,18 @@
 	    <div id="accordion0" class="accordion">
             <div class="accordion-group">
                 <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" href="#notification2" data-original-title="">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#notification5" data-original-title="">
                         <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  Passenger Detail <i class="icon-chevron-down icon-white pull-right"></i>
                     </a>
                 </div>
-                <div id="notification2" class="accordion-body collapse in">
+                <div id="notification5" class="accordion-body collapse in">
                     <div class="accordion-inner paddind">
                     	<table>
                     		<tr>
                     			<td width="150">Title</td>
-                    			<td>
-                    				<%= select_tag :title, options_for_select(TitleName::CALL), :include_blank => true %>
-                    			</td>
+                    			<td><%= select_tag :title, options_for_select(TitleName::CALL), :include_blank => true %></td>
                     		</tr>
-                    		<tr>
-		          				<td>Fullname *</td><td><%= text_field_tag :fullname, params[:fullname] %></td>
-		          			</tr>
+                    		<tr><td>Fullname *</td><td><%= text_field_tag :fullname, params[:fullname] %></td></tr>
 		          			<tr>
 		          				<td>Date of Birth</td><td>
 				          			<span data-date-format="dd-mm-yyyy" data-date="<%= Date.today.strftime("%d-%m-%Y") %>" class="input-append date" id="start">

@@ -1,19 +1,37 @@
-<% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
+<%# if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
+
+<% if @result_payment[:buyer_type_id].to_i == BuyerType::AGENT && @net_total > @result_payment[:buyer_credit] %>
 	<div class="alert">
 	  <button type="button" class="close" data-dismiss="alert">×</button>
 	  <h4>Warning!</h4>
 	   Agent credit is not enough !
 
 		<!-- Button to trigger modal -->
-		<a href="#byPass" role="button" class="btn btn-primary" data-toggle="modal">Bypass</a>
-
+		<!--a href="#byPass" class="btn btn-primary" data-toggle="modal">Bypass</a-->
+		<div id="byPass_button" class="btn btn-primary">Bypass</div>
 	</div>
 <% end %>
 
 <dl class="dl-horizontal">
-  <dt><%= @order.buyer_title %></dt><dd><%= @order.buyer_name %></dd>
-  <dt>Current Credit</dt><dd><%= @order.buyer_credit %></dd>
+  <dt><%#= @order.buyer_title rescue '-' %><%= @result_payment[:buyer_title] rescue '-' %></dt>
+  <dd><%#= @order.buyer_name rescue '-' %><%= @result_payment[:buyer_name] rescue '-' %></dd>
+
+  <dt>Current Credit</dt>
+  <dd><%#= @order.buyer_credit rescue '-' %><%= @result_payment[:buyer_credit] rescue '-' %></dd>
 </dl>
- 
 
 
+  <div id="byPass"  class="modal hide fade">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Authorize</h3>
+      </div>
+      <div class="modal-body">
+        <p><%= text_field_tag :username, params[:username], :placeholder => "Username" %></p>
+        <p><%= password_field_tag :password, params[:password], :placeholder => "Password" %></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <a href="#" class="btn btn-primary" id="accept_button">Submit</a>
+      </div>
+  </div>

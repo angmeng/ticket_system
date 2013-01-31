@@ -1,0 +1,58 @@
+ <%#= form_tag(make_payment_orders_path(@order), :class => "form-vertical", :id => "submit_payment_form") do %>
+ <%= form_tag(orders_path(Order.new), :class => "form-vertical", :id => "submit_payment_form") do %>
+
+  <%= render "order_detail_unsaved" %>
+
+  <%= render "passenger_detail" %>
+  
+  <div class="row-fluid">
+     <!--Tabs1-->
+    <div class="span12">
+     <div id="accordion0" class="accordion">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#notification3" data-original-title="">
+                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  Make Payment <i class="icon-chevron-down icon-white pull-right"></i>
+                    </a>
+                </div>
+                <div id="notification3" class="accordion-body collapse in">
+                    <div class="accordion-inner paddind">
+                    	
+          	<div class="control-group select required">
+  						<label class="radio inline">
+  						  <input type="radio" name="order[payment_type_id]" id="payment_type_cash" value="<%= PaymentType::CASH %>" checked="checked">
+  						  Cash
+  						</label>
+
+              <% if @result_payment[:buyer_type_id].to_i == BuyerType::PUBLIC %>
+                <label class="radio inline">
+                  <input type="radio" name="order[payment_type_id]" id="payment_type_free" value="<%= PaymentType::FREE %>"> F.O.C
+                </label>
+              <% else %>
+    						<label class="radio inline">
+    						  <input type="radio" name="order[payment_type_id]" id="payment_type_credit" value="<%= PaymentType::CREDIT %>"> Credit
+    						</label>
+              <% end %>
+						</div>
+
+						<div id="cash_method">
+							<%= render "cash_method" %>
+						</div>
+
+						<div id="credit_method" style="display:none">
+							<%= render "credit_method" %>
+              <%= hidden_field_tag :show_manager_id, params[:show_manager_id], :id => "input_manager_id" %>
+						</div>
+
+	                </div>
+	             </div>
+	            </div>
+	          </div>
+       </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-large" id="submit_button">Confirm</button>
+
+<% end %>
+
+<%= render "payment_js"  %>

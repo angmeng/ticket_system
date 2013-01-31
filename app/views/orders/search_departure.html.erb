@@ -1,8 +1,11 @@
 <%#= debug @result %>
-<%= form_tag orders_path(Order.new) do %>
+<%#= form_tag orders_path(Order.new), :id => "target_order" do %>
+<%= form_tag before_payment_orders_path, :id => "target_payment", :method => "get" do %>
+
   	<%= render :partial => "order", :locals => {:order => @result, :seller => current_user} %>
+
   	<div class="row-fluid">
-                                    <!--Tabs1-->
+    <!--Tabs1-->
     <div class="span12">
      	<div id="accordion1" class="accordion">
             <div class="accordion-group">
@@ -159,9 +162,23 @@
 	   </div>
 
 
-  	   <input class="btn btn btn-primary btn-large" name="commit" type="submit" value="   Confirm    " id="order_button" />
+  	   <input class="btn btn btn-primary btn-large" name="commit" type="submit" value="   Select   " />
+  	   <!-- id="order_button" -->
 
   	   <%= link_to t('.back', :default => t("helpers.links.back")), new_order_path, :class => 'btn'  %>
+
+		
+
+  	   	<!-- stack1 is popup order requisition -->
+		<div id="order_requisition" class="modal hide fade">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3>Order Requisitions</h3>
+		  </div>
+		  <div class="ajax-modal-body"></div>
+		</div>
+
+
     </div>
    </div>
         <!--/Tabs1-->
@@ -170,23 +187,23 @@
 
   <% end # end of form %>
 
-    <% content_for :javascripts_path do %>
-      <script>
-       $(function(){
-          $("#order_buyer_type_agent").click(function(){
-          	$("#order_agent_id").show();
-          	$("#order_warrant_id").hide();
-          })
+<% content_for :javascripts_path do %>
+    <script>
+        $(function(){
+			$("#order_buyer_type_agent").click(function(){
+				$("#order_agent_id").show();
+				$("#order_warrant_id").hide();
+			})
 
-          $("#order_buyer_type_warrant").click(function(){
-          	$("#order_agent_id").hide();
-          	$("#order_warrant_id").show();
-          })
+			$("#order_buyer_type_warrant").click(function(){
+				$("#order_agent_id").hide();
+				$("#order_warrant_id").show();
+			})
 
-          $("#order_buyer_type_normal").click(function(){
-          	$("#order_agent_id").hide();
-          	$("#order_warrant_id").hide();
-          })
+			$("#order_buyer_type_normal").click(function(){
+				$("#order_agent_id").hide();
+				$("#order_warrant_id").hide();
+			})
 
           // $("#order_agent_id").change(function(){
           // 	var agent_id = $(this).val();
@@ -200,56 +217,79 @@
 	         //  	}
           // })
 
-          $("#order_button").click(function(){
+			$("#target_payment").submit(function(e){
 
-          	  if($("input[name='order[departure_routine_id]']:radio:checked").length==0)
-          	  {
-          	  	alert("You must select a departing route to continue");
-          	  	return false
-          	  }
+				// e.preventDefault();
+
+				if($("input[name='order[departure_routine_id]']:radio:checked").length==0) 
+				{
+					alert("You must select a departing route to continue");
+					return false
+				}
+
+				<% if @result[:order]["trip_type"] == "round" %>
+					if($("input[name='order[arrival_routine_id]']:radio:checked").length==0)
+					{
+						alert("You must select a return route to continue");
+						return false
+					}
+				<% end %>
+
+	          	<% if @result[:order]["trip_type"] == "open_ticket" %>
+					if ($("input[name='order[arrival_id]']").length==0) 
+					{
+						alert("You must select a return route to continue");
+						return false
+					}
+
+					if ($("input[name='order[departure_id]']").length==0) {
+						alert("You must select a return route to continue");
+						return false
+					}
+	          	<% end %>
+
+	          	if($("input[name='order[buyer_type]']:radio:checked").val()=="agent")
+	          	{
+	          		if($("#order_agent_id").val()=="")
+	          		{
+	          			alert("You must select an agent");
+	          			return false
+	          		}
+	          	}
+
+	          	if($("input[name='order[buyer_type]']:radio:checked").val()=="warrant")
+	          	{
+	          		if($("#order_warrant_id").val()=="")
+	          		{
+	          			alert("You must select an warrant");
+	          			return false
+	          		}
+	          	}
+
+	      //    	$('body').modalmanager('loading');
+
+			    // $.ajax({
+			    //     url: '/orders/before_payment',
+			    //     type: 'GET',
+			    //     data: $('form#target_payment').serialize(),
+			    //     success: function(data) {
+			    //     			$('.ajax-modal-body').html(data);
+
+			    //     			$("#order_requisition").modal('show').css({ 
+			    //     				width: '700px', 
+			    //     				'margin-left': function () { return -($(this).width() /2); }
+							// 	});
+			    //              }
+			    // });
+
+			    // return false;
+	      	});
+
+			
+
+	    }); //end script
+    </script>
+
+<% end %>
 
 
-          	<% if @result[:order]["trip_type"] == "round" %>
-          	  if($("input[name='order[arrival_routine_id]']:radio:checked").length==0)
-          	  {
-          	  	alert("You must select a return route to continue");
-          	  	return false
-          	  }
-          	<% end %>
-
-          	<% if @result[:order]["trip_type"] == "open_ticket" %>
-          	  if ($("input[name='order[arrival_id]']").length==0){
-          	  	alert("You must select a return route to continue");
-          	  	return false
-          	  }
-
-          	  if ($("input[name='order[departure_id]']").length==0){
-          	  	alert("You must select a return route to continue");
-          	  	return false
-          	  }
-          	<% end %>
-
-          	if($("input[name='order[buyer_type]']:radio:checked").val()=="agent")
-          	{
-          		if($("#order_agent_id").val()=="")
-          		{
-          			alert("You must select an agent");
-          			return false
-          		}
-          	}
-
-          	if($("input[name='order[buyer_type]']:radio:checked").val()=="warrant")
-          	{
-          		if($("#order_warrant_id").val()=="")
-          		{
-          			alert("You must select an warrant");
-          			return false
-          		}
-          	}
-          	
-          })
-
-       	    });
-       </script>
-
-    <% end %>

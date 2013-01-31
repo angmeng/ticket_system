@@ -57,19 +57,41 @@ class Order < ActiveRecord::Base
     @warrant ||= Warrant.find_by_id(self.buyer_id)
   end
 
-  def buyer_name
-    case self.buyer_type_id
+  # def buyer_name
+  #   case self.buyer_type_id
+  #   when BuyerType::PUBLIC
+  #     "Public User"
+  #   when BuyerType::AGENT
+  #     agent.fullname rescue "-"
+  #   when BuyerType::WARRANT
+  #     warrant.name rescue "-"
+  #   end
+  # end
+
+  def self.buyer_name(buyer_type, acc)
+    case buyer_type
     when BuyerType::PUBLIC
       "Public User"
     when BuyerType::AGENT
-      agent.fullname rescue "-"
+      acc.fullname rescue "-"
     when BuyerType::WARRANT
-      warrant.name rescue "-"
+      acc.name rescue "-"
     end
   end
 
-  def buyer_title
-    case self.buyer_type_id
+  # def buyer_title
+  #   case self.buyer_type_id
+  #   when BuyerType::PUBLIC
+  #     "Buyer Type"
+  #   when BuyerType::AGENT
+  #     "Agent"
+  #   when BuyerType::WARRANT
+  #     "Warrant"
+  #   end
+  # end
+
+  def self.buyer_title(buyer_type)
+    case buyer_type
     when BuyerType::PUBLIC
       "Buyer Type"
     when BuyerType::AGENT

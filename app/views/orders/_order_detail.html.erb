@@ -1,7 +1,7 @@
 <div class="row-fluid">
-     <!--Tabs1-->
+    <!--Tabs1-->
     <div class="span12">
-     <div id="accordion0" class="accordion">
+     	<div id="accordion0" class="accordion">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" href="#notification0" data-original-title="">
@@ -46,7 +46,16 @@
                            <td></td>
                            <td></td>
                            <td><%= @order.going_out_item.total_tickets rescue '0' %></td>
-                           <th> <%= "%.2f" % @order.going_out_item.total_amount rescue '0' %></th>
+
+                       		
+                       		<th>
+                       			<% if @order.payment_type_is_free? %>
+		                       		<%= "%.2f" % @order.going_out_item.total_amount rescue '0' %> (F.O.C)
+                       			<% else %>
+	                           		<%= "%.2f" % @order.going_out_item.total_amount rescue '0' %> 
+		                        <% end %>
+                            </th>
+
 						  </tr>
 						 <tbody>
 
@@ -87,7 +96,17 @@
 	                           <td></td>
 	                           <td></td>
 	                           <td><%= @order.coming_back_item.total_tickets %></td>
-	                           <th> <%= "%.2f" % @order.coming_back_item.total_amount %></th>
+
+	                           
+	                           	<th>
+	                           		<% if @order.payment_type_is_free? %>
+	                           		 	<%= "%.2f" % @order.coming_back_item.total_amount %> (F.O.C)
+		                            <% else %>
+	                           			<%= "%.2f" % @order.coming_back_item.total_amount %>
+	                           		<% end %>
+	                           	</th>
+	                           
+
 							  </tr>
 							 <tbody>
 							 <% @net_total += @order.coming_back_item.total_amount %>
@@ -117,7 +136,6 @@
                         				  <% agent_discount = @net_total * current_branch.agent_commission / 100 %>
                         				  (<%= "%.2f" % agent_discount %>) 
                                           <% @net_total -= agent_discount %>
-
                         				<% end %>
                         			</td>
 	                        	</tr>

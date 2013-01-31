@@ -1,21 +1,25 @@
  <% content_for :javascripts_path do %>
       <script>
        $(function(){
+
           $("#payment_type_cash").click(function(){
           	$("#cash_method").show();
           	$("#credit_method").hide();
           })
 
           $("#payment_type_credit").click(function(){
-
               $("#cash_method").hide();
-              $("#credit_method").show();
-            
+              $("#credit_method").show();            
           })
 
           $("#payment_type_free").click(function(){
-              $('#byPass').modal('show')
+              $('#byPass').modal('show');
           })
+
+          $("#byPass_button").click(function(){
+              $('#byPass').modal('show');
+          })
+
 
           $("#inputAmount").keyup(function() {
             var total = $("#net-total").text();
@@ -24,7 +28,8 @@
           });
 
           $("#accept_button").click(function(){
-            <% if (@order.buyer_is_agent? && @net_total > @order.buyer_credit) || @order.buyer_is_public? %>
+            <% if (@result_payment[:buyer_type_id].to_i == BuyerType::AGENT && @net_total > @result_payment[:buyer_credit]) || @result_payment[:buyer_type_id].to_i == BuyerType::PUBLIC %>
+
                 var fullname_string = $("#fullname").val();
                 if (fullname_string.length == 0) {
                   alert("Fullname must key-in in the Passenger Detail. Thanks.");
@@ -33,6 +38,7 @@
 
                 var username = $("#username").val();
                 var password = $("#password").val();
+
                 $.ajax({
                   type:'POST', 
                   dataType:"json",
@@ -40,7 +46,7 @@
                   data: { 'username' : username, 'password' : password },
                   success: function(response) {
                           if( response.status == true ) {
-                            <% if (@order.buyer_is_agent?) %>
+                            <% if (@result_payment[:buyer_type_id].to_i == BuyerType::AGENT) %>
                               $("#input_manager_id").val(response.manager_id);
                             <% end %>
                             $("#byPass").modal('hide');
@@ -56,13 +62,6 @@
           });
 
           $("#submit_button").click(function(){
-            <% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
-              if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CREDIT %>)
-              {
-                alert("Credit is not enough !");
-                return false;
-              }
-            <% end %>
 
             var fullname_string = $("#fullname").val();
             if (fullname_string.length == 0) {
@@ -70,9 +69,17 @@
               return false;
             }
 
+            <% if (@result_payment[:buyer_type_id].to_i == BuyerType::AGENT && @net_total > @result_payment[:buyer_credit]) %>
+              if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CREDIT %>)
+              {
+                alert("Credit is not enough !");
+                return false;
+              }
+            <% end %>
+            
+
             if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::FREE %>)
               {
-                alert("ok");
                 $("#byPass").modal('show');
                 return false;
               }
@@ -82,3 +89,6 @@
     </script>
 
 <% end %>
+
+<%# if (@order.buyer_is_agent? && @net_total > @order.buyer_credit) || @order.buyer_is_public? %>
+<%# if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>

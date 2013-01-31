@@ -1,0 +1,154 @@
+<%#= debug @result_payment %>
+<div class="row-fluid">
+     <!--Tabs1-->
+    <div class="span12">
+     <div id="accordion0" class="accordion">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#notification0" data-original-title="">
+                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span> Order Detail <i class="icon-chevron-down icon-white pull-right"></i>
+                    </a>
+                </div>
+                <div id="notification0" class="accordion-body collapse in">
+                    <div class="accordion-inner paddind">
+          			  <table  class="table table-bordered table-striped pull-left">
+          			  	<thead>
+          			  		<tr>
+          			  		  <th colspan="4">Going Out : <%= @result_payment[:go_place] %></th>
+          			  		</tr>
+          			  		<tr>
+          			  			<th>Age</th>
+          			  			<th>Price</th>
+          			  			<th>Quantity</th>
+          			  			<th>Amount (MYR)</th>
+          			  		</tr>
+          			  	</thead>
+
+                        <tbody>
+						  <tr>
+						    <td>Adult</td>
+						    <td><%= "%.2f" % @result_payment[:go_adult_fare] rescue '0' %></td>
+						    <td><%= @result_payment[:go_number_of_adult] rescue '0' %> </td>
+						    <td><%= "%.2f" % @result_payment[:go_total_adult_fare] %></td>
+						  </tr>
+						  <tr>
+						    <td>Child</td>
+						    <td><%= "%.2f" % @result_payment[:go_kid_fare] rescue '0' %></td>
+						    <td><%= @result_payment[:go_number_of_kid] rescue '0' %> </td>
+						    <td><%= "%.2f" % @result_payment[:go_total_kid_fare] %></td>
+						  </tr>
+						  <tr>
+						    <td>Infant</td>
+						    <td><%= "%.2f" % @result_payment[:go_infant_fare] rescue '0' %></td>
+						    <td><%= @result_payment[:go_number_of_infant] rescue '0' %> </td>
+						    <td><%= "%.2f" % @result_payment[:go_total_infant_fare] %></td>
+						  </tr>
+						  <tr>
+                            <td></td>
+                            <td></td>
+                           	<td><%= @result_payment[:go_total_tickets] rescue '0' %></td>
+                      		<th><%= "%.2f" % @result_payment[:go_total_amount] rescue '0' %></th>
+						  </tr>
+						 <tbody>
+
+                       <% @net_total += @result_payment[:go_total_amount].to_f %>
+
+                       <% if @result_payment[:travel_type_id].to_i == TravelType::ROUND_TRIP or @result_payment[:travel_type_id].to_i == TravelType::OPEN_TICKET %>
+	          			  	<thead>
+	          			  		<tr>
+	          			  		  <th colspan="4">Coming Back : <%= @result_payment[:back_place] %></th>
+	          			  		</tr>
+	          			  		<tr>
+          			  				<th>Age</th>
+          			  				<th>Price</th>
+          			  				<th>Quantity</th>
+          			  				<th>Amount</th>
+          			  			</tr>
+	          			  	</thead>
+	                        <tbody>
+							  <tr>
+							   <td>Adult</td>
+							   <td><%= "%.2f" % @result_payment[:back_adult_fare] %></td>
+							   <td><%= @result_payment[:back_number_of_adult] %> </td>
+							   <td><%= "%.2f" % @result_payment[:back_total_adult_fare] %></td>
+							  </tr>
+							  <tr>
+							   <td>Child</td>
+							   <td><%= "%.2f" % @result_payment[:back_kid_fare] %></td>
+							   <td><%= @result_payment[:back_number_of_kid] %> </td>
+							   <td><%= "%.2f" % @result_payment[:back_total_kid_fare] %></td>
+							  </tr>
+							  <tr>
+							   <td>Infant</td>
+							   <td><%= "%.2f" % @result_payment[:back_infant_fare] %></td>
+							   <td><%= @result_payment[:back_number_of_infant] %> </td>
+							   <td><%= "%.2f" % @result_payment[:back_total_infant_fare] %></td>
+							  </tr>
+							  <tr>
+	                           <td></td>
+	                           <td></td>
+	                           <td><%= @result_payment[:back_total_tickets] %></td>
+
+	                           
+	                           	<th><%= "%.2f" % @result_payment[:back_total_amount] %></th>
+	                           
+
+							  </tr>
+							 <tbody>
+							 <% @net_total += @result_payment[:back_total_amount].to_f %>
+                       <% end %>
+
+                         <%# @net_total += tax + service_charges %>
+                         <tr><td colspan=4><strong>Payment</strong></td></tr>
+                         
+                         	<tbody>
+                         		<tr>
+	                        		<td>2 way ticket discount</td>
+	                        		<td></td>
+	                        		<td></td>
+	                        		<td>
+	                        			<% if @result_payment[:travel_type_id].to_i == TravelType::ROUND_TRIP or @result_payment[:travel_type_id].to_i == TravelType::OPEN_TICKET %>
+	                        				(<%= "%.2f" % @result_payment[:discount] %>)
+	                        				<% @net_total -= @result_payment[:discount].to_f %>
+                        				<% end %>
+                        			</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>Agent discount</td>
+	                        		<td></td>
+	                        		<td></td>
+	                        		<td>
+                        				<% if @result_payment[:buyer_type_id].to_i == BuyerType::AGENT %>
+                        				  <% agent_discount = @net_total * current_branch.agent_commission / 100 %>
+                        				  (<%= "%.2f" % agent_discount %>) 
+                                          <% @net_total -= agent_discount %>
+                        				<% end %>
+                        			</td>
+	                        	</tr>
+								<tr>
+								 <td>Tax</td>
+								 <td></td>
+								 <td></td>
+								 <td></td>
+								</tr>
+								<tr>
+								 <td>Service Charges</td>
+								 <td></td>
+								 <td></td>
+								 <td></td>
+								</tr>
+								<tr>
+		                         <th>Total Price</th>
+		                         <td> </td>
+		                         <td></td>
+		                         <th> <span id="net-total"><%= "%.2f" % @net_total %></span></th>
+								</tr>
+							<tbody>
+                       </table>
+	                </div>
+	             </div>
+	            </div>
+	          </div>
+       </div>
+   </div>
+

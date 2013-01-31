@@ -52,13 +52,15 @@ class OrdersController < ApplicationController
   end
 
   def payment
-    @order = Order.find params[:id]
-    @net_total = 0.00
+    # @order = Order.find params[:id]
+    @result_payment = params[:fetch_data]
+    @net_total      = 0.00
+
     #redirect_to preview_order_path(@order) if  @order.is_voided?
   end
 
   def make_payment
-    @order = Order.find params[:id]
+    # @order = Order.find params[:id]
     PaymentMachine.bypass(@order, params[:show_manager_id]) if params[:show_manager_id].present?
     psg = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country][:country_name], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
     if @order.update_attributes(params[:order]) && psg.save
@@ -83,6 +85,8 @@ class OrdersController < ApplicationController
 
   def void
     @order_item = OrderItem.find params[:id]
+    @order_item.status_id = OrderStatus::VOIDED
+    @order_item.save!
     flash[:notice] = "Voided successfully"
     redirect_to :back
   end
@@ -92,12 +96,45 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
+  def before_payment
+    session[:order] = params[:order]  #will return session[:order] to nil, after create new form
+    @result_payment = OrderingMachine.store_order(params[:order])
+    @net_total      = 0.00
+    render :layout => "order_requisition"
+
+    # @order_machine = OrderingMachine.store_order(params[:order])
+    # render :text => @order_machine.to_json
+    # redirect_to payment_orders_path(:fetch_data => @order_machine)
+  end
+
   # POST /orders
   # POST /orders.json
   def create
-    order = OrderingMachine.new(params[:order], system_company, current_branch).process
-    flash[:notice] = "Order created"
-    redirect_to payment_order_path(order)
+    @order  = OrderingMachine.new(session[:order], system_company, current_branch, params[:order]).process
+    psg     = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country][:country_name], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
+    psg.save!
+    PaymentMachine.bypass(@order, params[:show_manager_id]) if params[:show_manager_id].present?
+    PaymentMachine.make_payment(@order)
+    session[:order] = nil
+    flash[:notice] = "Order Payment has completed."
+    redirect_to preview_order_path(@order)
+      
+    # if @order.update_attributes(params[:order]) && psg.save
+      # PaymentMachine.make_payment(@order)
+      # session[:order] = nil
+      # flash[:notice] = "Order Payment has completed."
+      # redirect_to preview_order_path(@order)
+    # else
+      # flash[:notice] = "Failed to save"
+      # redirect_to payment_order_path(@order)
+    # end
+
+    # flash[:notice] = "Order Created"
+    # redirect_to payment_order_path(order)
+
+    # order = OrderingMachine.new(params[:order], system_company, current_branch).process
+    # flash[:notice] = "Order Created"
+    # redirect_to payment_order_path(order)
   end
 
   # PUT /orders/1

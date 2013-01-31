@@ -1,17 +1,16 @@
 <%#= debug(order.inspect) %>
-<%= hidden_field_tag "order[trip_type]", order[:order]["trip_type"] %>
-<%= hidden_field_tag "order[departure_jetty_id]", order[:order]["departure_jetty_id"] %>
-<%= hidden_field_tag "order[arrival_jetty_id]", order[:order]["arrival_jetty_id"] %>
-<%= hidden_field_tag "order[depart_date]", order[:order]["depart_date"] %>
-<%= hidden_field_tag "order[return_date]", order[:order]["return_date"] %>
-<%= hidden_field_tag "order[adult]", order[:order]["adult"] %>
-<%= hidden_field_tag "order[kid]", order[:order]["kid"] %>
-<%= hidden_field_tag "order[infant]", order[:order]["infant"] %>
-<%= hidden_field_tag "order[seller_id]", seller.id %>
-<%#= hidden_field_tag "order[status_id]", order[:order]["status_id"] %>
-<% @total_tickets = order[:order]["adult"].to_i + order[:order]["kid"].to_i %>
-<%# @passengers = order[:order]["adult"].to_i + order[:order]["kid"].to_i + order[:order]["infant"] %>
-<%#= hidden_field_tag "order[total_passenger]", @passengers %>
+
+<%= hidden_field_tag "order[trip_type]", 			order[:order]["trip_type"] %>
+<%= hidden_field_tag "order[departure_jetty_id]", 	order[:order]["departure_jetty_id"] %>
+<%= hidden_field_tag "order[arrival_jetty_id]", 	order[:order]["arrival_jetty_id"] %>
+<%= hidden_field_tag "order[depart_date]", 			order[:order]["depart_date"] %>
+<%= hidden_field_tag "order[return_date]", 			order[:order]["return_date"] %>
+<%= hidden_field_tag "order[adult]", 				order[:order]["adult"] %>
+<%= hidden_field_tag "order[kid]", 					order[:order]["kid"] %>
+<%= hidden_field_tag "order[infant]", 				order[:order]["infant"] %>
+<%= hidden_field_tag "order[seller_id]", 			seller.id %>
+
+<% @total_tickets = order[:order]["adult"].to_i + order[:order]["kid"].to_i + order[:order]["infant"].to_i %>
 
 <% order[:departure_ticket].each do |ticket| %>
 	<%= hidden_field_tag "order[departure_ticket_ids][]", ticket.id %>
@@ -20,3 +19,7 @@
 <% order[:arrival_ticket].each do |ticket| %>
 	<%= hidden_field_tag "order[arrival_ticket_ids][]", ticket.id %>
 <% end if order[:arrival_ticket] %>
+
+<%#= hidden_field_tag "order[status_id]", order[:order]["status_id"] %>
+<%# @passengers = order[:order]["adult"].to_i + order[:order]["kid"].to_i + order[:order]["infant"] %>
+<%#= hidden_field_tag "order[total_passenger]", @passengers %>
