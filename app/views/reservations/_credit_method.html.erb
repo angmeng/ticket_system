@@ -1,0 +1,18 @@
+<% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
+	<div class="alert">
+	  <button type="button" class="close" data-dismiss="alert">×</button>
+	  <h4>Warning!</h4>
+	   Agent credit is not enough !
+
+		<!-- Button to trigger modal -->
+		<div id="byPass_button" class="btn btn-primary">ByPass</div>
+	</div>
+<% end %>
+
+<dl class="dl-horizontal">
+  <dt>Agent</dt>
+  <dd><%= @order.buyer_name rescue '-' %></dd>
+
+  <dt>Current Credit</dt>
+  <dd><%= number_with_precision(@order.buyer_credit, :precision => 2) rescue '-' %></dd>
+</dl>

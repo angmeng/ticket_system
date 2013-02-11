@@ -9,6 +9,7 @@
 <%= hidden_field_tag "order[kid]", 					order[:order]["kid"] %>
 <%= hidden_field_tag "order[infant]", 				order[:order]["infant"] %>
 <%= hidden_field_tag "order[seller_id]", 			seller.id %>
+<%= hidden_field_tag "order[reservation]", 			order[:order]["reservation"] %>
 
 <% @total_tickets = order[:order]["adult"].to_i + order[:order]["kid"].to_i + order[:order]["infant"].to_i %>
 

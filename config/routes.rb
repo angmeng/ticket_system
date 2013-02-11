@@ -1,5 +1,8 @@
 TicketSystem::Application.routes.draw do
 
+  resources :reservation_details
+
+
   resources :warrant_purchases
   namespace :api do
     resources :agents do
@@ -10,13 +13,18 @@ TicketSystem::Application.routes.draw do
     resources :staffs do
       collection do
         post :authorize
+        #get :authorize
       end
     end
   end
 
-  get "reservations/index"
-
-  get "reservations/new"
+  # get "reservations/index"
+  # get "reservations/new"
+  resources :reservations do
+    member do
+      get  :printable
+    end
+  end
 
   resources :passengers
   resources :order_item_details
@@ -28,6 +36,8 @@ TicketSystem::Application.routes.draw do
       
       get  :payment
       post :make_payment
+
+      get  :data_open_ticket
     end
     member do
       # get  :payment

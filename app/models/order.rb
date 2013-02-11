@@ -1,10 +1,13 @@
 class Order < ActiveRecord::Base
-  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :total_passenger, :bypass_credit, :bypass_credit_manager_id
+  attr_accessible :amount_tender, :discount, :extra_charges, :free_tickets, :payment_type_id, :remark, :seller_id, :buyer_id, :buyer_type_id, :travel_type_id, :total_passenger, :bypass_credit, :bypass_credit_manager_id, :reservation
+
+  has_one :warrant_purchase
+  has_one :reservation_detail
 
   has_many :order_items
-  belongs_to :seller, :class_name => "User"
   has_many :passengers
-  has_one :warrant_purchase
+
+  belongs_to :seller, :class_name => "User"
 
   def going_out_item
     @going_out ||= self.order_items.find_by_travel_type_id TravelType::GOING_OUT
@@ -57,16 +60,16 @@ class Order < ActiveRecord::Base
     @warrant ||= Warrant.find_by_id(self.buyer_id)
   end
 
-  # def buyer_name
-  #   case self.buyer_type_id
-  #   when BuyerType::PUBLIC
-  #     "Public User"
-  #   when BuyerType::AGENT
-  #     agent.fullname rescue "-"
-  #   when BuyerType::WARRANT
-  #     warrant.name rescue "-"
-  #   end
-  # end
+  def buyer_name
+    case self.buyer_type_id
+    when BuyerType::PUBLIC
+      "Public User"
+    when BuyerType::AGENT
+      agent.fullname rescue "-"
+    when BuyerType::WARRANT
+      warrant.name rescue "-"
+    end
+  end
 
   def self.buyer_name(buyer_type, acc)
     case buyer_type
@@ -178,8 +181,12 @@ class Order < ActiveRecord::Base
       "Credit Card"
     when PaymentType::ONLINE
       "Online Payment Gateway"
+    when PaymentType::FREE
+      "Free"
+    when PaymentType::RESERVATION
+      "Reservation"
     else
-      "Cash"
+      '-'
     end
   end
 
@@ -191,4 +198,11 @@ class Order < ActiveRecord::Base
     self.payment_type_id == PaymentType::FREE
   end
 
+  def payment_type_is_reservation?
+    self.payment_type_id == PaymentType::RESERVATION
+  end
+
+  def is_reservation?
+    self.reservation == true
+  end
 end

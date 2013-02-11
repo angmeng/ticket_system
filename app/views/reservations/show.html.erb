@@ -1,0 +1,140 @@
+<%= render "reservation_detail" %>
+<%= render "/orders/order_detail" %>
+
+<% if @order.payment_type_is_reservation? %>
+
+  <%= form_tag(reservation_path(@order), :method => :put, :id => "submit_payment_form") do %>
+    <!-- Begin Make Payment -->
+    <div class="row-fluid">
+       <!--Tabs1-->
+      <div class="span12">
+        <div id="accordion0" class="accordion">
+              <div class="accordion-group">
+                  <div class="accordion-heading">
+                      <a class="accordion-toggle" data-toggle="collapse" href="#notification3" data-original-title="">
+                          <i class="icon-th icon-white"></i> <span class="divider-vertical"></span> Make Payment <i class="icon-chevron-down icon-white pull-right"></i>
+                      </a>
+                  </div>
+                  <div id="notification3" class="accordion-body collapse in">
+                      <div class="accordion-inner paddind">
+                      	
+      	<div class="control-group select required">
+    			<label class="radio inline">
+    			  <input type="radio" name="order[payment_type_id]" id="payment_type_cash" value="<%= PaymentType::CASH %>" checked="checked"> Cash
+    			</label>
+
+    			<label class="radio inline">
+    			  <input type="radio" name="order[payment_type_id]" id="payment_type_credit" value="<%= PaymentType::CREDIT %>"> Credit
+    			</label>
+    		</div>
+
+    		<div id="cash_method">
+    			<%= render "cash_method" %>
+    		</div>
+
+    		<div id="credit_method" style="display:none">
+    			<%= render "credit_method" %>
+    		</div>
+
+       	<div id="byPass" style="display: none;">
+            <div class="modal-header"><h3 id="myModalLabel">Authorize</h3></div>
+            <div class="modal-body">
+            	<p><%= text_field_tag :username, params[:username], :placeholder => "Username" %></p>
+            	<p><%= password_field_tag :password, params[:password], :placeholder => "Password" %></p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              <a href="#" class="btn btn-primary" id="accept_button">Submit</a>
+            </div>
+        </div>
+
+      	<%= hidden_field_tag :show_manager_id, params[:show_manager_id], :id => "input_manager_id" %>
+
+                    </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Make Payment -->
+
+    <button type="submit" class="btn btn-primary btn-large" id="submit_button">Confirm</button>  
+    <%#= link_to "Cancel Reservation", reservation_path(@order), :method => :delete, :class => "btn"  %>    
+
+  <% end %>
+
+<% end %>
+
+<%= link_to t('.back', :default => t("helpers.links.back")), reservations_path, :class => 'btn'  %>
+<%= link_to "Printable Version", printable_reservation_path(@order, :format => "pdf"), :class => 'btn btn-primary', :target => "_blank", :style => "float: right;" %>
+
+<% content_for :javascripts_path do %>
+    <script>
+     $(function(){
+
+        $("#payment_type_cash").click(function(){
+          $("#cash_method").show();
+          $("#credit_method").hide();
+          $("#byPass").hide();
+          $("#submit_button").show();
+        })
+
+        $("#payment_type_credit").click(function(){
+            $("#cash_method").hide();
+            $("#credit_method").show();            
+        })
+
+        $("#byPass_button").click(function(){
+            $('#credit_method').hide();
+            $("#submit_button").hide();
+            $('#byPass').show();
+        })
+
+        $("#inputAmount").keyup(function() {
+          var total = $("#net-total").text();
+          var balance = parseFloat($(this).val()) - parseFloat(total);
+          $("#balance").text(balance.toFixed(2));
+        });
+
+        $("#accept_button").click(function(){
+          <% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
+
+              var username = $("#username").val();
+              var password = $("#password").val();
+
+              $.ajax({
+                type:'POST', 
+                dataType:"json",
+                url: '/api/staffs/authorize', 
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: { 'username' : username, 'password' : password },
+                success: function(response) {
+                  if( response.status == true ) {
+                    <% if @order.buyer_is_agent? %>
+                      $("#input_manager_id").val(response.manager_id);
+                    <% end %>
+                    $("#username").val("");
+                    $("#password").val("");
+                    $("form#submit_payment_form").submit();
+                    return true;
+                  } else {
+                    alert(response.message);
+                    return false;
+                  }
+                }
+              });
+          <% end %>
+        });
+
+        $("#submit_button").click(function(){
+          <% if @order.buyer_is_agent? && @net_total > @order.buyer_credit %>
+            if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CREDIT %>) {
+              alert("Credit is not enough !");
+              return false; }
+          <% end %>
+        });
+
+      });
+  </script>
+
+<% end %>

@@ -3,7 +3,6 @@ class TripSearchEngine
   def self.search(order)
   	@result = {}
   	@result[:order] = order
-    # @total_ticket = order["adult"].to_i + order["kid"].to_i
   	search_jetty
     search_trip
     @result

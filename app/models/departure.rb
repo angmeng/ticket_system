@@ -25,7 +25,7 @@ class Departure < ActiveRecord::Base
   private
 
   def update_balance
-    self.available_online_sales  = self.online_quota - self.online_sales
     self.available_counter_sales = self.sales_quota  - self.counter_sales
+    self.available_online_sales  = self.online_quota - self.online_sales
   end
 end

@@ -12,7 +12,7 @@
                     <div class="accordion-inner paddind">
                     	<table>
                     		<tr>
-                    			<td width="150">Title</td>
+                    			<td width="150">Title *</td>
                     			<td><%= select_tag :title, options_for_select(TitleName::CALL), :include_blank => true %></td>
                     		</tr>
                     		<tr><td>Fullname *</td><td><%= text_field_tag :fullname, params[:fullname] %></td></tr>

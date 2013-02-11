@@ -3,7 +3,7 @@
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" href="#notification" data-original-title="">
-                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>  <%=t '.title', :default => model_class.model_name.human.pluralize %> <i class="icon-chevron-down icon-white pull-right"></i>
+                        <i class="icon-th icon-white"></i> <span class="divider-vertical"></span> Open Tickets <i class="icon-chevron-down icon-white pull-right"></i>
                     </a>
                 </div>
                 <div id="notification" class="accordion-body collapse in">
@@ -17,12 +17,13 @@
     <th>Status</th>
     <th>Total tickets</th>
     <th>Payment type</th>
+    <th>Voucher No.</th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
   </thead>
   <tbody>
      <tr>
-      <%= form_for @search, :url => orders_path do |f| %>
+      <%= form_for @search, :url => data_open_ticket_orders_path do |f| %>
         <td></td>
         <td><%= f.select :routine_id_equals, options_from_collection_for_select(selection_routine, :id, :code, @search.routine_id_equals), { :include_blank => true }, { :style => "width: 100px;" } %></td>
          <td align="center">
@@ -56,6 +57,7 @@
         <td><%= f.select :order_order_items_status_id_equals, OrderStatus::OPTIONS, { :include_blank => true }, { :style => "width: 100px;" } %></td>
         <td></td>
         <td><%= f.select :order_payment_type_id_equals, PaymentType::OPTIONS, { :include_blank => true }, { :style => "width: 100px;" } %></td>
+        <td><%= f.text_field :order_order_items_order_item_details_serial_number_contains, :style => "width: 100px;" %></td>
         <td><%= f.submit "Search" %></td>
       <% end %> 
     </tr>
@@ -84,6 +86,7 @@
     </td>
     <td><%= item.total_tickets %></td>
     <td><%= order.payment_type %></td>
+    <td><%= item.order_item_details.last.serial_number rescue '-' %></td>
     <td>
           <%= link_to t('.show', :default => t("helpers.links.show")), order_path(item), :class => 'btn btn-mini' %>
 

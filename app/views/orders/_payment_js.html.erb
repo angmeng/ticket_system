@@ -5,6 +5,8 @@
           $("#payment_type_cash").click(function(){
           	$("#cash_method").show();
           	$("#credit_method").hide();
+            $("#byPass").hide();
+            $("#submit_button").show();
           })
 
           $("#payment_type_credit").click(function(){
@@ -13,11 +15,15 @@
           })
 
           $("#payment_type_free").click(function(){
-              $('#byPass').modal('show');
+              $('#cash_method').hide();
+              $("#submit_button").hide();
+              $('#byPass').show();
           })
 
           $("#byPass_button").click(function(){
-              $('#byPass').modal('show');
+              $('#credit_method').hide();
+              $("#submit_button").hide();
+              $('#byPass').show();
           })
 
 
@@ -30,32 +36,40 @@
           $("#accept_button").click(function(){
             <% if (@result_payment[:buyer_type_id].to_i == BuyerType::AGENT && @net_total > @result_payment[:buyer_credit]) || @result_payment[:buyer_type_id].to_i == BuyerType::PUBLIC %>
 
+                var title_name = $("#title").val();
                 var fullname_string = $("#fullname").val();
+                var username = $("#username").val();
+                var password = $("#password").val();
+                
+                if (title_name.length == 0){
+                  alert("Title Name must select.");
+                  return false;
+                }
+
                 if (fullname_string.length == 0) {
                   alert("Fullname must key-in in the Passenger Detail. Thanks.");
                   return false;
                 }
 
-                var username = $("#username").val();
-                var password = $("#password").val();
-
                 $.ajax({
                   type:'POST', 
                   dataType:"json",
                   url: '/api/staffs/authorize', 
+                  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                   data: { 'username' : username, 'password' : password },
                   success: function(response) {
-                          if( response.status == true ) {
-                            <% if (@result_payment[:buyer_type_id].to_i == BuyerType::AGENT) %>
-                              $("#input_manager_id").val(response.manager_id);
-                            <% end %>
-                            $("#byPass").modal('hide');
-                            $("form#submit_payment_form").submit();
-                            return true;
-                          } else {
-                            alert(response.message);
-                            return false;
-                          }
+                    if( response.status == true ) {
+                      <% if (@result_payment[:buyer_type_id].to_i == BuyerType::AGENT) || (@result_payment[:buyer_type_id].to_i == BuyerType::PUBLIC) %>
+                        $("#input_manager_id").val(response.manager_id);
+                      <% end %>
+                      $("#username").val("");
+                      $("#password").val("");
+                      $("form#submit_payment_form").submit();
+                      return true;
+                    } else {
+                      alert(response.message);
+                      return false;
+                    }
                   }
                 });
             <% end %>
@@ -63,26 +77,29 @@
 
           $("#submit_button").click(function(){
 
+            var title_name = $("#title").val();
             var fullname_string = $("#fullname").val();
+
+            if (title_name.length == 0){
+              alert("Title Name must select.");
+              return false;
+            }
+            
             if (fullname_string.length == 0) {
               alert("Fullname must key-in in the Passenger Detail.");
               return false;
             }
 
             <% if (@result_payment[:buyer_type_id].to_i == BuyerType::AGENT && @net_total > @result_payment[:buyer_credit]) %>
-              if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CREDIT %>)
-              {
+              if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::CREDIT %>) {
                 alert("Credit is not enough !");
-                return false;
-              }
+                return false; }
             <% end %>
             
 
-            if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::FREE %>)
-              {
-                $("#byPass").modal('show');
-                return false;
-              }
+            // if(parseInt($("input[name='order[payment_type_id]']:radio:checked").val()) == <%= PaymentType::FREE %>) {
+            //     $("#byPass").modal('show');
+            //     return false; }
           });
 
        	});

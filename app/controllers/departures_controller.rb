@@ -8,7 +8,7 @@ class DeparturesController < ApplicationController
     else
       @search = Departure.search(params[:search])
     end
-    @departures = @search.includes(:routine, :vessel).order("departures.date, departures.time, routines.code")
+    @departures = @search.includes(:routine, :vessel).order("departures.date DESC, departures.time, routines.code")
     @departures = @departures.page(params[:page]).per(25)
 
     respond_to do |format|

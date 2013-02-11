@@ -1,0 +1,210 @@
+<div id="container">
+
+  <div>
+    <table>
+      <tr>
+        <td align="right"><strong>Reservation No:</strong></td>
+        <td><%= @order.reservation_detail.reservation_number rescue '-' %>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="right"><strong>Agent Code:</strong></td>
+        <td><%= @order.seller_id rescue '-' %>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="right"><strong>Agent Name:</strong></td>
+        <td><%= User.find(@order.seller_id).fullname rescue '-' %>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="right"><strong>Reservation DateTime:</strong></td>
+        <td><%= @order.reservation_detail.created_at.strftime("%d-%m-%Y") rescue '-' %>&nbsp;</td>
+      </tr>
+    </table>
+  </div>
+
+    <table class="black-line-table">
+      <thead>
+        <tr>
+          <th colspan="4" align="left">
+            Going Out : <%= @order.going_out_item.title %><br/>
+            DateTime : <%= @order.going_out_item.departure.date_time rescue '-' %>
+          </th>
+        </tr>
+        <tr>
+          <th width="80">Age</th>
+          <th width="100">Price</th>
+          <th width="100">Quantity</th>
+          <th width="100">Amount (MYR)</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Adult</td>
+          <td align="right"><%= "%.2f" % @order.going_out_item.adult_fare rescue '0' %></td>
+          <td align="center"><%= @order.going_out_item.number_of_adult rescue '0' %> </td>
+          <td align="right"><%= "%.2f" % @order.going_out_item.total_adult_fare rescue '0' %></td>
+        </tr>
+        <tr>
+          <td>Child</td>
+          <td align="right"><%= "%.2f" % @order.going_out_item.kid_fare rescue '0' %></td>
+          <td align="center"><%= @order.going_out_item.number_of_kid rescue '0' %> </td>
+          <td align="right"><%= "%.2f" % @order.going_out_item.total_kid_fare rescue '0' %></td>
+        </tr>
+        <tr>
+          <td>Infant</td>
+          <td align="right"><%= "%.2f" % @order.going_out_item.infant_fare rescue '0' %></td>
+          <td align="center"><%= @order.going_out_item.number_of_infant rescue '0' %> </td>
+          <td align="right"><%= "%.2f" % @order.going_out_item.total_infant_fare rescue '0' %></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td align="center"><%= @order.going_out_item.total_tickets rescue '0' %></td>
+          <th align="right">
+            <% if @order.payment_type_is_free? %>
+              <%= "%.2f" % @order.going_out_item.total_amount rescue '0' %> (F.O.C)
+            <% else %>
+                <%= "%.2f" % @order.going_out_item.total_amount rescue '0' %> 
+            <% end %>
+          </th>
+        </tr>
+      </tbody>
+
+      <% @net_total += @order.going_out_item.total_amount %>
+
+      <% if @order.is_round_trip? or @order.is_open_ticket? %>
+        <thead>
+          <tr>
+            <th colspan="4" align="left">
+              Coming Back : <%= @order.coming_back_item.title %><br/>
+              DateTime : <%= @order.coming_back_item.departure.date_time rescue '-' %>
+            </th>
+          </tr>
+          <tr>
+            <th>Age</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Adult</td>
+            <td align="right"><%= "%.2f" % @order.coming_back_item.adult_fare %></td>
+            <td align="center"><%= @order.coming_back_item.number_of_adult %> </td>
+            <td align="right"><%= "%.2f" % @order.coming_back_item.total_adult_fare %></td>
+          </tr>
+          <tr>
+            <td>Child</td>
+            <td align="right"><%= "%.2f" % @order.coming_back_item.kid_fare %></td>
+            <td align="center"><%= @order.coming_back_item.number_of_kid %> </td>
+            <td align="right"><%= "%.2f" % @order.coming_back_item.total_kid_fare %></td>
+          </tr>
+          <tr>
+            <td>Infant</td>
+            <td align="right"><%= "%.2f" % @order.coming_back_item.infant_fare %></td>
+            <td align="center"><%= @order.coming_back_item.number_of_infant %> </td>
+            <td align="right"><%= "%.2f" % @order.coming_back_item.total_infant_fare %></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td align="center"><%= @order.coming_back_item.total_tickets %></td>
+            <th align="right">
+              <% if @order.payment_type_is_free? %>
+                <%= "%.2f" % @order.coming_back_item.total_amount %> (F.O.C)
+              <% else %>
+                <%= "%.2f" % @order.coming_back_item.total_amount %>
+              <% end %>
+            </th>
+          </tr>
+        </tbody>
+
+        <% @net_total += @order.coming_back_item.total_amount %>
+      <% end %>
+
+      <tr><td colspan=4><strong>Payment</strong></td></tr>
+                           
+      <tbody>
+        <tr>
+          <td>2 way ticket discount</td>
+          <td></td>
+          <td></td>
+          <td align="right">
+            <% if @order.is_round_trip? or @order.is_open_ticket? %>
+              (<%= "%.2f" % @order.discount %>)
+              <% @net_total -= @order.discount %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Agent discount</td>
+          <td></td>
+          <td></td>
+          <td align="right">
+            <% if @order.buyer_is_agent? %>
+              <% agent_discount = @net_total * current_branch.agent_commission / 100 %>
+              (<%= "%.2f" % agent_discount %>) 
+                      <% @net_total -= agent_discount %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Tax</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Service Charges</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>Total Price</th>
+          <td></td>
+          <td></td>
+          <th align="right"> <span id="net-total"><%= "%.2f" % @net_total %></span></th>
+        </tr>
+      </tbody>
+     </table>
+
+</div>
+
+
+<style type="text/css">
+  #container    { border: 1px solid black; width: 600px; }
+  p, ol, ul, td, th { 
+    font-size: 18px; 
+    font-family: Tahoma, arial, helvetica, sans-serif;
+  }
+  table td, th { padding-left: 5px; padding-right: 5px; }
+
+  /*=================================== BLACK TABLE =====================================*/
+  table.black-line-table {
+    width:100%;
+    border-width: 1px;
+    border-spacing: 0px;
+    border-style: none;
+    border-color: black;
+    border-collapse: collapse;
+    background-color: transparent; }
+
+  table.black-line-table th {
+    border-width: 1px;
+    padding: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: transparent;
+    -moz-border-radius: 0px 0px 0px 0px; }
+          
+  table.black-line-table td {
+    border-width: 1px;
+    padding: 1px;
+    border-style: solid;
+    border-color: black;
+    background-color: transparent;
+    -moz-border-radius: 0px 0px 0px 0px; }
+  /*=================================== BLACK TABLE (END) =====================================*/
+</style>

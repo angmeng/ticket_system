@@ -1,6 +1,5 @@
-<div class="page-header">
-  <h1>New order</h1>
-</div>
+<div class="page-header"><h1>New Order</h1></div>
+
 <%= render 'form' %>
 
 <% content_for :javascripts_path do %>
@@ -30,8 +29,6 @@
       $("#order_trip_type_one, #order_trip_type_open_ticket").click(function(){
         $("#end").hide();
       });
-
-
 
       $("#order_trip_type_round").click(function(){
         $("#end").show();
@@ -83,8 +80,6 @@
                 arrival_select_tag.html(output);
                    });
             });
-
-
     });
   </script>
 

@@ -14,7 +14,9 @@
           			  <table  class="table table-bordered table-striped pull-left">
           			  	<thead>
           			  		<tr>
-          			  		  <th colspan="4">Going Out : <%= @result_payment[:go_place] %></th>
+          			  		  <th colspan="4">
+          			  		  	Going Out : <%= @result_payment[:go_place] %>
+          			  		  </th>
           			  		</tr>
           			  		<tr>
           			  			<th>Age</th>
@@ -88,11 +90,7 @@
 	                           <td></td>
 	                           <td></td>
 	                           <td><%= @result_payment[:back_total_tickets] %></td>
-
-	                           
-	                           	<th><%= "%.2f" % @result_payment[:back_total_amount] %></th>
-	                           
-
+	                           <th><%= "%.2f" % @result_payment[:back_total_amount] %></th>
 							  </tr>
 							 <tbody>
 							 <% @net_total += @result_payment[:back_total_amount].to_f %>

@@ -3,28 +3,33 @@
 <%#= hidden_field_tag "order[status_id]", OrderStatus::PENDING %>
 
 <div class="control-group select required">
-<label class="radio inline">
-  <input type="radio" name="order[trip_type]" id="order_trip_type_round" value="round" checked>
-  Round Trip
-</label>
-<label class="radio inline">
-  <input type="radio" name="order[trip_type]" id="order_trip_type_one" value="one">
-  One Way
-</label>
-<label class="radio inline">
-  <input type="radio" name="order[trip_type]" id="order_trip_type_open_ticket" value="open_ticket">
-  Open Ticket
-</label>
+  <label class="radio inline" style="width: 100px;">
+    <input type="radio" name="order[trip_type]" id="order_trip_type_round" value="round" checked="checked">
+    Round Trip
+  </label>
+  <label class="radio inline" style="width: 100px;">
+    <input type="radio" name="order[trip_type]" id="order_trip_type_one" value="one">
+    One Way
+  </label>
+  <label class="radio inline" style="width: 100px;">
+    <input type="radio" name="order[trip_type]" id="order_trip_type_open_ticket" value="open_ticket">
+    Open Ticket
+  </label>
 </div>
 
-<div class="control-group select required" id="order_departure_jetty_id_div"><label class="select required control-label" for="order_departure_jetty_id"><abbr title="required">*</abbr> Departing</label><div class="controls">
-  <select class="select required" name="order[departure_jetty_id]" id="order_departure_jetty_id">
-    <option value="">Origin</option>
-    <% @jetties.each do |jetty| %>
-      <option value="<%= jetty.id %>"><%= jetty.name %></option>
-    <% end %>
-
-</select></div></div>
+<div class="control-group select required" id="order_departure_jetty_id_div">
+  <label class="select required control-label" for="order_departure_jetty_id">
+    <abbr title="required">*</abbr> Departing
+  </label>
+  <div class="controls">
+    <select class="select required" name="order[departure_jetty_id]" id="order_departure_jetty_id">
+      <option value="">Origin</option>
+      <% @jetties.each do |jetty| %>
+        <option value="<%= jetty.id %>"><%= jetty.name %></option>
+      <% end %>
+    </select>
+  </div>
+</div>
 
 <div class="control-group select required" id="order_arrival_jetty_id_div"><label class="select required control-label" for="order_arrival_jetty_id"><abbr title="required">*</abbr> Arriving</label><div class="controls">
   <select class="select required"  name="order[arrival_jetty_id]" id="order_arrival_jetty_id">

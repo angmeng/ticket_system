@@ -128,37 +128,52 @@
     <div class="span11">
       <div class="control-group select required">
 
-			<label class="radio inline">
-			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_normal" value="normal" checked="checked">
-			  Normal
-			</label>
-			<label class="radio inline">
-			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent">
-			  Agent
-			</label>
-			<label class="radio inline">
-			  <input type="radio" name="order[buyer_type]" id="order_buyer_type_warrant" value="warrant">
-			  Warrant
-			</label>
+      		<% if @result[:order]["reservation"] == "yes" %> 
+				<label class="radio inline">
+				  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent" checked="checked">
+				  Agent
+				</label>
+      		<% else %>
+				<label class="radio inline">
+				  <input type="radio" name="order[buyer_type]" id="order_buyer_type_normal" value="normal" checked="checked">
+				  Normal
+				</label>
+				<label class="radio inline">
+				  <input type="radio" name="order[buyer_type]" id="order_buyer_type_agent" value="agent">
+				  Agent
+				</label>
+				<label class="radio inline">
+				  <input type="radio" name="order[buyer_type]" id="order_buyer_type_warrant" value="warrant">
+				  Warrant
+				</label>
+			<% end %>
 
 	  </div>
 	  
 		<div class="controls">
 
+			<% if @result[:order]["reservation"] == "yes" %> 
+				<select class="select"  name="order[agent_id]" id="order_agent_id">
+				    <option value="">Choose agent</option>
+				    <% @agents.each do |agent| %>
+				      <option value="<%= agent.id %>"><%= agent.fullname%></option>
+				    <% end %>
+				</select>
+			<% else %>
+				<select class="select"  name="order[agent_id]" id="order_agent_id" style="display:none">
+				    <option value="">Choose agent</option>
+				    <% @agents.each do |agent| %>
+				      <option value="<%= agent.id %>"><%= agent.fullname%></option>
+				    <% end %>
+				</select>
 
-		<select class="select"  name="order[agent_id]" id="order_agent_id" style="display:none">
-		    <option value="">Choose agent</option>
-		    <% @agents.each do |agent| %>
-		      <option value="<%= agent.id %>"><%= agent.fullname%></option>
-		    <% end %>
-		</select>
-
-		<select class="select"  name="order[warrant_id]" id="order_warrant_id" style="display:none">
-		    <option value="">Choose warrant</option>
-		    <% @warrants.each do |warrant| %>
-		      <option value="<%= warrant.id %>"><%= warrant.name%></option>
-		    <% end %>
-		</select>
+				<select class="select"  name="order[warrant_id]" id="order_warrant_id" style="display:none">
+				    <option value="">Choose warrant</option>
+				    <% @warrants.each do |warrant| %>
+				      <option value="<%= warrant.id %>"><%= warrant.name%></option>
+				    <% end %>
+				</select>
+			<% end %>
 	   </div>
 
 
@@ -219,7 +234,7 @@
 
 			$("#target_payment").submit(function(e){
 
-				// e.preventDefault();
+				e.preventDefault();
 
 				if($("input[name='order[departure_routine_id]']:radio:checked").length==0) 
 				{
@@ -266,26 +281,23 @@
 	          		}
 	          	}
 
-	      //    	$('body').modalmanager('loading');
+	         	$('body').modalmanager('loading');
 
-			    // $.ajax({
-			    //     url: '/orders/before_payment',
-			    //     type: 'GET',
-			    //     data: $('form#target_payment').serialize(),
-			    //     success: function(data) {
-			    //     			$('.ajax-modal-body').html(data);
+			    $.ajax({
+			        url: '/orders/before_payment',
+			        type: 'GET',
+			        data: $('form#target_payment').serialize(),
+			        success: function(data) {
+			        			$('.ajax-modal-body').html(data);
 
-			    //     			$("#order_requisition").modal('show').css({ 
-			    //     				width: '700px', 
-			    //     				'margin-left': function () { return -($(this).width() /2); }
-							// 	});
-			    //              }
-			    // });
-
-			    // return false;
+			        			$("#order_requisition").modal('show').css({ 
+			        				width: '700px', 
+			        				'margin-left': function () { return -($(this).width() /2); }
+								});
+			                 }
+			    });
+			    
 	      	});
-
-			
 
 	    }); //end script
     </script>

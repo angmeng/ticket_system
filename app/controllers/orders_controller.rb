@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+
   # GET /orders
   # GET /orders.json
   def index
@@ -9,8 +10,8 @@ class OrdersController < ApplicationController
     end
     @search.order_branch_id_equals = current_branch.id #unless is_admin?
     @search.order_buyer_id_equals = current_user.id if is_agent?
-    @order_items = @search.order("order_items.created_at DESC")
-
+    @order_items = @search.order("order_items.departure_id DESC").page(params[:page]).per(25)
+   
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @orders }
@@ -61,6 +62,7 @@ class OrdersController < ApplicationController
 
   def make_payment
     # @order = Order.find params[:id]
+
     PaymentMachine.bypass(@order, params[:show_manager_id]) if params[:show_manager_id].present?
     psg = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country][:country_name], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
     if @order.update_attributes(params[:order]) && psg.save
@@ -94,6 +96,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])
+     @net_total = 0
   end
 
   def before_payment
@@ -113,11 +116,19 @@ class OrdersController < ApplicationController
     @order  = OrderingMachine.new(session[:order], system_company, current_branch, params[:order]).process
     psg     = Passenger.new(:order_id => @order.id, :title => params[:title], :fullname => params[:fullname], :date_of_birth => params[:date_of_birth], :travel_document => params[:travel_document], :issuing_country => params[:issuing_country][:country_name], :document_no => params[:document_no], :expiration_date => params[:expiration_date])
     psg.save!
-    PaymentMachine.bypass(@order, params[:show_manager_id]) if params[:show_manager_id].present?
-    PaymentMachine.make_payment(@order)
+    unless @order.is_reservation?
+      PaymentMachine.bypass(@order, params[:show_manager_id]) if params[:show_manager_id].present?
+      PaymentMachine.make_payment(@order)
+    end
     session[:order] = nil
     flash[:notice] = "Order Payment has completed."
-    redirect_to preview_order_path(@order)
+
+    if @order.is_reservation?
+      redirect_to reservation_path(@order)  
+    else
+      redirect_to preview_order_path(@order)  
+    end
+  end
       
     # if @order.update_attributes(params[:order]) && psg.save
       # PaymentMachine.make_payment(@order)
@@ -135,7 +146,7 @@ class OrdersController < ApplicationController
     # order = OrderingMachine.new(params[:order], system_company, current_branch).process
     # flash[:notice] = "Order Created"
     # redirect_to payment_order_path(order)
-  end
+
 
   # PUT /orders/1
   # PUT /orders/1.json
@@ -163,5 +174,25 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url }
       format.json { head :no_content }
     end
+  end
+
+  def data_open_ticket
+    if params[:time_eq] && !params[:time_eq].blank?
+      @search = OrderItem.includes(:departure).where("departures.time = ?", params[:time_eq]).search(params[:search])
+    else
+      @search = OrderItem.search(params[:search])
+    end
+    @search.order_branch_id_equals = current_branch.id #unless is_admin?
+    @search.order_buyer_id_equals = current_user.id if is_agent?
+    @order_items = @search.order("order_items.departure_id DESC")
+                          .select { |item| item.order.is_open_ticket? }
+                          .select { |item| item.travel_type_id == TravelType::COMING_BACK }
+    @order_items = Kaminari.paginate_array(@order_items).page(params[:page]).per(25)
+   
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @orders }
+    end
+
   end
 end

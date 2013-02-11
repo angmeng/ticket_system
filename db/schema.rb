@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114035808) do
+ActiveRecord::Schema.define(:version => 20130207093503) do
 
   create_table "agent_groups", :force => true do |t|
     t.string   "code"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20130114035808) do
     t.decimal  "discount_on_two_way_ticket",               :precision => 10, :scale => 2, :default => 5.0
     t.integer  "last_voucher_number",                                                     :default => 0
     t.integer  "last_receipt_number",                                                     :default => 0
+    t.integer  "last_reservation_number",                                                 :default => 0
   end
 
   add_index "companies", ["register_number"], :name => "index_companies_on_register_number", :unique => true
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20130114035808) do
     t.boolean  "bypass_credit",                                           :default => false
     t.integer  "bypass_credit_manager_id",                                :default => 0
     t.integer  "branch_id",                                               :default => 0
+    t.boolean  "reservation",                                             :default => false
   end
 
   add_index "orders", ["branch_id"], :name => "index_orders_on_branch_id"
@@ -161,6 +163,15 @@ ActiveRecord::Schema.define(:version => 20130114035808) do
   end
 
   add_index "passengers", ["order_id"], :name => "index_passengers_on_order_id"
+
+  create_table "reservation_details", :force => true do |t|
+    t.string   "reservation_number"
+    t.integer  "order_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "reservation_details", ["order_id"], :name => "index_reservation_details_on_order_id"
 
   create_table "routines", :force => true do |t|
     t.string   "code"

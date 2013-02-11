@@ -1,0 +1,37 @@
+<div id="accordion1" class="accordion">
+  <div class="accordion-group">
+      <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" href="#notification" data-original-title="">
+              <i class="icon-th icon-white"></i> <span class="divider-vertical"></span>Reservation Detail<i class="icon-chevron-down icon-white pull-right"></i>
+          </a>
+      </div>
+
+      <div id="notification" class="accordion-body collapse in">
+        <div class="accordion-inner paddind">
+
+            <% if @order.is_reservation? %>
+                <dl class="dl-horizontal">
+                    <dt><strong>Reservation No:</strong></dt>
+                    <dd><%= @order.reservation_detail.reservation_number rescue '-' %>&nbsp;</dd>
+                    <dt><strong>Agent Code:</strong></dt>
+                    <dd><%= @order.buyer_id rescue '-' %>&nbsp;</dd>
+                    <dt><strong>Agent Name:</strong></dt>
+                    <dd><%= User.find(@order.buyer_id).fullname rescue '-' %>&nbsp;</dd>
+                    <dt><strong>Reservation DateTime:</strong></dt>
+                    <dd><%= @order.reservation_detail.created_at.strftime("%d-%m-%Y") rescue '-' %>&nbsp;</dd>
+                </dl>
+            <% else %>
+              "The Data has got mistaken..."
+            <% end %>
+
+        </div>
+      </div>
+  </div>
+</div>
+
+
+<div>
+
+
+
+</div>
